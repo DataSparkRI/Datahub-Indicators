@@ -5,6 +5,10 @@ from datahub.indicators.models import Indicator, IndicatorData
 from django.utils.functional import memoize
 from django.db import transaction
 
+key_field_cache = {}
+get_files_cache = {}
+get_variables_cache = {}
+
 def safe_strip(val):
     if isinstance(val, str):
         return val.strip()
@@ -57,7 +61,7 @@ class DataImporter(object):
                 
                 variables.append(var_dict)
             return variables
-        do_get_variables = memoize(do_get_variables, {}, 0)
+        do_get_variables = memoize(do_get_variables, get_variables_cache, 0)
         return do_get_variables()
 
     def get_files(self):
@@ -67,7 +71,7 @@ class DataImporter(object):
                 for filename in subfiles:
                     files[filename] = os.path.join(path, filename)
             return files
-        do_get_files = memoize(do_get_files, {}, 0)
+        do_get_files = memoize(do_get_files, get_files_cache, 0)
         return do_get_files()
 
     
@@ -79,15 +83,19 @@ class DataImporter(object):
         return val
 
     def get_key_field(self, table_name):
-        files = self.get_files()
-        for filename, path in files.iteritems():
-            if filename.startswith(table_name) and filename.endswith('csv'):
-                # assuming the first column is the key field
-                reader = csv.reader(open(path, 'rU'))
-                header = reader.next()
-                return header[0]
-        print "WARNING: Couldn't find a key field for %s" % table_name
-        return ''
+        def do_get_key_field(table_name):
+            print 'in do_get_key_field for %s' % table_name
+            files = self.get_files()
+            for filename, path in files.iteritems():
+                if filename.startswith(table_name) and filename.endswith('csv'):
+                    # assuming the first column is the key field
+                    reader = csv.reader(open(path, 'rU'))
+                    header = reader.next()
+                    return header[0]
+            print "WARNING: Couldn't find a key field for %s" % table_name
+            return ''
+        do_get_key_field = memoize(do_get_key_field, key_field_cache, 1)
+        return do_get_key_field(table_name)
 
     def generate_indicator_data(self, variable, row):
         from webportal.indicators.models import IndicatorData
