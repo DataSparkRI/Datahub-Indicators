@@ -92,7 +92,7 @@ class Indicator(models.Model):
 
 class IndicatorData(models.Model):
     indicator = models.ForeignKey(Indicator)
-    name = models.CharField(max_length=100,db_index=True)
+    #name = models.CharField(max_length=100,db_index=True)
     time_type = models.CharField(max_length=50,choices=TIME_CHOICES,null=True,blank=True,db_index=True)
     time_key = models.CharField(max_length=10,blank=True,null=True,db_index=True)
     key_unit_type = models.CharField(max_length=50,choices=KEY_UNIT_TYPE_CHOICES,db_index=True)

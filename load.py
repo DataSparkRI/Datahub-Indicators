@@ -104,7 +104,6 @@ class DataImporter(object):
         key_field = self.get_key_field(variable['file_name'])
         
         indicator_data_kwargs = {
-            'name': variable['name'],
             'data_type': variable['data_type'].lower()
         }
         
@@ -174,6 +173,7 @@ class DataImporter(object):
             raise
 
     def _run_all(self):
+        from django.db.utils import IntegrityError
         variables = self.get_variables()
         
         Indicator.objects.all().delete()
@@ -208,12 +208,14 @@ class DataImporter(object):
             display = indicator_def.pop('display').upper()
             if keep_drop == "KEEP" and display == "YES" and indicator_def['file_name']:
                 if variable['time_group'].strip() == '':
-                    print 'creating %s...' % indicator_def['name']
-                    
-                    indicator_def['key_unit_type'] = variable['dataset_tag']
-                    i = Indicator(**indicator_def)
-                    i.save(force_insert=True)
-                    self.insert_data_for_indicator(i)
+                    if Indicator.objects.filter(name=indicator_def['name'],key_unit_type=variable['dataset_tag']).count() == 0:
+                        print 'creating %s...' % indicator_def['name']                
+                        indicator_def['key_unit_type'] = variable['dataset_tag']
+                        i = Indicator(**indicator_def)
+                        i.save(force_insert=True)
+                        self.insert_data_for_indicator(i)
+                    else:
+                        print "Skipping dupe (%s, %s)" % (indicator_def['name'], variable['dataset_tag'])
 
                 # if part of a time group, add the "time group" indicator
                 # if the component years of a time group indicator should be
@@ -226,3 +228,4 @@ class DataImporter(object):
                     i = Indicator(**indicator_def)
                     i.save(force_insert=True)
                     self.insert_data_for_indicator(i)
+
