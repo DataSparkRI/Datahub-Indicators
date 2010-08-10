@@ -229,3 +229,49 @@ class DataImporter(object):
                     i.save(force_insert=True)
                     self.insert_data_for_indicator(i)
 
+def dynamic_indicators():
+    self.directory = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), 
+        'data'
+    ))
+    
+ 
+    # pull indicators by release and store info from the excel sheet
+    import xlrd
+    ibr_file = "Indicators by Release.xls"
+    book = xlrd.open_workbook(os.path.join(self.directory,ibr_file))
+    excel_data = {}
+    for wave in range(1, book.nsheets+1): #assuming multiple sheets
+        sheet = book.sheet_by_index(wave)
+        for row_num in range(1, sheet.nrows):
+            #stores short and long definitions in a dict with indicator group as the key
+            excel_data = [map(safe_strip, sheet.cell_value(row_num, 1))] = map(safe_strip, sheet.row_values(row_num, start_colx=2, end_colx=3))
+    
+    # find dynamic indicators
+    from core.models import *
+    from core.indicators import *
+    from indicators.models import *
+    dynamic_indicators = indicator_list() # list of (indicators, names)
+    create_list = []
+    
+    # create an Indicator object
+    for pair in dynamic_indicators:
+        try:        
+            create_list.append((pair[0], pair[1])
+        except:
+            print str(pair[1]) + '  initialization failed'
+    
+    # create() the indicator
+    # insert IndicatorData for each agg key
+    for pair in create_list:
+        try:
+            excel_related_info = excel_data[pair[0]]
+            Indicator(name = str(pair[1]), short_label = excel_related_info[0]) #etc
+            Indicator.save()
+            
+            for key, value in pair[0].create().iteritems():
+                IndicatorData(indicator=Indicator, time_type='School Year', time_key = key[0], key_unit_type = 'School', key_value = key[1], data_type = 'numeric', numeric = value)
+                IndicatorData.save()
+            
+        except:
+            print str(pair[1]) + '  created failed'
