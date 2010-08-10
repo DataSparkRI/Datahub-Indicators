@@ -275,4 +275,3 @@ def dynamic_indicators():
             
         except:
             print str(pair[1]) + '  created failed'
-
