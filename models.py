@@ -58,7 +58,8 @@ class Indicator(models.Model):
     # calculated meta-data
 
     years_available = models.CharField(max_length=200)
-
+    datasource = models.CharField(max_length=200)
+    
     # outlier index
     # match rate
     # possible values
