@@ -4,6 +4,9 @@ import sys
 from datahub.indicators.models import Indicator, IndicatorData
 from django.utils.functional import memoize
 from django.db import transaction
+from core.models import *
+from core.indicators import *
+from indicators.models import *
 
 key_field_cache = {}
 get_files_cache = {}
@@ -184,49 +187,33 @@ class DataImporter(object):
             # add indicators and variables
             def prep_indicator_definition(var):
                 indicator_def = copy.deepcopy(var)
-
                 indicator_def['data_type'] = indicator_def['data_type'].upper()
+                del indicator_def['source']
 
                 if isinstance(indicator_def['min'], str) and indicator_def['min'].strip() == '':
                     indicator_def['min'] = None
-                
                 if isinstance(indicator_def['max'], str) and indicator_def['max'].strip() == '':
                     indicator_def['max'] = None
-                
-                if safe_strip(var['time_group']) != '':
-                    indicator_def['name'] = variable['time_group'].strip()
-                elif safe_strip(var['year']) != '':
-                    pass
-                    # add the year to the short label, since all code later in the pipeline
-                    # won't make any assumptions about years at the Indicator level
-                    #indicator_def['short_label'] = '%s (%s)' % (indicator_def['short_label'], indicator_def['year'])
-                    #indicator_def['name'] = '%s (%s)' % (indicator_def['name'], indicator_def['year'])
+
+                try:
+                    indicator_def['year'] = indicator_def['year'].split('-')[0]
+                except:
+                    indicator_def['year'] = str(int(indicator_def['year']))
                 del indicator_def['year']
-
-                indicator_def['key_unit_type'] = variable['dataset_tag']
-
-#                try:
-#                    indicator_def['year'] = indicator_def['year'].split('-')[0]
-#                except:
-#                    indicator_def['year'] = str(int(indicator_def['year']))
-
                 del indicator_def['time_group']
-                del indicator_def['keep_or_drop']
-                del indicator_def['display']
-                del indicator_def['source']
-
-                indicator_def['name'] = indicator_def['name'].strip()
-
+                
                 return indicator_def
             
             
             indicator_def = prep_indicator_definition(variable)
-            keep_drop = variable['keep_or_drop'].upper()
-            display = variable['display'].upper()
+            indicator_def['name'] = indicator_def['name'].strip()
+            keep_drop = indicator_def.pop('keep_or_drop').upper()
+            display = indicator_def.pop('display').upper()
             if keep_drop == "KEEP" and display == "YES" and indicator_def['file_name']:
                 if variable['time_group'].strip() == '':
                     if Indicator.objects.filter(name=indicator_def['name'],key_unit_type=variable['dataset_tag']).count() == 0:
                         print 'creating %s...' % indicator_def['name']                
+                        indicator_def['key_unit_type'] = variable['dataset_tag']
                         i = Indicator(**indicator_def)
                         i.save(force_insert=True)
                         self.insert_data_for_indicator(i)
@@ -239,58 +226,57 @@ class DataImporter(object):
                 # check for an existing time group indicator
                 elif variable['time_group'].strip() and not Indicator.objects.filter(name=variable['time_group'].strip()).count():
                     print 'creating time group variable %s...' % variable['time_group'].strip()
+                    indicator_def['name'] = variable['time_group'].strip()
+                    indicator_def['key_unit_type'] = variable['dataset_tag']
                     i = Indicator(**indicator_def)
                     i.save(force_insert=True)
                     self.insert_data_for_indicator(i)
-    
-                i.calculate_metadata()
-                i.save()
 
-"""
-def dynamic_indicators():
-    self.directory = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), 
-        'data'
-    ))
+class DynamicImporter():
+    def __init__(self):
+        self.directory = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), 
+            'data'
+        ))
+        
+    def grab_xls_info(self):
+        # pull indicators by release and store info from the excel sheet
+        import xlrd
+        ibr_file = "Indicators_by_Release.xls" #xlsx not supported?
+        
+        book = xlrd.open_workbook(os.path.join(self.directory, ibr_file))
+        excel_data = {}
+        for wave in range(0, 3): #assuming multiple sheets
+            sheet = book.sheet_by_index(wave)
+            for row_num in range(1, sheet.nrows):
+                #stores short and long definitions in a dict with indicator group as the key
+                ig = sheet.cell_value(row_num, 1)
+                ig += 'Indicator'
+                excel_data[ig] = map(safe_strip, sheet.row_values(row_num, start_colx=2, end_colx=4))
+        return excel_data
+  
+    def run_all(self):
     
- 
-    # pull indicators by release and store info from the excel sheet
-    import xlrd
-    ibr_file = "Indicators by Release.xls"
-    book = xlrd.open_workbook(os.path.join(self.directory,ibr_file))
-    excel_data = {}
-    for wave in range(1, book.nsheets+1): #assuming multiple sheets
-        sheet = book.sheet_by_index(wave)
-        for row_num in range(1, sheet.nrows):
-            #stores short and long definitions in a dict with indicator group as the key
-            excel_data = [map(safe_strip, sheet.cell_value(row_num, 1))] = map(safe_strip, sheet.row_values(row_num, start_colx=2, end_colx=3))
-    
-    # find dynamic indicators
-    from core.models import *
-    from core.indicators import *
-    from indicators.models import *
-    dynamic_indicators = indicator_list() # list of (indicators, names)
-    create_list = []
-    
-    # create an Indicator object
-    for pair in dynamic_indicators:
-        try:        
-            create_list.append((pair[0], pair[1])
-        except:
-            print str(pair[1]) + '  initialization failed'
-    
-    # create() the indicator
-    # insert IndicatorData for each agg key
-    for pair in create_list:
-        try:
-            excel_related_info = excel_data[pair[0]]
-            Indicator(name = str(pair[1]), short_label = excel_related_info[0]) #etc
-            Indicator.save()
-            
-            for key, value in pair[0].create().iteritems():
-                IndicatorData(indicator=Indicator, time_type='School Year', time_key = key[0], key_unit_type = 'School', key_value = key[1], data_type = 'numeric', numeric = value)
-                IndicatorData.save()
-            
-        except:
-            print str(pair[1]) + '  created failed'
-"""
+        print 'start'
+        Indicator.objects.all().delete()
+        excel_info = self.grab_xls_info()
+        output_file = open('errors.txt', 'w')
+        
+        for pair in indicator_list():
+            try:
+                if pair[0] in excel_info.keys():
+                    excel_related_info = excel_info[pair[0]]
+                    i = Indicator(name = pair[0], short_label = excel_related_info[0]) #etc
+                    i.save()
+                    results = pair[1]().create()
+                        
+                    for key, value in results.iteritems():
+                        i_data = IndicatorData(indicator=i, time_type=key[1].time_type(), time_key = key[1].time_key(), key_unit_type = key[0].key_unit_type(), key_value = key[0].key_value(), data_type = 'numeric', numeric = value)
+                        i_data.save()
+            except:
+                output_file.write(str(sys.exc_info()) + '\n')
+                break
+        output_file.close()
+        
+        print 'done'
+        
