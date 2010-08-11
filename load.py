@@ -246,7 +246,7 @@ class DynamicImporter():
         
         book = xlrd.open_workbook(os.path.join(self.directory, ibr_file))
         excel_data = {}
-        for wave in range(0, 3): #assuming multiple sheets
+        for wave in range(0, book.nsheets): #assuming multiple sheets
             sheet = book.sheet_by_index(wave)
             for row_num in range(1, sheet.nrows):
                 #stores short and long definitions in a dict with indicator group as the key
@@ -254,10 +254,23 @@ class DynamicImporter():
                 ig += 'Indicator'
                 excel_data[ig] = map(safe_strip, sheet.row_values(row_num, start_colx=2, end_colx=4))
         return excel_data
-  
-    def run_all(self):
     
-        print 'start'
+    
+    def xls_check(self):
+        output_file = open('errors.txt', 'w')
+        output_file.write('Indicators not found in excel file: \n')
+        excel_info = self.grab_xls_info()
+        count = 0
+        for pair in indicator_list():
+            if pair[0] in excel_info.keys():
+                continue
+            else:
+                count += 1
+                output_file.write(str(pair[0]) + '\n')
+        output_file.close()
+        print str(count) + ' indicators not found in the excel file'
+            
+    def run_all(self):
         Indicator.objects.all().delete()
         excel_info = self.grab_xls_info()
         output_file = open('errors.txt', 'w')
@@ -269,14 +282,12 @@ class DynamicImporter():
                     i = Indicator(name = pair[0], short_label = excel_related_info[0]) #etc
                     i.save()
                     results = pair[1]().create()
-                        
+                       
                     for key, value in results.iteritems():
-                        i_data = IndicatorData(indicator=i, time_type=key[1].time_type(), time_key = key[1].time_key(), key_unit_type = key[0].key_unit_type(), key_value = key[0].key_value(), data_type = 'numeric', numeric = value)
+                        i_data = IndicatorData(indicator=i, time_type=key[1].time_type, time_key = key[1].time_key, key_unit_type = key[0].key_unit_type, key_value = key[0].key_value, data_type = 'numeric', numeric = value)
                         i_data.save()
             except:
                 output_file.write(str(sys.exc_info()) + '\n')
-                break
+                break 
         output_file.close()
-        
-        print 'done'
         
