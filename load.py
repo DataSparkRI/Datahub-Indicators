@@ -187,33 +187,49 @@ class DataImporter(object):
             # add indicators and variables
             def prep_indicator_definition(var):
                 indicator_def = copy.deepcopy(var)
+
                 indicator_def['data_type'] = indicator_def['data_type'].upper()
-                del indicator_def['source']
 
                 if isinstance(indicator_def['min'], str) and indicator_def['min'].strip() == '':
                     indicator_def['min'] = None
+                
                 if isinstance(indicator_def['max'], str) and indicator_def['max'].strip() == '':
                     indicator_def['max'] = None
-
-                try:
-                    indicator_def['year'] = indicator_def['year'].split('-')[0]
-                except:
-                    indicator_def['year'] = str(int(indicator_def['year']))
-                del indicator_def['year']
-                del indicator_def['time_group']
                 
+                if safe_strip(var['time_group']) != '':
+                    indicator_def['name'] = variable['time_group'].strip()
+                elif safe_strip(var['year']) != '':
+                    pass
+                    # add the year to the short label, since all code later in the pipeline
+                    # won't make any assumptions about years at the Indicator level
+                    #indicator_def['short_label'] = '%s (%s)' % (indicator_def['short_label'], indicator_def['year'])
+                    #indicator_def['name'] = '%s (%s)' % (indicator_def['name'], indicator_def['year'])
+                del indicator_def['year']
+
+                indicator_def['key_unit_type'] = variable['dataset_tag']
+
+#                try:
+#                    indicator_def['year'] = indicator_def['year'].split('-')[0]
+#                except:
+#                    indicator_def['year'] = str(int(indicator_def['year']))
+
+                del indicator_def['time_group']
+                del indicator_def['keep_or_drop']
+                del indicator_def['display']
+                del indicator_def['source']
+
+                indicator_def['name'] = indicator_def['name'].strip()
+
                 return indicator_def
             
             
             indicator_def = prep_indicator_definition(variable)
-            indicator_def['name'] = indicator_def['name'].strip()
-            keep_drop = indicator_def.pop('keep_or_drop').upper()
-            display = indicator_def.pop('display').upper()
+            keep_drop = variable['keep_or_drop'].upper()
+            display = variable['display'].upper()
             if keep_drop == "KEEP" and display == "YES" and indicator_def['file_name']:
                 if variable['time_group'].strip() == '':
                     if Indicator.objects.filter(name=indicator_def['name'],key_unit_type=variable['dataset_tag']).count() == 0:
                         print 'creating %s...' % indicator_def['name']                
-                        indicator_def['key_unit_type'] = variable['dataset_tag']
                         i = Indicator(**indicator_def)
                         i.save(force_insert=True)
                         self.insert_data_for_indicator(i)
@@ -226,11 +242,13 @@ class DataImporter(object):
                 # check for an existing time group indicator
                 elif variable['time_group'].strip() and not Indicator.objects.filter(name=variable['time_group'].strip()).count():
                     print 'creating time group variable %s...' % variable['time_group'].strip()
-                    indicator_def['name'] = variable['time_group'].strip()
-                    indicator_def['key_unit_type'] = variable['dataset_tag']
                     i = Indicator(**indicator_def)
                     i.save(force_insert=True)
                     self.insert_data_for_indicator(i)
+    
+                i.calculate_metadata()
+                i.save()
+
 
 class DynamicImporter():
     def __init__(self):
