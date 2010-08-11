@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+
+#from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
 
 INDICATOR_TYPES = (
@@ -17,13 +21,17 @@ DATA_TYPE_CHOICES = (
     ('string', 'string'),
 )
 
-# Create your models here.
+class IndicatorManager(models.Manager):
+    pass
+
 class Indicator(models.Model):
     name = models.CharField(max_length=100,blank=False)
     file_name = models.CharField(max_length=100)
     #key_field_name = models.CharField(max_length=100)
     #category = models.ForeignKey('Category',null=True,blank=True,related_name='indicators')
     key_unit_type = models.CharField(max_length=30) # FIXME: should go away
+    
+    #attributecolumns = generic.GenericRelation(AttributeColumn)
     
     min = models.IntegerField(null=True,blank=True)
     max = models.IntegerField(null=True,blank=True)
@@ -48,32 +56,38 @@ class Indicator(models.Model):
     # data type choices (percent, number, $, etc etc)
     
     # calculated meta-data
+
+    years_available = models.CharField(max_length=200)
+
     # outlier index
     # match rate
     # possible values
     # etc etc
+
+    objects = IndicatorManager()
     
     class Meta:
         unique_together = (
             ('name', 'key_unit_type', ),
         )
 
-    def weave_name(self, data_filter=None, year=None):
+    def weave_name(self):
+        return self.name
         if not self.short_label:
             basic_name = self.name
         else:
             basic_name = self.short_label
             if self.short_label_prefix:
                 basic_name = u"%s %s" % (self.short_label_prefix, basic_name)
-        if data_filter and year:
-            return u"%s (%s) (%s)" % (basic_name, data_filter.name, year)
-        if data_filter and not year:
-            return u"%s (%s)" % (basic_name, data_filter.name)
-        if not data_filter and year:
-            return u"%s (%s)" % (basic_name, year)
         return basic_name 
-            
-
+    
+    def display_name(self):
+        if self.short_label and self.short_label_prefix:
+            return u"%s %s" % (self.short_label_prefix, self.short_label)
+        if self.short_label:
+            return self.short_label
+        return self.name
+    
     def get_time_types_available(self):
         return self.indicatordata_set.values_list('time_type',flat=True).distinct()
     
@@ -93,6 +107,12 @@ class Indicator(models.Model):
     def get_key_values_available(self, key_unit_type):
         return self.indicatordata_set.values_list('key_value',flat=True).distinct()
 
+    def calculate_metadata(self):
+        self.years_available = ','.join(sorted(map(
+            lambda sy: str(school_year_to_year(sy)), 
+            self.get_time_keys_available()
+        )))
+    
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
         unique_slugify(self, "%s %s" % (self.short_label, self.key_unit_type))
