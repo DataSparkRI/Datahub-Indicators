@@ -255,6 +255,32 @@ class DynamicImporter():
                 excel_data[ig] = map(safe_strip, sheet.row_values(row_num, start_colx=2, end_colx=4))
         return excel_data
     
+    def csv_output(self, results, name):
+        columns = []
+        rows = []
+        data = {}
+        for key, value in results.iteritems():
+            col = key[1]
+            row = key[0]
+            if not col in columns:
+                columns.append(col)
+            if not row in rows:
+                rows.append(row)
+            
+            if not col in data.keys():
+                data[col] = {}
+            data[col][row] = value
+        
+        out_file = open(name + '.csv', 'w')
+        out_file.write(',' + ','.join(map(lambda c: str(c), columns)) + "\n")
+        for row in rows:
+            row_data = [str(row),]
+            
+            for column in columns:    
+                row_data.append(str(data[column][row]))
+            
+            out_file.write(','.join(row_data) + "\n")
+    
     
     def xls_check(self):
         output_file = open('errors.txt', 'w')
@@ -282,7 +308,8 @@ class DynamicImporter():
                     i = Indicator(name = pair[0], short_label = excel_related_info[0]) #etc
                     i.save()
                     results = pair[1]().create()
-                       
+                    self.csv_output(results, pair[0])
+                    
                     for key, value in results.iteritems():
                         i_data = IndicatorData(indicator=i, time_type=key[1].time_type, time_key = key[1].time_key, key_unit_type = key[0].key_unit_type, key_value = key[0].key_value, data_type = 'numeric', numeric = value)
                         i_data.save()
