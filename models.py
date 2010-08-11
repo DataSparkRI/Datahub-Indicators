@@ -1,4 +1,5 @@
 from django.db import models
+from indicators.conversion import school_year_to_year
 
 INDICATOR_TYPES = (
     ('csv', 'csv'),
@@ -79,8 +80,15 @@ class Indicator(models.Model):
     def get_key_unit_types_available(self):
         return self.values_list('key_unit_type',flat=True).distinct()
     
-    def get_time_keys_available(self, time_type):
-        return self.indicatordata_set.values_list('time_key',flat=True).distinct()
+    def get_years_available(self):
+        return map(lambda sy: school_year_to_year(sy), self.get_time_keys_available())
+
+    def get_time_keys_available(self):
+        """ Shortcut, since currently indicators don't span time types """
+        return self.indicatordata_set.filter(time_key__isnull=False).values_list('time_key',flat=True).distinct()
+
+    #def get_time_keys_available(self, time_type):
+    #    return self.indicatordata_set.values_list('time_key',flat=True).distinct()
 
     def get_key_values_available(self, key_unit_type):
         return self.indicatordata_set.values_list('key_value',flat=True).distinct()
