@@ -21,6 +21,17 @@ DATA_TYPE_CHOICES = (
     ('string', 'string'),
 )
 
+class DataSource(models.Model):
+    short = models.CharField(max_length=4)
+    short_name = models.CharField(max_length=12) # to display in lists, etc
+    name = models.CharField(max_length=100)
+    url = models.URLField(verify_exists=False)
+    icon_path = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+    
+    def __unicode__(self):
+        return self.name
+
 class IndicatorManager(models.Manager):
     pass
 
@@ -58,8 +69,8 @@ class Indicator(models.Model):
     # calculated meta-data
 
     years_available = models.CharField(max_length=200)
-    datasource = models.CharField(max_length=200)
-    
+    datasources = models.ManyToManyField(DataSource)
+    #datasource = models.CharField(max_length=100)
     # outlier index
     # match rate
     # possible values

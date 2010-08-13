@@ -1,9 +1,10 @@
 import os
 import csv
 import sys
-from datahub.indicators.models import Indicator, IndicatorData
+
 from django.utils.functional import memoize
 from django.db import transaction
+
 from core.models import *
 from core.indicators import *
 from indicators.models import *
@@ -319,14 +320,22 @@ class DynamicImporter():
         excel_info = self.grab_xls_info()
         output_file = open('errors.txt', 'w')
         
-        for pair in indicator_list():
+        for indicator_name, IndicatorDef in indicator_list():
             try:
-                if pair[0] in excel_info.keys():
-                    excel_related_info = excel_info[pair[0]]
-                    i = Indicator(name = pair[0], short_label = excel_related_info[0]) #etc
+                if indicator_name in excel_info.keys():
+                    indicator_def = IndicatorDef()
+                    excel_related_info = excel_info[indicator_name]
+                    # find data sources
+                    i = Indicator.objects.create(
+                        name=indicator_name, 
+                        short_label=excel_related_info[0]
+                    ) #etc
+                    for data_source in indicator_def.data_sources():
+                        i.datasources.add(DataSource.objects.get(
+                            short=data_source))
                     i.save()
-                    results = pair[1]().create()
-                    self.csv_output(results, pair[0])
+                    results = indicator_def.create()
+                    self.csv_output(results, indicator_name)
                     
                     for key, value in results.iteritems():
                         i_data = IndicatorData(indicator=i, time_type=key[1].time_type, time_key = key[1].time_key, key_unit_type = key[0].key_unit_type, key_value = key[0].key_value, data_type = 'numeric', numeric = value)
@@ -335,4 +344,15 @@ class DynamicImporter():
                 output_file.write(str(sys.exc_info()) + '\n')
                 break 
         output_file.close()
-        
+
+def assign_datasource_to_existing():
+    for indicator_name, IndicatorDef in indicator_list():
+        try:
+            i = Indicator.objects.get(name=indicator_name)
+            i_def = IndicatorDef()
+            for data_source in i_def.data_sources():
+                i.datasources.add(DataSource.objects.get(
+                    short=data_source))
+                i.save()
+        except Indicator.DoesNotExist:
+            pass
