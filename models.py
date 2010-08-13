@@ -119,6 +119,9 @@ class Indicator(models.Model):
         unique_slugify(self, "%s %s" % (self.short_label, self.key_unit_type))
         super(Indicator, self).save(*args, **kwargs)
 
+    def __unicode__(self):
+        return self.name
+
 class IndicatorData(models.Model):
     indicator = models.ForeignKey(Indicator)
     #name = models.CharField(max_length=100,db_index=True)
