@@ -340,6 +340,8 @@ class DynamicImporter():
                     for key, value in results.iteritems():
                         i_data = IndicatorData(indicator=i, time_type=key[1].time_type, time_key = key[1].time_key, key_unit_type = key[0].key_unit_type, key_value = key[0].key_value, data_type = 'numeric', numeric = value)
                         i_data.save()
+                    i.calculate_metadata()
+                    i.save()
             except:
                 output_file.write(str(sys.exc_info()) + '\n')
                 break 
