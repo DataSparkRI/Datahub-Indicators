@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
@@ -111,7 +112,7 @@ class Indicator(models.Model):
 
     def get_time_keys_available(self):
         """ Shortcut, since currently indicators don't span time types """
-        return self.indicatordata_set.filter(time_key__isnull=False).values_list('time_key',flat=True).distinct()
+        return self.indicatordata_set.filter(time_key__isnull=False).exclude(numeric__isnull=True,string__isnull=True).values_list('time_key',flat=True).distinct()
 
     #def get_time_keys_available(self, time_type):
     #    return self.indicatordata_set.values_list('time_key',flat=True).distinct()
