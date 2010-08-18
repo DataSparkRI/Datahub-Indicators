@@ -203,11 +203,11 @@ class DataImporter(object):
         if isinstance(metadata['min'], str) and metadata['min'] == '':
             indicator['min'] = None
         else:
-            indicator['min'] = metadata['min'].strip()
+            indicator['min'] = metadata['min']
         if isinstance(metadata['max'], str) and metadata['max'] == '':
             indicator['max'] = None
         else:
-            indicator['max'] = metadata['max'].strip()
+            indicator['max'] = metadata['max']
         indicator['data_type'] = metadata['data_type'].lower().strip()
         if indicator['data_type'] == 'text':
             indicator['data_type'] = 'string'
