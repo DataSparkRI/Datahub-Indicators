@@ -22,6 +22,14 @@ DATA_TYPE_CHOICES = (
     ('string', 'string'),
 )
 
+UNIT_CHOICES = (
+    ('percent', 'percent'),
+    ('count', 'count'),
+    ('rate', 'rate'),
+    ('other', 'other') ,
+)
+
+
 class DataSource(models.Model):
     short = models.CharField(max_length=4)
     short_name = models.CharField(max_length=12) # to display in lists, etc
@@ -36,70 +44,36 @@ class DataSource(models.Model):
 class IndicatorManager(models.Manager):
     pass
 
-class Indicator(models.Model):
-    name = models.CharField(max_length=100,blank=False)
-    file_name = models.CharField(max_length=100)
-    #key_field_name = models.CharField(max_length=100)
-    #category = models.ForeignKey('Category',null=True,blank=True,related_name='indicators')
-    key_unit_type = models.CharField(max_length=30) # FIXME: should go away
-    
-    #attributecolumns = generic.GenericRelation(AttributeColumn)
+class Indicator(models.Model):    
+    name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
+    file_name = models.CharField(max_length=100, blank=True)
     
     min = models.IntegerField(null=True,blank=True)
     max = models.IntegerField(null=True,blank=True)
-
-    # from Variable
-    slug = models.SlugField(unique=True,db_index=True,null=False)
-    display = models.BooleanField(default=True)
-    dataset_tag = models.CharField(max_length=100)
-    icon = models.CharField(max_length=100,null=True)
-    short_label_prefix = models.CharField(max_length=100)
+    display_name = models.CharField(max_length=100)   
     short_label = models.CharField(max_length=300)
-    hover_label = models.TextField()
-    variable_definition = models.TextField()
-    case_restrictions = models.TextField()
-    category_one = models.CharField(max_length=300,null=True,blank=True)
-    category_two = models.CharField(max_length=300,null=True,blank=True)
-    category_three = models.CharField(max_length=300,null=True,blank=True)
-    category_four = models.CharField(max_length=300,null=True,blank=True)
+    short_definition = models.TextField()
+    long_definition = models.TextField()
+    purpose = models.TextField() # aka rationale/implications    
+    raw_tags = models.TextField() # will be parsed later into actual tag values
+    unit = models.CharField(max_length=10, choices=UNIT_CHOICES, default='other')
+    
     
     type = models.CharField(max_length=9,choices=INDICATOR_TYPES)
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES,blank=False)
-    # data type choices (percent, number, $, etc etc)
     
-    # calculated meta-data
-
+    # calculated meta-data and fields
+    slug = models.SlugField(unique=True,db_index=True,null=False)
     years_available = models.CharField(max_length=200)
     datasources = models.ManyToManyField(DataSource)
-    #datasource = models.CharField(max_length=100)
-    # outlier index
-    # match rate
-    # possible values
-    # etc etc
-
+    
     objects = IndicatorManager()
     
     class Meta:
-        unique_together = (
-            ('name', 'key_unit_type', ),
-        )
-
-    def weave_name(self):
-        return self.name
-        if not self.short_label:
-            basic_name = self.name
-        else:
-            basic_name = self.short_label
-            if self.short_label_prefix:
-                basic_name = u"%s %s" % (self.short_label_prefix, basic_name)
-        return basic_name 
+        pass
     
-    def display_name(self):
-        if self.short_label and self.short_label_prefix:
-            return u"%s %s" % (self.short_label_prefix, self.short_label)
-        if self.short_label:
-            return self.short_label
-        return self.name
+    def weave_name(self):
+        return self.display_name
     
     def get_time_types_available(self):
         return self.indicatordata_set.values_list('time_type',flat=True).distinct()
@@ -131,7 +105,7 @@ class Indicator(models.Model):
     
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
-        unique_slugify(self, "%s %s" % (self.short_label, self.key_unit_type))
+        unique_slugify(self, "%s" % (self.name, ))
         super(Indicator, self).save(*args, **kwargs)
 
     def __unicode__(self):
