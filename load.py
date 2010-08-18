@@ -14,7 +14,7 @@ get_files_cache = {}
 get_metadata_cache = {}
 
 def safe_strip(val):
-    if isinstance(val, str):
+    if isinstance(val, str) or isinstance(val, unicode):
         return val.strip()
     return val
 
