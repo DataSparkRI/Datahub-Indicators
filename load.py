@@ -40,7 +40,7 @@ class DataImporter(object):
                 'display_name',
                 'short_definition',
                 'long_definition',
-                '',
+                'hub_programming',
                 '',
                 'file_name',
                 'key_type',
@@ -82,8 +82,7 @@ class DataImporter(object):
             for row_num in range(1, sheet.nrows):
                 row = map(safe_strip, sheet.row_values(row_num))
                 metadata_dict = dict(zip(attr_map, row))
-                if metadata_dict['file_name']:
-                    metadata.append(metadata_dict)
+                metadata.append(metadata_dict)
             return metadata
         do_get_metadata = memoize(do_get_metadata, get_metadata_cache, 0)
         return do_get_metadata()
@@ -147,10 +146,16 @@ class DataImporter(object):
             indicator_data_kwargs['key_value'] = row[key_field]
         
         indicator_data_kwargs['time_type'] = metadata['time_type']
-        indicator_data_kwargs['time_key'] = metadata['time_key']
+        indicator_data_kwargs['time_key'] = str(metadata['time_key']).split('.')[0]
         return IndicatorData(**indicator_data_kwargs)
 
-
+    def find_file(self, metadata):
+        file_path = None
+        for file, path in self.get_files().iteritems():
+            if file.lower() == metadata['file_name'].lower():
+                file_path = path
+        return file_path
+        
     def insert_data_for_indicator(self, indicator):
         # find all metadata rows for this indicator
         indicator_metadata = []
@@ -159,10 +164,7 @@ class DataImporter(object):
                 indicator_metadata.append(metadata)
         for metadata in indicator_metadata:
             # find the file
-            file_path = None
-            for file, path in self.get_files().iteritems():
-                if file.lower() == metadata['file_name'].lower():
-                    file_path = path
+            file_path = self.find_file(metadata)
             if file_path:
                 reader = csv.DictReader(open(file_path, 'rU'))
                 found_column = False
@@ -200,12 +202,85 @@ class DataImporter(object):
         indicator['file_name'] = metadata['file_name']
         if isinstance(metadata['min'], str) and metadata['min'] == '':
             indicator['min'] = None
+        else:
+            indicator['min'] = metadata['min']
         if isinstance(metadata['max'], str) and metadata['max'] == '':
             indicator['max'] = None
+        else:
+            indicator['max'] = metadata['max']
         indicator['data_type'] = metadata['data_type'].lower()
+        if indicator['data_type'] == 'text':
+            indicator['data_type'] = 'string'
+        indicator['raw_tags'] = metadata['raw_tags']
+        indicator['unit'] = metadata['unit']
+        indicator['purpose'] = metadata['purpose']
         
         return indicator
 
+    def check_metadata(self):
+        counts = {}
+        for metadata in self.get_metadata():
+            idef = self.prep_indicator_definition(metadata)
+            if not metadata['element_name']:
+                if not counts.has_key(idef['name']):
+                    counts[idef['name']] = 1
+                else:
+                    counts[idef['name']] += 1
+
+        for name, count in counts.iteritems():
+            if count > 1:
+                print "%s, %d" % (name, count)
+    
+    def update_metadata(self):
+        from django.db.models import Q
+        for metadata in self.get_metadata():
+            if metadata['hub_programming'].lower() == 'y':
+                indicator_def = self.prep_indicator_definition(metadata)
+                print indicator_def
+                print Indicator.objects.filter(name__in=[indicator_def['name'], indicator_def['name']+'Indicator'])
+                Indicator.objects.filter(name__in=[indicator_def['name'], indicator_def['name']+'Indicator']).update(
+                    **indicator_def
+                )
+        for indicator in Indicator.objects.all():
+            indicator.calculate_metadata()
+            indicator.save()
+    
+    def load_only_static(self):
+        from django.db.utils import IntegrityError
+        Indicator.objects.exclude(file_name='').delete()
+        for metadata in self.get_metadata():
+            if not self.find_file(metadata) or metadata['hub_programming'].lower() == 'y':
+                continue
+            # add indicators            
+            i = None
+            indicator_def = self.prep_indicator_definition(metadata)
+            if metadata['indicator_group'].strip() == '':
+                existing_count = Indicator.objects.filter(
+                    name=indicator_def['name']
+                ).count()
+                if existing_count == 0:
+                    print 'creating %s...' % indicator_def['name']
+                    i = Indicator.objects.create(**indicator_def)
+                    self.insert_data_for_indicator(i)
+                    i.assign_datasources(metadata['datasources'])
+                else:
+                    print "Skipping dupe %s" % indicator_def['name']
+            elif metadata['indicator_group'].strip():
+                # if part of a time group, add the "time group" indicator
+                # if the component years of a time group indicator should be
+                # available, they should be split out in the spreadsheet. 
+                # check for an existing time group indicator
+                existing_count = Indicator.objects.filter(
+                        name=metadata['indicator_group']).count()
+                if existing_count == 0:
+                    print 'creating time group variable %s...' % (
+                        metadata['indicator_group'].strip(), )
+                    i = Indicator.objects.create(**indicator_def)
+                    self.insert_data_for_indicator(i)
+                    i.assign_datasources(metadata['datasources'])
+            if i:
+                i.calculate_metadata()
+                i.save()
 
     def _run_all(self):
         from django.db.utils import IntegrityError

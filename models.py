@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from taggit.managers import TaggableManager
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
@@ -31,7 +32,7 @@ UNIT_CHOICES = (
 
 
 class DataSource(models.Model):
-    short = models.CharField(max_length=4)
+    short = models.CharField(max_length=11)
     short_name = models.CharField(max_length=12) # to display in lists, etc
     name = models.CharField(max_length=100)
     url = models.URLField(verify_exists=False)
@@ -51,7 +52,7 @@ class Indicator(models.Model):
     min = models.IntegerField(null=True,blank=True)
     max = models.IntegerField(null=True,blank=True)
     display_name = models.CharField(max_length=100)   
-    short_label = models.CharField(max_length=300)
+    #short_label = models.CharField(max_length=300)
     short_definition = models.TextField()
     long_definition = models.TextField()
     purpose = models.TextField() # aka rationale/implications    
@@ -64,8 +65,11 @@ class Indicator(models.Model):
     
     # calculated meta-data and fields
     slug = models.SlugField(unique=True,db_index=True,null=False)
-    years_available = models.CharField(max_length=200)
+    years_available_display = models.CharField(max_length=200)
+    years_available = models.CommaSeparatedIntegerField(max_length=200)
     datasources = models.ManyToManyField(DataSource)
+    
+    tags = TaggableManager()     
     
     objects = IndicatorManager()
     
@@ -98,10 +102,58 @@ class Indicator(models.Model):
         return self.datasources.all().order_by('short')
     
     def calculate_metadata(self):
-        self.years_available = ','.join(sorted(map(
-            lambda sy: str(school_year_to_year(sy)), 
-            self.get_time_keys_available()
-        )))
+        years = set()
+        for time_type, time_key in self.indicatordata_set.filter(time_key__isnull=False).exclude(numeric__isnull=True,string__isnull=True).values_list('time_type', 'time_key').distinct():
+            if time_type == 'School Year':
+                years.add(school_year_to_year(time_key))
+            if time_type == 'Calendar Year':
+                years.add(int(time_key.split('.')[0]))
+        self.years_available = list(years)
+        # FIXME: done in a rush, could be better
+        years = sorted(years)
+        ranged_sets = []
+        last_year = None
+        start = None
+        for year in years:
+            if not last_year:
+                start = year
+                last_year = year
+            else:
+                if year == last_year + 1:
+                    last_year = year
+                else:
+                    if last_year == start:
+                        if start:
+                            ranged_sets.append(str(start))
+                    else:
+                        ranged_sets.append("%s-%s" % (start, str(last_year)[2:4]))
+                    start = year
+                    last_year = year
+        
+        if last_year == start:
+            if start:
+                ranged_sets.append(str(start))
+        else:
+            ranged_sets.append("%s-%s" % (start, str(last_year)[2:4]))
+        
+        if len(ranged_sets) > 0:
+            self.years_available_display = ','.join(ranged_sets)
+        else:
+            self.years_available_display = ''
+
+        from taggit.utils import parse_tags
+        print parse_tags(self.raw_tags)
+        self.tags.set(*parse_tags(self.raw_tags))
+    
+    def assign_datasources(self, raw_datasource):
+        """ Takes a comma separated list of sources and assigns them properly """
+        sources = map(lambda s: s.strip(), raw_datasource.split(','))
+        self.datasources.clear()
+        for source in sources:
+            try:
+                self.datasources.add(DataSource.objects.get(short=source))
+            except DataSource.DoesNotExist:
+                pass
     
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
