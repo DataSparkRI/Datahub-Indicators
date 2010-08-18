@@ -273,7 +273,7 @@ class DataImporter(object):
                 # available, they should be split out in the spreadsheet. 
                 # check for an existing time group indicator
                 existing_count = Indicator.objects.filter(
-                        name=metadata['indicator_group']).count()
+                        name=metadata['indicator_group'].strip()).count()
                 if existing_count == 0:
                     print 'creating time group variable %s...' % (
                         metadata['indicator_group'].strip(), )
