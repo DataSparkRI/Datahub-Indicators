@@ -141,8 +141,8 @@ class Indicator(models.Model):
         else:
             self.years_available_display = ''
 
+    def parse_tags(self):
         from taggit.utils import parse_tags
-        print parse_tags(self.raw_tags)
         self.tags.set(*parse_tags(self.raw_tags))
     
     def assign_datasources(self, raw_datasource):
