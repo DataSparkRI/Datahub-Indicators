@@ -193,27 +193,29 @@ class DataImporter(object):
     def prep_indicator_definition(self, metadata):
         indicator = {}
         if metadata['indicator_group'] != '':
-            indicator['name'] = metadata['indicator_group']
+            indicator['name'] = metadata['indicator_group'].strip()
         else:
-            indicator['name'] = metadata['element_name']
-        indicator['display_name'] = metadata['display_name']
-        indicator['short_definition'] = metadata['short_definition']
-        indicator['long_definition'] = metadata['long_definition']
-        indicator['file_name'] = metadata['file_name']
+            indicator['name'] = metadata['element_name'].strip()
+        indicator['display_name'] = metadata['display_name'].strip()
+        indicator['short_definition'] = metadata['short_definition'].strip()
+        indicator['long_definition'] = metadata['long_definition'].strip()
+        indicator['file_name'] = metadata['file_name'].strip()
         if isinstance(metadata['min'], str) and metadata['min'] == '':
             indicator['min'] = None
         else:
-            indicator['min'] = metadata['min']
+            indicator['min'] = metadata['min'].strip()
         if isinstance(metadata['max'], str) and metadata['max'] == '':
             indicator['max'] = None
         else:
-            indicator['max'] = metadata['max']
-        indicator['data_type'] = metadata['data_type'].lower()
+            indicator['max'] = metadata['max'].strip()
+        indicator['data_type'] = metadata['data_type'].lower().strip()
         if indicator['data_type'] == 'text':
             indicator['data_type'] = 'string'
-        indicator['raw_tags'] = metadata['raw_tags']
-        indicator['unit'] = metadata['unit']
-        indicator['purpose'] = metadata['purpose']
+        if indicator['data_type'] == '':
+            indicator['data_type'] = 'numeric'
+        indicator['raw_tags'] = metadata['raw_tags'].strip()
+        indicator['unit'] = metadata['unit'].strip()
+        indicator['purpose'] = metadata['purpose'].strip()
         
         return indicator
 
