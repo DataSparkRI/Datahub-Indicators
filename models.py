@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from taggit.managers import TaggableManager
@@ -173,3 +174,31 @@ class IndicatorData(models.Model):
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES)
     numeric = models.FloatField(null=True)
     string = models.CharField(max_length=100,null=True)
+
+class IndicatorList(models.Model):
+    name = models.CharField(max_length=200,unique=True)
+    slug = models.SlugField(max_length=200,unique=True)
+    public = models.BooleanField(default=False)
+    visible_in_default = models.BooleanField(default=False)
+    owner = models.ForeignKey(User,null=True,blank=True)
+    created = models.DateField(auto_now_add=True)
+    indicators = models.ManyToManyField(Indicator)
+
+    @property
+    def attribute_column_Q(self):
+        return Q(
+            content_type=ContentType.objects.get_for_model(Indicator),
+            object_id__in=self.indicators.values_list('id',flat=True)
+        )
+
+    def save(self, *args, **kwargs):
+        from webportal.unique_slugify import unique_slugify
+        unique_slugify(self, "%s" % (self.name, ))
+        super(IndicatorList, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.name
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('indicators-list_hierarchy', [], {'indicator_list_slug': self.slug})
