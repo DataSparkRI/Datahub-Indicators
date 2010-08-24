@@ -175,6 +175,14 @@ class IndicatorData(models.Model):
     numeric = models.FloatField(null=True)
     string = models.CharField(max_length=100,null=True)
 
+class IndicatorListManager(models.Manager):
+    def get_or_create_default_for_user(self, user):
+        default_list_name = "%s's Indicators" % user.username
+        list, created = self.get_or_create(owner=user, name=default_list_name)
+        user.get_profile().indicator_lists.add(list)
+        return list, created
+
+
 class IndicatorList(models.Model):
     name = models.CharField(max_length=200,unique=True)
     slug = models.SlugField(max_length=200,unique=True)
@@ -183,7 +191,9 @@ class IndicatorList(models.Model):
     owner = models.ForeignKey(User,null=True,blank=True)
     created = models.DateField(auto_now_add=True)
     indicators = models.ManyToManyField(Indicator)
-
+    
+    objects = IndicatorListManager()
+    
     @property
     def attribute_column_Q(self):
         return Q(
