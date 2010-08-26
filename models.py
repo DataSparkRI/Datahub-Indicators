@@ -177,7 +177,7 @@ class IndicatorData(models.Model):
 
 class IndicatorListManager(models.Manager):
     def get_or_create_default_for_user(self, user):
-        default_list_name = "%s's Indicators" % user.username
+        default_list_name = "%s's Indicators" % user.email
         list, created = self.get_or_create(owner=user, name=default_list_name)
         user.get_profile().indicator_lists.add(list)
         return list, created
