@@ -7,15 +7,22 @@ from django.contrib.contenttypes.models import ContentType
 from indicators.models import IndicatorList, Indicator
 
 def default(request):
-    lists = set()
+    lists = []
     if request.user.is_authenticated():
-        lists.update(
-            request.user.get_profile().indicator_lists.all()
-        )
+        for list in request.user.get_profile().indicator_lists.all():
+            lists.append({
+                'name': list.name,
+                'attr_col_Q': list.attribute_column_Q
+            })
+    else:
+        lists.append({
+            'name': 'All Indicators',
+            'attr_col_Q': Q()
+        })
+    
     return render_to_response('indicators/default.xml', 
         {
-            'all_attribute_column_Q': Q(),
-            'user_specific_lists': list(lists)
+            'lists': lists
         }, 
         context_instance=RequestContext(request))
 
