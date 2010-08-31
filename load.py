@@ -41,6 +41,7 @@ class DataImporter(object):
                 'short_definition',
                 'long_definition',
                 'hub_programming',
+                'query_level',
                 '',
                 'file_name',
                 'key_type',
