@@ -14,7 +14,7 @@ get_files_cache = {}
 get_metadata_cache = {}
 
 def safe_strip(val):
-    if isinstance(val, str):
+    if isinstance(val, str) or isinstance(val, unicode):
         return val.strip()
     return val
 
@@ -194,13 +194,13 @@ class DataImporter(object):
     def prep_indicator_definition(self, metadata):
         indicator = {}
         if metadata['indicator_group'] != '':
-            indicator['name'] = metadata['indicator_group']
+            indicator['name'] = metadata['indicator_group'].strip()
         else:
-            indicator['name'] = metadata['element_name']
-        indicator['display_name'] = metadata['display_name']
-        indicator['short_definition'] = metadata['short_definition']
-        indicator['long_definition'] = metadata['long_definition']
-        indicator['file_name'] = metadata['file_name']
+            indicator['name'] = metadata['element_name'].strip()
+        indicator['display_name'] = metadata['display_name'].strip()
+        indicator['short_definition'] = metadata['short_definition'].strip()
+        indicator['long_definition'] = metadata['long_definition'].strip()
+        indicator['file_name'] = metadata['file_name'].strip()
         if isinstance(metadata['min'], str) and metadata['min'] == '':
             indicator['min'] = None
         else:
@@ -209,12 +209,14 @@ class DataImporter(object):
             indicator['max'] = None
         else:
             indicator['max'] = metadata['max']
-        indicator['data_type'] = metadata['data_type'].lower()
+        indicator['data_type'] = metadata['data_type'].lower().strip()
         if indicator['data_type'] == 'text':
             indicator['data_type'] = 'string'
-        indicator['raw_tags'] = metadata['raw_tags']
-        indicator['unit'] = metadata['unit']
-        indicator['purpose'] = metadata['purpose']
+        if indicator['data_type'] == '':
+            indicator['data_type'] = 'numeric'
+        indicator['raw_tags'] = metadata['raw_tags'].strip()
+        indicator['unit'] = metadata['unit'].strip()
+        indicator['purpose'] = metadata['purpose'].strip()
         
         return indicator
 
@@ -272,7 +274,7 @@ class DataImporter(object):
                 # available, they should be split out in the spreadsheet. 
                 # check for an existing time group indicator
                 existing_count = Indicator.objects.filter(
-                        name=metadata['indicator_group']).count()
+                        name=metadata['indicator_group'].strip()).count()
                 if existing_count == 0:
                     print 'creating time group variable %s...' % (
                         metadata['indicator_group'].strip(), )
