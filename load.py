@@ -132,12 +132,27 @@ class DataImporter(object):
         
         value = self.clean_value(value)
         
-        if metadata['data_type'].lower() == 'numeric':
+        resolved_type = None
+        if metadata['data_type'].lower() == 'text':
+            resolved_type = 'text'
+        elif metadata['data_type'].lower() == 'numeric':
+            resolved_type = 'numeric'
+        else:
+            try:
+                float(value)
+                resolved_type = 'numeric'
+            except ValueError:
+                resolved_type = 'text'
+        indicator_data_kwargs['data_type'] = resolved_type
+        
+        if indicator_data_kwargs['data_type'] == 'text':
+            indicator_data_kwargs['string'] = value
+        
+        if indicator_data_kwargs['data_type'] == 'numeric':
             if value == '':
                 value = None
             indicator_data_kwargs['numeric'] = value
-        else:
-            indicator_data_kwargs['string'] = value
+        
         indicator_data_kwargs['key_unit_type'] = metadata['key_type']
         if metadata['key_type'].upper() == 'SCHOOL':
             indicator_data_kwargs['key_value'] = row[key_field].rjust(5,'0')
@@ -153,7 +168,7 @@ class DataImporter(object):
     def find_file(self, metadata):
         file_path = None
         for file, path in self.get_files().iteritems():
-            if file.lower() == metadata['file_name'].lower():
+            if file.lower() == metadata['file_name'].lower() or file.lower() == metadata['file_name'].lower() + '.csv':
                 file_path = path
         return file_path
         
