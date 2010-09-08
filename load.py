@@ -444,10 +444,14 @@ class DataImporter(object):
                 indicator = self.create_indicator(indicator_def)
             seen_indicators.add(indicator)
             
+            print 'Inserting data for %s' % indicator
             if metadata['hub_programming'].lower() == 'y':
                 self.insert_dynamic_data(indicator, metadata)
             else:
                 self.insert_pregen_data(indicator)
+            indicator.calculate_metadata()
+            indicator.assign_datasources(metadata['datasources'])
+            indicator.save()
         
     def _run_all(self):
         from django.db.utils import IntegrityError
