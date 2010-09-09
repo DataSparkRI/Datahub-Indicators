@@ -20,7 +20,6 @@ def safe_strip(val):
         return val.strip()
     return val
 
-
 class DataImporter(object):
     def __init__(self):
         self.directory = os.path.abspath(os.path.join(
@@ -375,6 +374,12 @@ class DataImporter(object):
             indicator.assign_datasources(metadata['datasources'])
             indicator.save()
         
+        print 'Indicators not seen'
+        print '-------------------'
+        for indicator in Indicator.objects.all():
+            if indicator not in seend_indicators:
+                print indicator.name
+        
     def _run_all(self):
         from django.db.utils import IntegrityError
         
@@ -557,4 +562,5 @@ def assign_datasource_to_existing():
                 i.save()
         except Indicator.DoesNotExist:
             pass
+
 

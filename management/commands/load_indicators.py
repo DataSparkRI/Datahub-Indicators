@@ -9,4 +9,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         from indicators.load import DataImporter
-        DataImporter().run_all()
+        DataImporter().new_run_all()

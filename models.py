@@ -152,7 +152,7 @@ class Indicator(models.Model):
         self.datasources.clear()
         for source in sources:
             try:
-                self.datasources.add(DataSource.objects.get(short=source))
+                self.datasources.add(DataSource.objects.get(short__iexact=source))
             except DataSource.DoesNotExist:
                 pass
     
