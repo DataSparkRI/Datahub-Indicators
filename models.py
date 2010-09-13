@@ -84,7 +84,7 @@ class Indicator(models.Model):
         return self.indicatordata_set.values_list('time_type',flat=True).distinct()
     
     def get_key_unit_types_available(self):
-        return self.values_list('key_unit_type',flat=True).distinct()
+        return self.indicatordata_set.values_list('key_unit_type',flat=True).distinct()
     
     def get_years_available(self):
         return map(lambda sy: school_year_to_year(sy), self.get_time_keys_available())

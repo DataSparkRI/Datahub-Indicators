@@ -373,11 +373,11 @@ class DataImporter(object):
             indicator.calculate_metadata()
             indicator.assign_datasources(metadata['datasources'])
             indicator.save()
-        
+
         print 'Indicators not seen'
         print '-------------------'
         for indicator in Indicator.objects.all():
-            if indicator not in seend_indicators:
+            if indicator not in seen_indicators:
                 print indicator.name
         
     def _run_all(self):
