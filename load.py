@@ -354,6 +354,7 @@ class DataImporter(object):
         from django.db.utils import IntegrityError
         IndicatorData.objects.all().delete()
         seen_indicators = set() # to track which Indicators may be gone now
+        created_indicators = set()
         
         import copy
         for metadata in [metadata for metadata in self.get_metadata() if metadata['indicator_group'] != '' and metadata['display_name'] != '']:
@@ -363,6 +364,7 @@ class DataImporter(object):
                 Indicator.objects.filter(id=indicator.id).update(**indicator_def)
             except Indicator.DoesNotExist:
                 indicator = self.create_indicator(indicator_def)
+                created_indicators.add(indicator)
             seen_indicators.add(indicator)
             
             print 'Inserting data for %s' % indicator
@@ -379,6 +381,11 @@ class DataImporter(object):
         for indicator in Indicator.objects.all():
             if indicator not in seen_indicators:
                 print indicator.name
+
+        print '\n\nNewly Created Indicators'
+        print '-------------------'
+        for indicator in created_indicators:
+            print indicator.name
         
     def _run_all(self):
         from django.db.utils import IntegrityError
@@ -563,4 +570,32 @@ def assign_datasource_to_existing():
         except Indicator.DoesNotExist:
             pass
 
+def test_celery_performance(indicator_def):
+    """ Run an indicator three ways:
 
+    1. By itself, without celery
+    2. By itself, through celery
+    3. By itself 4 times
+
+    Calculate the slowdown incurred by each method, with #1 as a reference
+    """
+    import datetime
+    from indicators.tasks import create_indicator_data
+    i = indicator_def()
+    
+    start1 = datetime.datetime.now()
+    i.create()
+    end1 = datetime.datetime.now()
+
+    start2 = datetime.datetime.now()
+    result = create_indicator_data.delay(i)
+    result.wait()
+    end2 = datetime.datetime.now()
+    
+    start3 = datetime.datetime.now()
+    create_indicator_data.delay(i,start_time=start3)
+    create_indicator_data.delay(i,start_time=start3)
+    create_indicator_data.delay(i,start_time=start3)
+    create_indicator_data.delay(i,start_time=start3)
+    print "no celery, single indicator: %d" % (end1 - start1).seconds
+    print "celery, single indicator: %d" % (end2 - start2).seconds
