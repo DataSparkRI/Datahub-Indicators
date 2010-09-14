@@ -38,7 +38,7 @@ def list_hierarchy(request, indicator_list_slug):
 @staff_member_required
 def admin(request):
     return render_to_response('indicators/admin.html',
-        {'indicators': Indicator.objects.all()},
+        {'indicators': Indicator.objects.all().order_by('name')},
         context_instance=RequestContext(request))
 
 @staff_member_required
