@@ -174,6 +174,14 @@ class IndicatorData(models.Model):
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES)
     numeric = models.FloatField(null=True)
     string = models.CharField(max_length=100,null=True)
+    
+    @property
+    def value(self):
+        # FIXME: why is this still inconsistent? check loading process
+        if self.data_type.lower() in ('string', 'text'):
+            return self.string
+        if self.data_type.lower() in ('numeric',):
+            return self.numeric
 
 class IndicatorListManager(models.Manager):
     def get_or_create_default_for_user(self, user):
