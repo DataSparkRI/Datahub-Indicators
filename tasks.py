@@ -16,7 +16,7 @@ def insert_dynamic_data(indicator_id, metadata):
     results = indicator_def().create()
     
     for key, value in results.iteritems():
-        indicator_data = self.new_generate_indicator_data(
+        indicator_data = new_generate_indicator_data(
             Indicator.objects.get(id=indicator_id),
             key[0].key_unit_type,
             key[0].key_value,
@@ -31,5 +31,10 @@ def insert_dynamic_data(indicator_id, metadata):
     indicator.assign_datasources(metadata['datasources'])
     indicator.save()
     print "Inserted %d values for %s" % (count, indicator)
-    time.sleep(10)
 
+@task
+def create_indicator_data(indicator, start_time=None):
+    indicator.create()
+    if start_time:
+        import datetime
+        print '%s finished in %d seconds' % (indicator, (datetime.datetime.now() - start_time).seconds)
