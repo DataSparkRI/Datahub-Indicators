@@ -386,7 +386,7 @@ class DataImporter(object):
         for indicator in created_indicators:
             print indicator.name
     
-    def refresh_metadata(self):
+    def load_metadata(self):
         for metadata in [metadata for metadata in self.get_metadata() if metadata['indicator_group'] != '' and metadata['display_name'] != '']:
             indicator_def = self.prep_indicator_definition(metadata)
             try:
