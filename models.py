@@ -49,21 +49,19 @@ class IndicatorManager(models.Manager):
 class Indicator(models.Model):    
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
     file_name = models.CharField(max_length=100, blank=True)
-    
     min = models.IntegerField(null=True,blank=True)
     max = models.IntegerField(null=True,blank=True)
     display_name = models.CharField(max_length=100)   
-    #short_label = models.CharField(max_length=300)
     short_definition = models.TextField()
     long_definition = models.TextField()
     purpose = models.TextField() # aka rationale/implications    
-    raw_tags = models.TextField() # will be parsed later into actual tag values
     unit = models.CharField(max_length=10, choices=UNIT_CHOICES, default='other')
-    
-    
     type = models.CharField(max_length=9,choices=INDICATOR_TYPES)
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES,blank=False)
     
+    raw_tags = models.TextField() # will be parsed later into actual tag values
+    raw_datasources = models.TextField() # will be parsed into datasource relations
+
     # calculated meta-data and fields
     slug = models.SlugField(unique=True,db_index=True,null=False)
     years_available_display = models.CharField(max_length=200)
@@ -102,7 +100,11 @@ class Indicator(models.Model):
     def sorted_datasources(self):
         return self.datasources.all().order_by('short')
     
-    def calculate_metadata(self):
+    def set_years_available(self):
+        """ Collapse a list of years into a single string that spans year ranges
+        
+        2000,2001,2002,2004 --> 2000-02,2004
+        """
         years = set()
         for time_type, time_key in self.indicatordata_set.filter(time_key__isnull=False).exclude(numeric__isnull=True,string__isnull=True).values_list('time_type', 'time_key').distinct():
             if time_type == 'School Year':
@@ -145,7 +147,11 @@ class Indicator(models.Model):
     def parse_tags(self):
         from taggit.utils import parse_tags
         self.tags.set(*parse_tags(self.raw_tags))
-    
+
+    def update_metadata(self):
+        self.set_years_available()
+        self.parse_tags()
+
     def assign_datasources(self, raw_datasource):
         """ Takes a comma separated list of sources and assigns them properly """
         sources = map(lambda s: s.strip(), raw_datasource.split(','))

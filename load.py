@@ -200,6 +200,7 @@ class DataImporter(object):
         if indicator['data_type'] == '':
             indicator['data_type'] = 'numeric'
         indicator['raw_tags'] = metadata['raw_tags'].strip()
+        indicator['raw_datasources'] = metadata['datasources'].strip()
         indicator['unit'] = metadata['unit'].strip()
         indicator['purpose'] = metadata['purpose'].strip()
         
@@ -372,8 +373,6 @@ class DataImporter(object):
                 insert_dynamic_data.delay(indicator.id, metadata)
             else:
                 self.insert_pregen_data(indicator)
-            indicator.calculate_metadata()
-            indicator.assign_datasources(metadata['datasources'])
             indicator.save()
 
         print 'Indicators not seen'
@@ -386,7 +385,17 @@ class DataImporter(object):
         print '-------------------'
         for indicator in created_indicators:
             print indicator.name
-        
+    
+    def refresh_metadata(self):
+        for metadata in [metadata for metadata in self.get_metadata() if metadata['indicator_group'] != '' and metadata['display_name'] != '']:
+            indicator_def = self.prep_indicator_definition(metadata)
+            try:
+                indicator = Indicator.objects.get(name=indicator_def['name'])
+                Indicator.objects.filter(id=indicator.id).update(**indicator_def)
+            except Indicator.DoesNotExist:
+                print "WARNING: Couldn't find %s, skipping..." % indicator_def['name']
+                continue
+
     def _run_all(self):
         from django.db.utils import IntegrityError
         
