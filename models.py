@@ -151,16 +151,16 @@ class Indicator(models.Model):
     def update_metadata(self):
         self.set_years_available()
         self.parse_tags()
+        self.assign_datasources()
 
-    def assign_datasources(self, raw_datasource):
-        """ Takes a comma separated list of sources and assigns them properly """
-        sources = map(lambda s: s.strip(), raw_datasource.split(','))
+    def assign_datasources(self):
+        sources = map(lambda s: s.strip(), self.raw_datasources.split(','))
         self.datasources.clear()
         for source in sources:
             try:
                 self.datasources.add(DataSource.objects.get(short__iexact=source))
             except DataSource.DoesNotExist:
-                pass
+                print "Couldn't find datasource to match '%s'" % source
     
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
