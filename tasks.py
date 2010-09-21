@@ -27,8 +27,6 @@ def insert_dynamic_data(indicator_id, metadata):
         )
         indicator_data.save(force_insert=True)
         count += 1
-    indicator.calculate_metadata()
-    indicator.assign_datasources(metadata['datasources'])
     indicator.save()
     print "Inserted %d values for %s" % (count, indicator)
 
