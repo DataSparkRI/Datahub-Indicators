@@ -351,13 +351,19 @@ class DataImporter(object):
                 print "WARNING: Couldn't find a column for %s in one or more rows" % indicator.name
         print "Inserted %d values for %s" % (count, indicator)
      
-    def new_run_all(self):
+    def new_run_all(self, indicator_list=None):
         from django.db.utils import IntegrityError
         IndicatorData.objects.all().delete()
         seen_indicators = set() # to track which Indicators may be gone now
         created_indicators = set()
         
         import copy
+        metadata_to_import = [
+            metadata for metadata in self.get_metadata() \
+            if (metadata['indicator_group'] != '' and metadata['display_name'] != '' 
+                and (indicator_list == None or metadata['indicator_group'] in indicator_list)]
+
+
         for metadata in [metadata for metadata in self.get_metadata() if metadata['indicator_group'] != '' and metadata['display_name'] != '']:
             indicator_def = self.prep_indicator_definition(metadata)
             try:

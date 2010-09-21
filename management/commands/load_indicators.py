@@ -5,8 +5,11 @@ import sys
 class Command(BaseCommand):
     option_list = BaseCommand.option_list# + (
     help = ''
-    args = ''
+    args = '[indicator_group_name]'
 
     def handle(self, *args, **options):
         from indicators.load import DataImporter
-        DataImporter().new_run_all()
+        indicator_list = None
+        if len(args) == 1:
+            indicator_list = [args[0]]
+        DataImporter().new_run_all(indicator_list=indicator_list)
