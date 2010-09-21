@@ -353,18 +353,18 @@ class DataImporter(object):
      
     def new_run_all(self, indicator_list=None):
         from django.db.utils import IntegrityError
-        IndicatorData.objects.all().delete()
         seen_indicators = set() # to track which Indicators may be gone now
         created_indicators = set()
         
         import copy
+        print indicator_list
         metadata_to_import = [
             metadata for metadata in self.get_metadata() \
-            if (metadata['indicator_group'] != '' and metadata['display_name'] != '' 
+            if metadata['indicator_group'] != '' and metadata['display_name'] != '' \
                 and (indicator_list == None or metadata['indicator_group'] in indicator_list)]
+        print metadata_to_import
 
-
-        for metadata in [metadata for metadata in self.get_metadata() if metadata['indicator_group'] != '' and metadata['display_name'] != '']:
+        for metadata in metadata_to_import:
             indicator_def = self.prep_indicator_definition(metadata)
             try:
                 indicator = Indicator.objects.get(name=indicator_def['name'])
@@ -373,7 +373,7 @@ class DataImporter(object):
                 indicator = self.create_indicator(indicator_def)
                 created_indicators.add(indicator)
             seen_indicators.add(indicator)
-            
+            IndicatorData.objects.filter(indicator=indicator).delete()
             print 'Inserting data for %s' % indicator
             if metadata['hub_programming'].lower() == 'y':
                 insert_dynamic_data.delay(indicator.id, metadata)
@@ -383,7 +383,11 @@ class DataImporter(object):
 
         print 'Indicators not seen'
         print '-------------------'
-        for indicator in Indicator.objects.all():
+        if indicator_list:
+            all_indicators =  Indicator.objects.filter(name__in=indicator_list)
+        else:
+            all_indicators = Indicator.objects.all()
+        for indicator in all_indicators:
             if indicator not in seen_indicators:
                 print indicator.name
 
