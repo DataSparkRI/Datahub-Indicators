@@ -68,6 +68,8 @@ class Indicator(models.Model):
     years_available = models.CommaSeparatedIntegerField(max_length=200)
     datasources = models.ManyToManyField(DataSource)
     
+    visible_in_all_lists = models.BooleanField(default=False)
+    
     tags = TaggableManager()     
     
     objects = IndicatorManager()
@@ -210,10 +212,12 @@ class IndicatorList(models.Model):
     
     @property
     def attribute_column_Q(self):
-        return Q(
-            content_type=ContentType.objects.get_for_model(Indicator),
-            object_id__in=self.indicators.values_list('id',flat=True)
-        )
+        return Q(content_type=ContentType.objects.get_for_model(Indicator)) & \
+            (
+                Q(object_id__in=self.indicators.values_list('id',flat=True)) | \
+                Q(object_id__in=Indicator.objects.filter(visible_in_all_lists=True))
+            )
+   
 
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
