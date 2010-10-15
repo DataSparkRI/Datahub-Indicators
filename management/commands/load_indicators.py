@@ -12,4 +12,4 @@ class Command(BaseCommand):
         indicator_list = None
         if len(args) == 1:
             indicator_list = [args[0]]
-        DataImporter().new_run_all(indicator_list=indicator_list)
+        DataImporter().run_all(indicator_list=indicator_list,ignore_celery=False)

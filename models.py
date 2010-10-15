@@ -43,6 +43,18 @@ class DataSource(models.Model):
     def __unicode__(self):
         return self.name
 
+class IndicatorPregenPart(models.Model):
+    indicator = models.ForeignKey('Indicator')
+    file_name = models.CharField(max_length=100)
+    column_name = models.CharField(max_length=100)
+    key_type = models.CharField(max_length=100)
+    time_type = models.CharField(max_length=100)
+    time_value = models.CharField(max_length=100)
+    key_column = models.CharField(max_length=100,blank=True)
+    
+    def __unicode__(self):
+        return u"%s in %s" % (self.column_name, self.file_name)
+
 class IndicatorManager(models.Manager):
     pass
 
@@ -54,14 +66,14 @@ class Indicator(models.Model):
     display_name = models.CharField(max_length=100)   
     short_definition = models.TextField()
     long_definition = models.TextField()
-    purpose = models.TextField() # aka rationale/implications    
+    purpose = models.TextField(blank=True) # aka rationale/implications    
     unit = models.CharField(max_length=10, choices=UNIT_CHOICES, default='other')
-    type = models.CharField(max_length=9,choices=INDICATOR_TYPES)
+    #type = models.CharField(max_length=9,choices=INDICATOR_TYPES)
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES,blank=False)
-    
+    notes = models.TextField(blank=True) # internal use misc notes
     raw_tags = models.TextField() # will be parsed later into actual tag values
     raw_datasources = models.TextField() # will be parsed into datasource relations
-
+    
     # calculated meta-data and fields
     slug = models.SlugField(unique=True,db_index=True,null=False)
     years_available_display = models.CharField(max_length=200)
@@ -152,8 +164,8 @@ class Indicator(models.Model):
 
     def update_metadata(self):
         self.set_years_available()
-        self.parse_tags()
-        self.assign_datasources()
+        #self.parse_tags()
+        #self.assign_datasources()
 
     def assign_datasources(self):
         sources = map(lambda s: s.strip(), self.raw_datasources.split(','))

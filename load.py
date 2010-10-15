@@ -27,69 +27,6 @@ class DataImporter(object):
             'data'
         ))
     
-    def open_xsl(self):
-        import xlrd
-        crosswalk_file = "Indicators by Release.xls"
-        return xlrd.open_workbook(os.path.join(self.directory,crosswalk_file))
-    
-    def get_metadata(self):
-        def do_get_metadata():
-            book = self.open_xsl()
-            sheet = book.sheet_by_index(0)
-            attr_map = [
-                'element_name',
-                'indicator_group',
-                'display_name',
-                'short_definition',
-                'long_definition',
-                'hub_programming',
-                'query_level',
-                '',
-                'file_name',
-                'key_type',
-                'min_threshold',
-                'min',
-                'max',
-                '',
-                '',
-                '',
-                'universe',
-                'limitations',
-                '',
-                'range_params',
-                'routine_use',
-                'datasources',
-                'subagency',
-                '',
-                '',
-                '',
-                'time_key',
-                'time_parameters_available',
-                'time_type',
-                'update_frequency',
-                'purpose',
-                '',
-                '',
-                '',
-                '',
-                'raw_tags',
-                '',
-                'data_type',
-                'unit',
-                '',
-                '',
-                ''
-            ]
-        
-            metadata = []
-            for row_num in range(1, sheet.nrows):
-                row = map(safe_strip, sheet.row_values(row_num))
-                metadata_dict = dict(zip(attr_map, row))
-                metadata.append(metadata_dict)
-            return metadata
-        do_get_metadata = memoize(do_get_metadata, get_metadata_cache, 0)
-        return do_get_metadata()
-
     def get_files(self):
         def do_get_files():
             files = {}
@@ -100,217 +37,29 @@ class DataImporter(object):
         do_get_files = memoize(do_get_files, get_files_cache, 0)
         return do_get_files()
 
-    def get_key_field(self, table_name):
-        def do_get_key_field(table_name):
-            print 'in do_get_key_field for %s' % table_name
-            files = self.get_files()
-            for filename, path in files.iteritems():
-                if filename.startswith(table_name) and filename.endswith('csv'):
-                    # assuming the first column is the key field
-                    reader = csv.reader(open(path, 'rU'))
-                    header = reader.next()
-                    return header[0]
-            print "WARNING: Couldn't find a key field for %s" % table_name
-            return ''
+    def get_key_field(self, pregen_part):
+        def do_get_key_field(pregen_part):
+            print 'in do_get_key_field for %s' % pregen_part
+            if pregen_part.key_column:
+                return pregen_part.key_column
+            file_path = self.find_file(pregen_part)
+            reader = csv.reader(open(file_path, 'rU'))
+            header = reader.next()
+            return header[0]
         do_get_key_field = memoize(do_get_key_field, key_field_cache, 1)
-        return do_get_key_field(table_name)
+        return do_get_key_field(pregen_part)
     
-    def generate_indicator_data(self, metadata, row):
-        from webportal.indicators.models import IndicatorData
-        import datahub.indicators.conversion as conversion
-        value = row[metadata['element_name']]
-        key_field = self.get_key_field(metadata['file_name'])
-        indicator_data_kwargs = {
-            'data_type': metadata['data_type'].lower()
-        }
-        
-        value = clean_value(value)
-        
-        resolved_type = None
-        if metadata['data_type'].lower() == 'text':
-            resolved_type = 'text'
-        elif metadata['data_type'].lower() == 'numeric':
-            resolved_type = 'numeric'
-        else:
-            try:
-                float(value)
-                resolved_type = 'numeric'
-            except ValueError:
-                resolved_type = 'text'
-        indicator_data_kwargs['data_type'] = resolved_type
-        
-        if indicator_data_kwargs['data_type'] == 'text':
-            indicator_data_kwargs['string'] = value
-        
-        if indicator_data_kwargs['data_type'] == 'numeric':
-            if value == '':
-                value = None
-            indicator_data_kwargs['numeric'] = value
-        
-        indicator_data_kwargs['key_unit_type'] = metadata['key_type']
-        if metadata['key_type'].upper() == 'SCHOOL':
-            indicator_data_kwargs['key_value'] = row[key_field].rjust(5,'0')
-        elif metadata['key_type'].upper() == 'DISTRICT':
-            indicator_data_kwargs['key_value'] = row[key_field].rjust(2,'0')
-        else:
-            indicator_data_kwargs['key_value'] = row[key_field]
-        
-        indicator_data_kwargs['time_type'] = metadata['time_type']
-        indicator_data_kwargs['time_key'] = str(metadata['time_key']).split('.')[0]
-        return IndicatorData(**indicator_data_kwargs)
-
-    def find_file(self, metadata):
+    def find_file(self, pregen_part):
         file_path = None
         for file, path in self.get_files().iteritems():
-            if file.lower() == metadata['file_name'].lower() or file.lower() == metadata['file_name'].lower() + '.csv':
+            if file.lower() == pregen_part.file_name.lower() or file.lower() == pregen_part.file_name.lower() + '.csv':
                 file_path = path
         return file_path
         
-    @transaction.commit_manually
-    def run_all(self):
-        try:
-            self._run_all()
-            transaction.commit()
-        except:
-            print "Caught an exception:", sys.exc_info()[0]
-            transaction.rollback()
-            raise
-
-    def prep_indicator_definition(self, metadata):
-        indicator = {}
-        if metadata['indicator_group'] != '':
-            indicator['name'] = metadata['indicator_group'].strip()
-        else:
-            indicator['name'] = metadata['element_name'].strip()
-        indicator['display_name'] = metadata['display_name'].strip()
-        indicator['short_definition'] = metadata['short_definition'].strip()
-        indicator['long_definition'] = metadata['long_definition'].strip()
-        indicator['file_name'] = metadata['file_name'].strip()
-        if isinstance(metadata['min'], str) and metadata['min'] == '':
-            indicator['min'] = None
-        else:
-            indicator['min'] = metadata['min']
-        if isinstance(metadata['max'], str) and metadata['max'] == '':
-            indicator['max'] = None
-        else:
-            indicator['max'] = metadata['max']
-        indicator['data_type'] = metadata['data_type'].lower().strip()
-        if indicator['data_type'] == 'text':
-            indicator['data_type'] = 'string'
-        if indicator['data_type'] == '':
-            indicator['data_type'] = 'numeric'
-        indicator['raw_tags'] = metadata['raw_tags'].strip()
-        indicator['raw_datasources'] = metadata['datasources'].strip()
-        indicator['unit'] = metadata['unit'].strip()
-        indicator['purpose'] = metadata['purpose'].strip()
-        
-        return indicator
-
-    def check_metadata(self):
-        counts = {}
-        for metadata in self.get_metadata():
-            idef = self.prep_indicator_definition(metadata)
-            if not metadata['element_name']:
-                if not counts.has_key(idef['name']):
-                    counts[idef['name']] = 1
-                else:
-                    counts[idef['name']] += 1
-
-        for name, count in counts.iteritems():
-            if count > 1:
-                print "%s, %d" % (name, count)
-    
     def update_metadata(self):
-        from django.db.models import Q
-        for metadata in self.get_metadata():
-            if metadata['hub_programming'].lower() == 'y':
-                indicator_def = self.prep_indicator_definition(metadata)
-                print indicator_def
-                print Indicator.objects.filter(name__in=[indicator_def['name'], indicator_def['name']+'Indicator'])
-                Indicator.objects.filter(name__in=[indicator_def['name'], indicator_def['name']+'Indicator']).update(
-                    **indicator_def
-                )
         for indicator in Indicator.objects.all():
             indicator.calculate_metadata()
             indicator.save()
-    
-    def load_only_static(self):
-        from django.db.utils import IntegrityError
-        Indicator.objects.exclude(file_name='').delete()
-        for metadata in self.get_metadata():
-            if not self.find_file(metadata) or metadata['hub_programming'].lower() == 'y':
-                continue
-            # add indicators            
-            i = None
-            indicator_def = self.prep_indicator_definition(metadata)
-            if metadata['indicator_group'].strip() == '':
-                existing_count = Indicator.objects.filter(
-                    name=indicator_def['name']
-                ).count()
-                if existing_count == 0:
-                    print 'creating %s...' % indicator_def['name']
-                    i = Indicator.objects.create(**indicator_def)
-                    self.insert_data_for_indicator(i)
-                    i.assign_datasources(metadata['datasources'])
-                else:
-                    print "Skipping dupe %s" % indicator_def['name']
-            elif metadata['indicator_group'].strip():
-                # if part of a time group, add the "time group" indicator
-                # if the component years of a time group indicator should be
-                # available, they should be split out in the spreadsheet. 
-                # check for an existing time group indicator
-                existing_count = Indicator.objects.filter(
-                        name=metadata['indicator_group'].strip()).count()
-                if existing_count == 0:
-                    print 'creating time group variable %s...' % (
-                        metadata['indicator_group'].strip(), )
-                    i = Indicator.objects.create(**indicator_def)
-                    self.insert_data_for_indicator(i)
-                    i.assign_datasources(metadata['datasources'])
-            if i:
-                i.calculate_metadata()
-                i.save()
-    
-    def grab_xls_info(self):
-        # pull indicators by release and store info from the excel sheet
-        import xlrd
-        ibr_file = "Indicators_by_Release.xls" #xlsx not supported?
-        
-        book = xlrd.open_workbook(os.path.join(self.directory, ibr_file))
-        excel_data = {}
-        for wave in range(0, book.nsheets): #assuming multiple sheets
-            sheet = book.sheet_by_index(wave)
-            for row_num in range(1, sheet.nrows):
-                #stores short and long definitions in a dict with indicator group as the key
-                ig = sheet.cell_value(row_num, 1)
-                ig += 'Indicator'
-                excel_data[ig] = map(safe_strip, sheet.row_values(row_num, start_colx=2, end_colx=4))
-        return excel_data
-
-    def insert_data_for_indicator(self, indicator):
-        # find all metadata rows for this indicator
-        indicator_metadata = []
-        for metadata in self.get_metadata():
-            if metadata['indicator_group'] == indicator.name:
-                indicator_metadata.append(metadata)
-        for metadata in indicator_metadata:
-            # find the file
-            file_path = self.find_file(metadata)
-            if file_path:
-                reader = csv.DictReader(open(file_path, 'rU'))
-                found_column = False
-                for row in reader:
-                    if row.has_key(metadata['element_name']):
-                        found_column = True
-                        indicator_data = self.generate_indicator_data(metadata, row)
-                        indicator_data.indicator = indicator
-                        indicator_data.save(force_insert=True)
-                if not found_column:
-                    print "WARNING: Couldn't find a column for %s in one or more rows" % indicator.name
-                    
-            else:
-                print "WARNING: Couldn't find a file for %s" % indicator.name
-
     
     def create_indicator(self, indicator_def):
         return Indicator.objects.create(**indicator_def)
@@ -318,264 +67,143 @@ class DataImporter(object):
     def insert_pregen_data(self, indicator):
         """ Find all rows for the indicator, and insert each """
         count = 0
-        for metadata in [metadata for metadata in self.get_metadata() if (
-                metadata['hub_programming'].lower != 'y' and metadata['indicator_group'] == indicator.name)]:
-            file_path = self.find_file(metadata)
+        for pregen_part in indicator.indicatorpregenpart_set.all():
+            file_path = self.find_file(pregen_part)
             if not file_path:
                 print "WARNING: Couldn't find a file for %s (searched for %s)" % (
-                    indicator.name, metadata['file_name'])
+                    indicator.name, pregen_part.file_name)
                 return
             
             reader = csv.DictReader(open(file_path, 'rU'))
             found_column = False
-            key_field = self.get_key_field(metadata['file_name'])
+            key_field = self.get_key_field(pregen_part)
             for row in reader:
-                if row.has_key(metadata['element_name']):
+                if row.has_key(pregen_part.column_name):
                     found_column = True
-                    data_type = metadata['data_type']
-                    if data_type == '':
+                    data_type = pregen_part.indicator.data_type
+                    if not data_type or data_type == '':
                         # this will trigger auto-detection
                         data_type = None
-                    indicator_data = new_generate_indicator_data(
+                    print data_type
+                    indicator_data = generate_indicator_data(
                         indicator,
-                        metadata['key_type'],
+                        pregen_part.key_type,
                         row[key_field],
-                        metadata['time_type'],
-                        str(metadata['time_key']).split('.')[0],
-                        row[metadata['element_name']],
-                        data_type=metadata['data_type']
+                        pregen_part.time_type,
+                        str(pregen_part.time_value).split('.')[0],
+                        row[pregen_part.column_name],
+                        data_type=indicator.data_type
                     )
                     indicator_data.save(force_insert=True)
                     count += 1
             if not found_column:
                 print "WARNING: Couldn't find a column for %s in one or more rows" % indicator.name
         print "Inserted %d values for %s" % (count, indicator)
+        return count
      
-    def new_run_all(self, indicator_list=None):
+    def _run_all(self, indicator_list=None, ignore_celery=False):
         from django.db.utils import IntegrityError
-        seen_indicators = set() # to track which Indicators may be gone now
-        created_indicators = set()
         
         import copy
-        print indicator_list
-        metadata_to_import = [
-            metadata for metadata in self.get_metadata() \
-            if metadata['indicator_group'] != '' and metadata['display_name'] != '' \
-                and (indicator_list == None or metadata['indicator_group'] in indicator_list)]
-        print metadata_to_import
-
-        for metadata in metadata_to_import:
-            indicator_def = self.prep_indicator_definition(metadata)
-            try:
-                indicator = Indicator.objects.get(name=indicator_def['name'])
-                Indicator.objects.filter(id=indicator.id).update(**indicator_def)
-            except Indicator.DoesNotExist:
-                indicator = self.create_indicator(indicator_def)
-                created_indicators.add(indicator)
-            seen_indicators.add(indicator)
-            IndicatorData.objects.filter(indicator=indicator).delete()
-            print 'Inserting data for %s' % indicator
-            if metadata['hub_programming'].lower() == 'y':
-                insert_dynamic_data.delay(indicator.id, metadata)
-            else:
-                self.insert_pregen_data(indicator)
-            indicator.save()
-
-        print 'Indicators not seen'
-        print '-------------------'
+        
         if indicator_list:
-            all_indicators =  Indicator.objects.filter(name__in=indicator_list)
+            indicators_to_import = Indicator.objects.filter(name__in=indicator_list)
         else:
-            all_indicators = Indicator.objects.all()
-        for indicator in all_indicators:
-            if indicator not in seen_indicators:
-                print indicator.name
-
-        print '\n\nNewly Created Indicators'
-        print '-------------------'
-        for indicator in created_indicators:
-            print indicator.name
-    
-    def load_metadata(self):
-        for metadata in [metadata for metadata in self.get_metadata() if metadata['indicator_group'] != '' and metadata['display_name'] != '']:
-            indicator_def = self.prep_indicator_definition(metadata)
-            try:
-                indicator = Indicator.objects.get(name=indicator_def['name'])
-                Indicator.objects.filter(id=indicator.id).update(**indicator_def)
-            except Indicator.DoesNotExist:
-                print "WARNING: Couldn't find %s, skipping..." % indicator_def['name']
-                continue
-
-    def _run_all(self):
-        from django.db.utils import IntegrityError
-        
-        #Indicator.objects.all().delete()
-        IndicatorData.objects.all().delete()
-        
-        # import pregen indicators
-        import copy
-        for metadata in self.get_metadata():
-            # add indicators            
-            indicator_def = self.prep_indicator_definition(metadata)
-            if metadata['indicator_group'].strip() == '':
-                existing_count = Indicator.objects.filter(
-                    name=indicator_def['name']
-                ).count()
-                if existing_count == 0:
-                    print 'creating %s...' % indicator_def['name']
-                    i = Indicator.objects.create(**indicator_def)
-                    self.insert_data_for_indicator(i)
-                else:
-                    print "Skipping dupe %s" % indicator_def['name']
-            elif metadata['indicator_group'].strip():
-                # if part of a time group, add the "time group" indicator
-                # if the component years of a time group indicator should be
-                # available, they should be split out in the spreadsheet. 
-                # check for an existing time group indicator
-                existing_count = Indicator.objects.filter(
-                        name=metadata['indicator_group']).count()
-                if existing_count == 0:
-                    print 'creating time group variable %s...' % (
-                        metadata['indicator_group'].strip(), )
-                    i = Indicator.objects.create(**indicator_def)
-                    self.insert_data_for_indicator(i)
-        
-            i.calculate_metadata()
-            i.save()
-        
-        # import dynamic indicators
-        output_file = open('errors.txt', 'w')
-        for indicator_name, IndicatorDef in indicator_list():
-            try:
-                if indicator_name in excel_info.keys():
-                    indicator_def = IndicatorDef()
-                    excel_related_info = excel_info[indicator_name]
-                    # find data sources
-                    i = Indicator.objects.create(
-                        name=indicator_name, 
-                        short_label=excel_related_info[0]
-                    ) #etc
-                    for data_source in indicator_def.data_sources():
-                        i.datasources.add(DataSource.objects.get(
-                            short=data_source))
-                    i.save()
-                    results = indicator_def.create()
-                    self.csv_output(results, indicator_name)
-                    
-                    for key, value in results.iteritems():
-                        i_data = IndicatorData(
-                            indicator=i,
-                            time_type=key[1].time_type,
-                            time_key = key[1].time_key,
-                            key_unit_type = key[0].key_unit_type,
-                            key_value = key[0].key_value,
-                            data_type = 'numeric',
-                            numeric = value
-                        )
-                        i_data.save()
-                    i.calculate_metadata()
-                    i.save()
-            except:
-                output_file.write(str(sys.exc_info()) + '\n')
-                break 
-        output_file.close()
+            indicators_to_import = Indicator.objects.all()
 
 
-class DynamicImporter():
-    def __init__(self):
-        self.directory = os.path.abspath(os.path.join(
-            os.path.dirname(__file__), 
-            'data'
-        ))
-        
-    def grab_xls_info(self):
-        # pull indicators by release and store info from the excel sheet
-        import xlrd
-        ibr_file = "Indicators_by_Release.xls" #xlsx not supported?
-        
-        book = xlrd.open_workbook(os.path.join(self.directory, ibr_file))
-        excel_data = {}
-        for wave in range(0, book.nsheets): #assuming multiple sheets
-            sheet = book.sheet_by_index(wave)
-            for row_num in range(1, sheet.nrows):
-                #stores short and long definitions in a dict with indicator group as the key
-                ig = sheet.cell_value(row_num, 1)
-                ig += 'Indicator'
-                excel_data[ig] = map(safe_strip, sheet.row_values(row_num, start_colx=2, end_colx=4))
-        return excel_data
-    
-    def csv_output(self, results, name):
-        columns = []
-        rows = []
-        data = {}
-        for key, value in results.iteritems():
-            col = key[1]
-            row = key[0]
-            if not col in columns:
-                columns.append(col)
-            if not row in rows:
-                rows.append(row)
+        for indicator in indicators_to_import:
+            IndicatorData.objects.filter(indicator=indicator).delete()
             
-            if not col in data.keys():
-                data[col] = {}
-            data[col][row] = value
-        
-        out_file = open(name + '.csv', 'w')
-        out_file.write(',' + ','.join(map(lambda c: str(c), columns)) + "\n")
-        for row in rows:
-            row_data = [str(row),]
-            
-            for column in columns:    
-                row_data.append(str(data[column][row]))
-            
-            out_file.write(','.join(row_data) + "\n")
-    
-    
-    def xls_check(self):
-        output_file = open('errors.txt', 'w')
-        output_file.write('Indicators not found in excel file: \n')
-        excel_info = self.grab_xls_info()
-        count = 0
-        for pair in indicator_list():
-            if pair[0] in excel_info.keys():
-                continue
+            print 'Inserting pre-gen data for %s...' % indicator
+            if self.insert_pregen_data(indicator) > 0:
+                indicator.update_metadata()
+                indicator.save()
+            print 'Inserting dynamic data for %s...' % indicator
+            if not ignore_celery:
+                insert_dynamic_data.delay(indicator.id)
             else:
-                count += 1
-                output_file.write(str(pair[0]) + '\n')
-        output_file.close()
-        print str(count) + ' indicators not found in the excel file'
-            
-    def run_all(self):
-        Indicator.objects.all().delete()
-        excel_info = self.grab_xls_info()
-        output_file = open('errors.txt', 'w')
-        
-        for indicator_name, IndicatorDef in indicator_list():
-            try:
-                if indicator_name in excel_info.keys():
-                    indicator_def = IndicatorDef()
-                    excel_related_info = excel_info[indicator_name]
-                    # find data sources
-                    i = Indicator.objects.create(
-                        name=indicator_name, 
-                        short_label=excel_related_info[0]
-                    ) #etc
-                    for data_source in indicator_def.data_sources():
-                        i.datasources.add(DataSource.objects.get(
-                            short=data_source))
-                    i.save()
-                    results = indicator_def.create()
-                    self.csv_output(results, indicator_name)
-                    
-                    for key, value in results.iteritems():
-                        i_data = IndicatorData(indicator=i, time_type=key[1].time_type, time_key = key[1].time_key, key_unit_type = key[0].key_unit_type, key_value = key[0].key_value, data_type = 'numeric', numeric = value)
-                        i_data.save()
-                    i.calculate_metadata()
-                    i.save()
-            except:
-                output_file.write(str(sys.exc_info()) + '\n')
-                break 
-        output_file.close()
+                insert_dynamic_data(indicator.id)
+
+    @transaction.commit_manually
+    def run_all(self, *args, **kwargs):
+        try:
+            self._run_all(*args, **kwargs)
+            transaction.commit()
+        except:
+            print "Caught an exception:", sys.exc_info()[0]
+            transaction.rollback()
+            raise
+
+
+def synchronize_pregen_parts_from_IBR(full_path):
+    import xlrd
+    crosswalk_file = "Indicators by Release.xls"
+    IBR = xlrd.open_workbook(full_path)
+    sheet = IBR.sheet_by_index(0)
+    attr_map = [
+        'element_name',
+        'indicator_group',
+        'display_name',
+        'short_definition',
+        'long_definition',
+        'hub_programming',
+        'query_level',
+        '',
+        'file_name',
+        'key_type',
+        'min_threshold',
+        'min',
+        'max',
+        '',
+        '',
+        '',
+        'universe',
+        'limitations',
+        '',
+        'range_params',
+        'routine_use',
+        'datasources',
+        'subagency',
+        '',
+        '',
+        '',
+        'time_key',
+        'time_parameters_available',
+        'time_type',
+        'update_frequency',
+        'purpose',
+        '',
+        '',
+        '',
+        '',
+        'raw_tags',
+        '',
+        'data_type',
+        'unit',
+        '',
+        '',
+        ''
+    ]
+    metadata = []
+    for row_num in range(1, sheet.nrows):
+        row = map(safe_strip, sheet.row_values(row_num))
+        metadata_dict = dict(zip(attr_map, row))
+        metadata.append(metadata_dict)
+    for row in [row for row in metadata if row['element_name'] != '']:
+        try:
+            indicator = Indicator.objects.get(name=row['indicator_group'])
+            IndicatorPregenPart.objects.get_or_create(
+                indicator = indicator,
+                file_name = row['file_name'],
+                column_name = row['element_name'],
+                key_type = row['key_type'],
+                time_type = row['time_type'],
+                time_value = row['time_key']
+            )
+        except Indicator.DoesNotExist:
+            print "Couldn't find %s" % row['indicator_group']
+            continue
 
 def assign_datasource_to_existing():
     for indicator_name, IndicatorDef in indicator_list():

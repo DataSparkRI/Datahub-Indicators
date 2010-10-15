@@ -8,20 +8,20 @@ def clean_value(val):
         val = val.replace("#NULL!", '')
     return val
 
-def get_dynamic_indicator_def(metadata):
+def get_dynamic_indicator_def(indicator):
     for indicator_pair in indicator_list():
-        if indicator_pair[0] == metadata['indicator_group'] + 'Indicator':
+        if indicator_pair[0] == indicator.name + 'Indicator':
             return indicator_pair[1]
 
-def new_generate_indicator_data(indicator, key_type, key_value, 
+def generate_indicator_data(indicator, key_type, key_value, 
         time_type, time_key, value, data_type=None):
     from webportal.indicators.models import IndicatorData
     import datahub.indicators.conversion as conversion
     indicator_data_kwargs = {}
     
     value = clean_value(value)
-    if data_type and data_type.lower() == 'text':
-        data_type = 'text'
+    if data_type and data_type.lower() == 'string':
+        data_type = 'string'
     elif data_type and data_type.lower() == 'numeric':
         data_type = 'numeric'
     else:
@@ -29,10 +29,10 @@ def new_generate_indicator_data(indicator, key_type, key_value,
             float(value)
             data_type = 'numeric'
         except ValueError:
-            data_type = 'text'
+            data_type = 'string'
     indicator_data_kwargs['data_type'] = data_type
     
-    if data_type == 'text':
+    if data_type == 'string':
         indicator_data_kwargs['string'] = value
     
     if data_type == 'numeric':
