@@ -9,7 +9,7 @@ from core.models import *
 from core.indicators import *
 from indicators.models import *
 from indicators.tasks import insert_dynamic_data
-from indicators.util import clean_value, get_dynamic_indicator_def, new_generate_indicator_data
+from indicators.util import clean_value, get_dynamic_indicator_def, generate_indicator_data
 
 key_field_cache = {}
 get_files_cache = {}
