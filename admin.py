@@ -10,8 +10,8 @@ class IndicatorPregenPartInline(admin.TabularInline):
     model = IndicatorPregenPart
 
 class IndicatorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'data_type', 'visible_in_all_lists' )
-    list_editable = ('visible_in_all_lists', )
+    list_display = ('name', 'data_type', 'visible_in_all_lists', 'published', )
+    list_editable = ('visible_in_all_lists', 'published',)
     list_filter = ('data_type', 'visible_in_all_lists', 'datasources')
     search_fields = ('name', 'datasources__short_name', 'short_definition',
         'long_definition', 'notes', )

@@ -73,6 +73,7 @@ class Indicator(models.Model):
     notes = models.TextField(blank=True) # internal use misc notes
     raw_tags = models.TextField() # will be parsed later into actual tag values
     raw_datasources = models.TextField() # will be parsed into datasource relations
+    published = models.BooleanField(default=True)
     
     # calculated meta-data and fields
     slug = models.SlugField(unique=True,db_index=True,null=False)
