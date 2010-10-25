@@ -21,5 +21,4 @@ class IndicatorAdmin(admin.ModelAdmin):
         IndicatorPregenPartInline,
     ]
     
-    
 admin.site.register(Indicator, IndicatorAdmin)
