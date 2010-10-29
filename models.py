@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -243,3 +245,48 @@ class IndicatorList(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('indicators-list_hierarchy', [], {'indicator_list_slug': self.slug})
+
+class AnonymizedEnrollmentManager(models.Manager):
+    def list_available_school_years(self):
+        """
+        Returns a list of possible values for 'school_year'.
+        """
+        # TODO: This should be high on the list of funtions to cache.
+        return self.values_list('school_year', flat=True).distinct()
+
+    def filter_by_year(self, year):
+        """
+        Returns a filtered QuerySet of records enrolled on Oct. 1st of year.
+        """
+        # Ensure we're working with an integer.
+        year = int(year) # TODO: Catch exceptions here.
+
+        start_enroll_date = datetime.date(year, 8, 1)
+        end_enroll_date =   datetime.date(year, 10, 1)
+
+        start_exit_date =   datetime.date(year, 10, 2)
+        end_exit_date =     datetime.date(year + 1, 10, 1)
+        
+        return self.filter(
+            enroll_date__range=(start_enroll_date, end_enroll_date)
+        ).filter(
+            exit_date__range=(start_exit_date, end_exit_date)
+        )
+
+class AnonymizedEnrollment(models.Model):
+    """
+    Provides an anonymized version of enrollment records for the churning chart.
+
+    SASID is scrambled, so they can still be used for churning purposes, but have
+    no relation to the original SASID. Only fields currently necessary for the
+    churning chart are copied.
+    """
+    school_year = models.CharField(max_length=9,db_index=True)
+    SASID = models.IntegerField(db_index=True)
+    distCode = models.CharField(max_length=2,db_index=True)
+    grade = models.CharField(max_length=50,db_index=True)
+    enroll_date = models.DateField(null=True)
+    exit_date = models.DateField(null=True)
+    exit_type = models.CharField(max_length=200)
+    
+    objects = AnonymizedEnrollmentManager()
