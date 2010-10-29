@@ -86,7 +86,6 @@ class Indicator(models.Model):
     
     
     # calculated meta-data and fields
-    
     data_levels_available = models.CharField(max_length=200, blank=True)
     query_level = models.CharField(max_length=100, blank=True)
     suppresion_threshold = models.IntegerField(null=True, blank=True)
