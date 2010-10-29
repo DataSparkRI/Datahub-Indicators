@@ -34,7 +34,7 @@ UNIT_CHOICES = (
 )
 
 
-class DataSource(models.Model):
+class DataSource(models.Model): 
     short = models.CharField(max_length=11)
     short_name = models.CharField(max_length=12) # to display in lists, etc
     name = models.CharField(max_length=100)
