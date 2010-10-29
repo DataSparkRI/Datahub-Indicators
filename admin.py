@@ -21,4 +21,41 @@ class IndicatorAdmin(admin.ModelAdmin):
         IndicatorPregenPartInline,
     ]
     
+    fieldsets = (
+        ('Basic Information', { 'fields':(
+            'name',
+            'file_name',
+            'display_name',  
+            'short_definition',
+            'long_definition',
+            'purpose',
+            'universe',
+            'limitations',
+            'routine_use',
+        )}),
+    
+        ('Numerical/Addtional Information', { 'fields':(
+            'min',
+            'max',
+            'unit',
+            'data_type',
+            'notes',
+        )}),
+        
+        ('Metadata', { 'fields':(
+            'data_levels_available',
+            'query_level',
+            'suppresion_threshold',
+            'datasources',
+        )}),    
+            
+        ('Django Internals', { 'fields':(
+            'published',
+            'visible_in_all_lists',
+            'slug',
+            'tags',
+        )}),
+    )
+    
+    
 admin.site.register(Indicator, IndicatorAdmin)
