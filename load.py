@@ -100,7 +100,7 @@ class DataImporter(object):
                 print "WARNING: Couldn't find a column for %s in one or more rows" % indicator.name
         print "Inserted %d values for %s" % (count, indicator)
         return count
-     
+    
     def _run_all(self, indicator_list=None, ignore_celery=False):
         from django.db.utils import IntegrityError
         
@@ -135,87 +135,6 @@ class DataImporter(object):
             transaction.rollback()
             raise
 
-
-def synchronize_pregen_parts_from_IBR(full_path):
-    import xlrd
-    crosswalk_file = "Indicators by Release.xls"
-    IBR = xlrd.open_workbook(full_path)
-    sheet = IBR.sheet_by_index(0)
-    attr_map = [
-        'element_name',
-        'indicator_group',
-        'display_name',
-        'short_definition',
-        'long_definition',
-        'hub_programming',
-        'query_level',
-        '',
-        'file_name',
-        'key_type',
-        'min_threshold',
-        'min',
-        'max',
-        '',
-        '',
-        '',
-        'universe',
-        'limitations',
-        '',
-        'range_params',
-        'routine_use',
-        'datasources',
-        'subagency',
-        '',
-        '',
-        '',
-        'time_key',
-        'time_parameters_available',
-        'time_type',
-        'update_frequency',
-        'purpose',
-        '',
-        '',
-        '',
-        '',
-        'raw_tags',
-        '',
-        'data_type',
-        'unit',
-        '',
-        '',
-        ''
-    ]
-    metadata = []
-    for row_num in range(1, sheet.nrows):
-        row = map(safe_strip, sheet.row_values(row_num))
-        metadata_dict = dict(zip(attr_map, row))
-        metadata.append(metadata_dict)
-    for row in [row for row in metadata if row['element_name'] != '']:
-        try:
-            indicator = Indicator.objects.get(name=row['indicator_group'])
-            IndicatorPregenPart.objects.get_or_create(
-                indicator = indicator,
-                file_name = row['file_name'],
-                column_name = row['element_name'],
-                key_type = row['key_type'],
-                time_type = row['time_type'],
-                time_value = row['time_key']
-            )
-        except Indicator.DoesNotExist:
-            print "Couldn't find %s" % row['indicator_group']
-            continue
-
-def assign_datasource_to_existing():
-    for indicator_name, IndicatorDef in indicator_list():
-        try:
-            i = Indicator.objects.get(name=indicator_name)
-            i_def = IndicatorDef()
-            for data_source in i_def.data_sources():
-                i.datasources.add(DataSource.objects.get(
-                    short=data_source))
-                i.save()
-        except Indicator.DoesNotExist:
-            pass
 
 def test_celery_performance(indicator_def):
     """ Run an indicator three ways:
