@@ -36,7 +36,7 @@ UNIT_CHOICES = (
 )
 
 
-class DataSource(models.Model):
+class DataSource(models.Model): 
     short = models.CharField(max_length=11)
     short_name = models.CharField(max_length=12) # to display in lists, etc
     name = models.CharField(max_length=100)
@@ -63,30 +63,42 @@ class IndicatorManager(models.Manager):
     pass
 
 class Indicator(models.Model):    
+    
+    #qualitative information
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
     file_name = models.CharField(max_length=100, blank=True)
-    min = models.IntegerField(null=True,blank=True)
-    max = models.IntegerField(null=True,blank=True)
     display_name = models.CharField(max_length=100)   
     short_definition = models.TextField()
     long_definition = models.TextField()
-    purpose = models.TextField(blank=True) # aka rationale/implications    
+    purpose = models.TextField(blank=True) # aka rationale/implications
+    universe = models.CharField(max_length=100, blank=True)
+    limitations = models.TextField(blank=True)
+    routine_use = models.TextField(blank=True)
+    
+    #quantitative information
+    min = models.IntegerField(null=True,blank=True)
+    max = models.IntegerField(null=True,blank=True)
     unit = models.CharField(max_length=10, choices=UNIT_CHOICES, default='other')
     #type = models.CharField(max_length=9,choices=INDICATOR_TYPES)
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES,blank=False)
-    notes = models.TextField(blank=True) # internal use misc notes
     raw_tags = models.TextField() # will be parsed later into actual tag values
     raw_datasources = models.TextField() # will be parsed into datasource relations
-    published = models.BooleanField(default=True)
+    notes = models.TextField(blank=True) # internal use misc notes
+    
+    
     
     # calculated meta-data and fields
-    slug = models.SlugField(unique=True,db_index=True,null=False)
+    data_levels_available = models.CharField(max_length=200, blank=True)
+    query_level = models.CharField(max_length=100, blank=True)
+    suppresion_threshold = models.IntegerField(null=True, blank=True)
     years_available_display = models.CharField(max_length=200)
     years_available = models.CommaSeparatedIntegerField(max_length=200)
     datasources = models.ManyToManyField(DataSource)
     
+    published = models.BooleanField(default=True)
     visible_in_all_lists = models.BooleanField(default=False)
     
+    slug = models.SlugField(unique=True,db_index=True,null=False)
     tags = TaggableManager()     
     
     objects = IndicatorManager()
