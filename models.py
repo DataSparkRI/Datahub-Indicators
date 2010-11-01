@@ -1,4 +1,6 @@
 import datetime
+import random
+from cStringIO import StringIO
 
 from django.db import models
 from django.db.models import Q
@@ -247,6 +249,62 @@ class IndicatorList(models.Model):
         return ('indicators-list_hierarchy', [], {'indicator_list_slug': self.slug})
 
 class AnonymizedEnrollmentManager(models.Manager):
+    def _insert_batch(self, cursor, columns, rows):
+        copy_contents = StringIO('%s\n\.\n' % '\n'.join(rows))
+        cursor.copy_from(
+            copy_contents, 
+            'indicators_anonymizedenrollment', 
+            columns=columns
+        )
+
+    def bulk_insert(self, records):
+        """ Expects a list of dict-based record definitions """
+        from django.db import connections, transaction
+        cursor = connections['portal'].cursor()
+        
+        batch_size = 100000
+        row_sqls = []
+        count = 0
+        columns = ('id', '"school_year"', '"SASID"', '"distCode"', '"grade"', 
+                   '"enroll_date"', '"exit_date"', '"exit_type"')
+        
+        sasid_map = {'max': 0}
+        def _munge_SASID(sasid):
+            """ Use a simple map to munge SASIDs in the anonymized dataset """
+            if not sasid_map.has_key(sasid):
+                max_sasid = sasid_map['max'] + 1
+                sasid_map[sasid] = max_sasid
+                sasid_map['max'] = max_sasid
+            return sasid_map[sasid]
+
+        def _prep(val):
+            """ Turn None into '\N' so null values are inserted """
+            if val is None:
+                return '\N'
+            return str(val)
+        
+        for record in records:
+            count += 1
+            row_sqls.append("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (
+                _prep(count),
+                _prep(record[0]),
+                _prep(_munge_SASID(record[1])),
+                _prep(record[2]),
+                _prep(record[3]),
+                _prep(record[4]),
+                _prep(record[5]),
+                _prep(record[6]),
+            ))
+            
+            if count % batch_size == 0:
+                self._insert_batch(cursor, columns, row_sqls)
+                row_sqls = []
+                print "Inserted batch..."
+        self._insert_batch(cursor, columns, row_sqls)
+        
+        connections['portal'].connection.commit()
+        print "Complete"
+
     def list_available_school_years(self):
         """
         Returns a list of possible values for 'school_year'.
