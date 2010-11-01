@@ -14,7 +14,7 @@ class IndicatorAdmin(admin.ModelAdmin):
     list_editable = ('visible_in_all_lists', 'published',)
     list_filter = ('data_type', 'visible_in_all_lists', 'datasources')
     search_fields = ('name', 'datasources__short_name', 'short_definition',
-        'long_definition', 'notes', )
+        'long_definition', 'notes', 'file_name')
     exclude = ('raw_tags', 'raw_datasources', 'years_available_display', 'years_available', )
     prepopulated_fields = {"slug": ("name",)}
     inlines = [
@@ -25,7 +25,7 @@ class IndicatorAdmin(admin.ModelAdmin):
         ('Basic Information', { 'fields':(
             'name',
             'file_name',
-            'display_name',  
+            'display_name',
             'short_definition',
             'long_definition',
             'purpose',
