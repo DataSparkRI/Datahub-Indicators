@@ -1,0 +1,15 @@
+{% load weave_tags %}<weave>
+  <OpenIndicatorsDataSource name="OpenIndicatorsDataSource">
+    <alertEnabled>true</alertEnabled>
+    <attributeHierarchy encoding="XML">
+    <hierarchy name="DataHub">
+    {% for list in lists %}
+    {% attributecolumn_list_hierarchy list.name list.attr_col_Q %}
+    {% endfor %}
+    </hierarchy>
+    </attributeHierarchy>
+    <url>/OpenIndicatorsDataServices</url>
+  </OpenIndicatorsDataSource>
+  <Colormap name="Global Colormap"/>
+  <ProxyAttributeColumn name="Default Main Probe Column"/>
+</weave>

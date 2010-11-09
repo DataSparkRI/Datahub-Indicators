@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <table>
+        <tr>
+            <th>Indicator</th>
+            <th># Data Values</th>
+            <th>Years</th>
+            <th></th>
+        </tr>
+        {% for indicator in indicators %}
+        <tr>
+            <td>{{ indicator.name }}</td>
+            <td>{{ indicator.indicatordata_set.count }}</td>
+            <td>{{ indicator.years_available_display }}</td>
+            <td><a href="{% url indicators-indicator_csv indicator_slug=indicator.slug %}">Download CSV</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
