@@ -84,7 +84,6 @@ class DataImporter(object):
                     if not data_type or data_type == '':
                         # this will trigger auto-detection
                         data_type = None
-                    print data_type
                     indicator_data = generate_indicator_data(
                         indicator,
                         pregen_part.key_type,
