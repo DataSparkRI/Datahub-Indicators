@@ -9,9 +9,11 @@ def clean_value(val):
     return val
 
 def get_dynamic_indicator_def(indicator):
-    for indicator_pair in indicator_list():
-        if indicator_pair[0] == indicator.name + 'Indicator':
-            return indicator_pair[1]
+    try:
+        return indicator.resolve_indicator_def()
+    except Indicator.MultipleDefinitionsFoundException:
+        print "Found multiple definitions for %s, skipping" % indicator.name
+        return None
 
 def generate_indicator_data(indicator, key_type, key_value, 
         time_type, time_key, value, data_type=None):
