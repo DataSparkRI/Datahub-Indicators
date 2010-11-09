@@ -105,15 +105,12 @@ class DataImporter(object):
         
         import copy
         
-        if indicator_list:
-            indicators_to_import = Indicator.objects.filter(name__in=indicator_list)
-        else:
-            indicators_to_import = Indicator.objects.all()
+        if not indicator_list:
+            indicator_list = Indicator.objects.all()
 
+        IndicatorData.objects.filter(indicator__=indicator_list).delete()
 
-        for indicator in indicators_to_import:
-            IndicatorData.objects.filter(indicator=indicator).delete()
-            
+        for indicator in indicator_list:
             print 'Inserting pre-gen data for %s...' % indicator
             if self.insert_pregen_data(indicator) > 0:
                 indicator.update_metadata()
