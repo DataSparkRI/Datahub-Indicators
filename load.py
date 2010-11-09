@@ -108,7 +108,7 @@ class DataImporter(object):
         if not indicator_list:
             indicator_list = Indicator.objects.all()
 
-        IndicatorData.objects.filter(indicator__=indicator_list).delete()
+        IndicatorData.objects.filter(indicator__in=indicator_list).delete()
 
         for indicator in indicator_list:
             print 'Inserting pre-gen data for %s...' % indicator
