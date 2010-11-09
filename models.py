@@ -63,7 +63,6 @@ class IndicatorManager(models.Manager):
     pass
 
 class Indicator(models.Model):    
-    
     #qualitative information
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
     file_name = models.CharField(max_length=100, blank=True)
@@ -193,6 +192,36 @@ class Indicator(models.Model):
             except DataSource.DoesNotExist:
                 print "Couldn't find datasource to match '%s'" % source
     
+    class MultipleDefinitionsFoundException(Exception): pass
+
+    def resolve_indicator_def(self):
+        """ Resolve the Indicator definition based on name.
+        
+        Translations to class names for matching:
+
+            - Some Indicator classes end with "Indicator"
+            - # and % might be in object names, but can't appear in class
+              names. Translate to 'Num' and 'Pct'
+        """
+        from core.indicators import indicator_list
+        translated_name = self.name
+        translated_name = translated_name.replace('#', 'Num')
+        translated_name = translated_name.replace('%', 'Pct')
+        translated_name = translated_name.replace(' ', '')
+        
+        resolved_def = None
+        for indicator_def in indicator_list():
+            if (indicator_def.__name__ == self.name or 
+                    indicator_def.__name__ == translated_name + 'Indicator'):
+                if resolved_def:
+                    print "Found multiple definitions for %s:" % self.name
+                    print "\t%s" % resolved_def
+                    print "\t%s\n\n" % indicator_def
+                    raise Indicator.MultipleDefinitionsFoundException("Found multiple definitions for this Indicator")
+                resolved_def = indicator_def
+        
+        return resolved_def
+
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
         unique_slugify(self, "%s" % (self.name, ))

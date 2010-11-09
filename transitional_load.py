@@ -224,6 +224,7 @@ class DataImporter(object):
             raise
 
     def synchronize_pregen_parts_from_IBR(self):
+        IndicatorPregenPart.objects.all().delete()
         for row in [row for row in self.get_metadata() if row['element_name'] != '']:
             try:
                 indicator = Indicator.objects.get(name=row['indicator_group'])
