@@ -84,7 +84,6 @@ class DataImporter(object):
                     if not data_type or data_type == '':
                         # this will trigger auto-detection
                         data_type = None
-                    print data_type
                     indicator_data = generate_indicator_data(
                         indicator,
                         pregen_part.key_type,
@@ -106,15 +105,12 @@ class DataImporter(object):
         
         import copy
         
-        if indicator_list:
-            indicators_to_import = Indicator.objects.filter(name__in=indicator_list)
-        else:
-            indicators_to_import = Indicator.objects.all()
+        if not indicator_list:
+            indicator_list = Indicator.objects.all()
 
+        IndicatorData.objects.filter(indicator__in=indicator_list).delete()
 
-        for indicator in indicators_to_import:
-            IndicatorData.objects.filter(indicator=indicator).delete()
-            
+        for indicator in indicator_list:
             print 'Inserting pre-gen data for %s...' % indicator
             if self.insert_pregen_data(indicator) > 0:
                 indicator.update_metadata()
@@ -134,7 +130,28 @@ class DataImporter(object):
             print "Caught an exception:", sys.exc_info()[0]
             transaction.rollback()
             raise
+    
+    @transaction.commit_manually
+    def run_pregen_only(self, *args, **kwargs):
+        try:
+            kwargs['indicator_list'] = Indicator.objects.exclude(file_name='')
+            self._run_all(*args, **kwargs)
+            transaction.commit()
+        except:
+            print "Caught an exception:", sys.exc_info()[0]
+            transaction.rollback()
+            raise
 
+    @transaction.commit_manually
+    def run_dynamic_only(self, *args, **kwargs):
+        try:
+            kwargs['indicator_list'] = Indicator.objects.filter(file_name='')
+            self._run_all(*args, **kwargs)
+            transaction.commit()
+        except:
+            print "Caught an exception:", sys.exc_info()[0]
+            transaction.rollback()
+            raise
 
 def test_celery_performance(indicator_def):
     """ Run an indicator three ways:

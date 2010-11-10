@@ -8,11 +8,14 @@ from indicators.models import Indicator
 def insert_dynamic_data(indicator_id):
     """ Run the indicator, and create IndicatorData objects for the results """
     indicator = Indicator.objects.get(id=indicator_id)
+
+    print "Start %s" % indicator
+
     count = 0
     indicator_def = get_dynamic_indicator_def(indicator)
     if not indicator_def:
         return
-    results = indicator_def().create()
+    results = indicator_def(debug=True).create()
     
     for key, value in results.iteritems():
         indicator_data = generate_indicator_data(

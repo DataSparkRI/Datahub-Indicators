@@ -9,7 +9,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         from indicators.load import DataImporter
+        from indicators.models import Indicator
         indicator_list = None
         if len(args) == 1:
-            indicator_list = [args[0]]
+            indicator_list = Indicator.objects.filter(name=args[0])
         DataImporter().run_all(indicator_list=indicator_list,ignore_celery=False)

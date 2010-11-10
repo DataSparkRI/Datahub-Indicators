@@ -134,10 +134,6 @@ class DataImporter(object):
         else:
             indicator['max'] = metadata['max']
         indicator['data_type'] = metadata['data_type'].lower().strip()
-        if indicator['data_type'] == 'text':
-            indicator['data_type'] = 'string'
-        if indicator['data_type'] == '':
-            indicator['data_type'] = 'numeric'
         indicator['raw_tags'] = metadata['raw_tags'].strip()
         indicator['raw_datasources'] = metadata['datasources'].strip()
         indicator['unit'] = metadata['unit'].strip()
