@@ -140,7 +140,18 @@ class DataImporter(object):
         except:
             print "Caught an exception:", sys.exc_info()[0]
             transaction.rollback()
-            raise        
+            raise
+
+    @transaction.commit_manually
+    def run_dynamic_only(self, *args, **kwargs):
+        try:
+            kwargs['indicator_list'] = Indicator.objects.filter(file_name='')
+            self._run_all(*args, **kwargs)
+            transaction.commit()
+        except:
+            print "Caught an exception:", sys.exc_info()[0]
+            transaction.rollback()
+            raise
 
 def test_celery_performance(indicator_def):
     """ Run an indicator three ways:
