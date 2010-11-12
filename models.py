@@ -204,16 +204,21 @@ class Indicator(models.Model):
               names. Translate to 'Num' and 'Pct'
         """
         from core.indicators import indicator_list
+
+        possible_names = []
+
         translated_name = self.name
         translated_name = translated_name.replace('#', 'Num')
         translated_name = translated_name.replace('%', 'Pct')
         translated_name = translated_name.replace(' ', '')
         translated_name = translated_name.upper()
 
+        possible_names.append(translated_name)
+        possible_names.append(translated_name + 'INDICATOR')
+        
         resolved_def = None
         for indicator_def in indicator_list():
-            if (indicator_def.__name__.upper() == translated_name or 
-                    indicator_def.__name__ == translated_name + 'INDICATOR'):
+            if indicator_def.__name__.upper() in possible_names:
                 if resolved_def:
                     print "Found multiple definitions for %s:" % self.name
                     print "\t%s" % resolved_def
