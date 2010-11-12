@@ -208,11 +208,12 @@ class Indicator(models.Model):
         translated_name = translated_name.replace('#', 'Num')
         translated_name = translated_name.replace('%', 'Pct')
         translated_name = translated_name.replace(' ', '')
-        
+        translated_name = translated_name.upper()
+
         resolved_def = None
         for indicator_def in indicator_list():
-            if (indicator_def.__name__ == self.name or 
-                    indicator_def.__name__ == translated_name + 'Indicator'):
+            if (indicator_def.__name__.upper() == translated_name or 
+                    indicator_def.__name__ == translated_name + 'INDICATOR'):
                 if resolved_def:
                     print "Found multiple definitions for %s:" % self.name
                     print "\t%s" % resolved_def
