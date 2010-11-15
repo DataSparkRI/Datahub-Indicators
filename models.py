@@ -98,7 +98,10 @@ class Indicator(models.Model):
     visible_in_all_lists = models.BooleanField(default=False)
     
     slug = models.SlugField(unique=True,db_index=True,null=False)
-    tags = TaggableManager()     
+    tags = TaggableManager()
+
+    load_pending = models.BooleanField(default=False)
+    last_load_completed = models.DateTimeField(null=True,blank=True)
     
     objects = IndicatorManager()
     
@@ -182,6 +185,13 @@ class Indicator(models.Model):
         self.set_years_available()
         #self.parse_tags()
         #self.assign_datasources()
+    
+    def mark_load_complete(self):
+        self.load_pending = False
+        self.last_load_completed = datetime.datetime.now()
+
+    def mark_load_pending(self):
+        self.load_pending = True
 
     def assign_datasources(self):
         sources = map(lambda s: s.strip(), self.raw_datasources.split(','))

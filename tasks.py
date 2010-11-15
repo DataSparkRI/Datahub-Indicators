@@ -1,5 +1,7 @@
-from celery.decorators import task
+import datetime
 import time
+
+from celery.decorators import task
 
 from indicators.util import get_dynamic_indicator_def, generate_indicator_data
 from indicators.models import Indicator
@@ -30,6 +32,7 @@ def insert_dynamic_data(indicator_id):
         indicator_data.save(force_insert=True)
         count += 1
     indicator.update_metadata()
+    indicator.mark_load_complete()
     indicator.save()
     print "Inserted %d values for %s" % (count, indicator)
 

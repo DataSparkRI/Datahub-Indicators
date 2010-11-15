@@ -1,18 +1,22 @@
 from django.contrib import admin
 from indicators.models import DataSource, IndicatorList, Indicator, IndicatorPregenPart
-
+from indicators.load import DataImporter
 
 admin.site.register(DataSource)
 admin.site.register(IndicatorList)
+
+def load_indicators(modeladmin, request, queryset):
+    DataImporter().run_all(indicator_list=queryset)
+load_indicators.short_description = "Load data for the selected Indicators"
 
 class IndicatorPregenPartInline(admin.TabularInline):
     extra = 10
     model = IndicatorPregenPart
 
 class IndicatorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'data_type', 'visible_in_all_lists', 'published', )
+    list_display = ('name', 'data_type', 'visible_in_all_lists', 'published', 'load_pending', 'last_load_completed')
     list_editable = ('visible_in_all_lists', 'published',)
-    list_filter = ('data_type', 'visible_in_all_lists', 'datasources')
+    list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 'load_pending')
     search_fields = ('name', 'datasources__short_name', 'short_definition',
         'long_definition', 'notes', 'file_name')
     exclude = ('raw_tags', 'raw_datasources', 'years_available_display', 'years_available', )
@@ -20,6 +24,7 @@ class IndicatorAdmin(admin.ModelAdmin):
     inlines = [
         IndicatorPregenPartInline,
     ]
+    actions = [load_indicators]
     
     fieldsets = (
         ('Basic Information', { 'fields':(
@@ -54,6 +59,8 @@ class IndicatorAdmin(admin.ModelAdmin):
             'visible_in_all_lists',
             'slug',
             'tags',
+            'load_pending',
+            'last_load_completed'
         )}),
     )
     

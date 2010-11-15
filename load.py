@@ -109,10 +109,14 @@ class DataImporter(object):
             indicator_list = Indicator.objects.all()
 
         IndicatorData.objects.filter(indicator__in=indicator_list).delete()
-
+        for i in indicator_list:
+            i.mark_load_pending()
+            i.save()
+        
         for indicator in indicator_list:
             print 'Inserting pre-gen data for %s...' % indicator
             if self.insert_pregen_data(indicator) > 0:
+                indicator.mark_load_complete()
                 indicator.update_metadata()
                 indicator.save()
             print 'Inserting dynamic data for %s...' % indicator
