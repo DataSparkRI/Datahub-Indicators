@@ -278,7 +278,6 @@ class IndicatorList(models.Model):
     slug = models.SlugField(max_length=200,unique=True)
     public = models.BooleanField(default=False)
     visible_in_default = models.BooleanField(default=False)
-    show_in_weave = models.BooleanField(default=False)
     owner = models.ForeignKey(User,null=True,blank=True)
     created = models.DateField(auto_now_add=True)
     indicators = models.ManyToManyField(Indicator)

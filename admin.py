@@ -10,6 +10,14 @@ def load_indicators(modeladmin, request, queryset):
     DataImporter().run_all(indicator_list=queryset)
 load_indicators.short_description = "Load data for the selected Indicators"
 
+def publish(modeladmin, request, queryset):
+    queryset.update(published=True)
+publish.short_description = "Publish selected indicators"
+
+def unpublish(modeladmin, request, queryset):
+    queryset.update(published=False)
+unpublish.short_description = "Unpublish selected indicators"
+
 class IndicatorPregenPartInline(admin.TabularInline):
     extra = 10
     model = IndicatorPregenPart
@@ -25,11 +33,12 @@ class IndicatorAdmin(admin.ModelAdmin):
     inlines = [
         IndicatorPregenPartInline,
     ]
+
     try:
         from indicators.load import DataImporter
-        actions = [load_indicators]
+        actions = [load_indicators, publish, unpublish]
     except ImportError:
-        actions = []
+        actions = [publish, unpublish]
     
     fieldsets = (
         ('Basic Information', { 'fields':(
