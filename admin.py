@@ -1,11 +1,12 @@
 from django.contrib import admin
 from indicators.models import DataSource, IndicatorList, Indicator, IndicatorPregenPart
-from indicators.load import DataImporter
+
 
 admin.site.register(DataSource)
 admin.site.register(IndicatorList)
 
 def load_indicators(modeladmin, request, queryset):
+    from indicators.load import DataImporter
     DataImporter().run_all(indicator_list=queryset)
 load_indicators.short_description = "Load data for the selected Indicators"
 
@@ -24,7 +25,11 @@ class IndicatorAdmin(admin.ModelAdmin):
     inlines = [
         IndicatorPregenPartInline,
     ]
-    actions = [load_indicators]
+    try:
+        from indicators.load import DataImporter
+        actions = [load_indicators]
+    except ImportError:
+        actions = []
     
     fieldsets = (
         ('Basic Information', { 'fields':(
