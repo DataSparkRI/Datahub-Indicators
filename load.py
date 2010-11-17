@@ -224,6 +224,9 @@ class WeaveExporter(object):
         return input
 
     def run(self, indicator_list_qs=Indicator.objects.all()):
+        from django.conf import settings
+        assert hasattr(settings, 'WEAVE')
+        connection = settings.WEAVE.get('CONNECTION', '')
         indicator_ctype = ContentType.objects.get(app_label='indicators', model='indicator')
                 
         # create AttributeColumns
@@ -259,6 +262,7 @@ class WeaveExporter(object):
                     attribute_column, created = AttributeColumn.objects.get_or_create(
                         content_type=indicator_ctype,
                         object_id=indicator.id,
+                        connection=connection,
                         dataTable=indicator_data['key_unit_type'],
                         name=indicator.name,
                         display_name=indicator.weave_name(),
