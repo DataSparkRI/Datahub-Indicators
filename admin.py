@@ -64,7 +64,8 @@ class IndicatorAdmin(admin.ModelAdmin):
         ('Metadata', { 'fields':(
             'data_levels_available',
             'query_level',
-            'suppresion_threshold',
+            'suppression_numerator',
+            'suppression_denominator',
             'datasources',
         )}),    
             
