@@ -89,7 +89,8 @@ class Indicator(models.Model):
     # calculated meta-data and fields
     data_levels_available = models.CharField(max_length=200, blank=True)
     query_level = models.CharField(max_length=100, blank=True)
-    suppresion_threshold = models.IntegerField(null=True, blank=True)
+    suppression_numerator = models.IntegerField(null=True, blank=True)
+    suppression_denominator = models.IntegerField(null=True, blank=True)
     years_available_display = models.CharField(max_length=200)
     years_available = models.CommaSeparatedIntegerField(max_length=200)
     datasources = models.ManyToManyField(DataSource)
