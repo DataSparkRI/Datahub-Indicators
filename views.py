@@ -7,6 +7,15 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from indicators.models import IndicatorList, Indicator
 
+def weave_index(request):
+    "Weave landing page"
+    defaults_path = reverse('indicators-default_hierarchy')
+    client_config = get_object_or_404(ClientConfiguration,name="Default")
+    if not request.GET.has_key('defaults'):
+        return HttpResponseRedirect("%s?defaults=%s" % (request.path, reverse('indicators-default_hierarchy')))
+    return render_to_response('weave/index.html', { }, 
+        context_instance=RequestContext(request))
+
 def default(request):
     lists = []
     if request.user.is_authenticated():
