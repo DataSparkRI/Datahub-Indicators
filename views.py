@@ -4,8 +4,10 @@ from django.template import RequestContext
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from indicators.models import IndicatorList, Indicator
+from weave.models import ClientConfiguration, DataFilter
 
 def weave_index(request):
     "Weave landing page"
