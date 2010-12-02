@@ -132,7 +132,9 @@ class Indicator(models.Model):
         return self.indicatordata_set.values_list('key_value',flat=True).distinct()
 
     def sorted_datasources(self):
-        return self.datasources.all().order_by('short')
+        if not hasattr(self, '_sorted_datasources'):
+            self._sorted_datasources = self.datasources.all().order_by('short')
+        return self._sorted_datasources
     
     def set_years_available(self):
         """ Collapse a list of years into a single string that spans year ranges
