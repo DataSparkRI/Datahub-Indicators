@@ -197,7 +197,8 @@ from django.db import IntegrityError
 from django.contrib.contenttypes.models import ContentType
 
 from indicators.models import Indicator, IndicatorData
-from weave.models import AttributeColumn, DataFilter
+from weave_addons.models import DataFilter
+from weave.models import AttributeColumn
 
 class WeaveExporter(object):
     def time_translations(self, input):
@@ -264,7 +265,7 @@ class WeaveExporter(object):
                         object_id=indicator.id,
                         connection=connection,
                         dataTable=indicator_data['key_unit_type'],
-                        name=indicator.name,
+                        name=indicator.weave_name(),
                         display_name=indicator.weave_name(),
                         keyType=indicator_data['key_unit_type'],
                         year=self.time_translations(time) or '',
@@ -279,26 +280,24 @@ class WeaveExporter(object):
                         indicator.key_unit_type,
                         indicator_data['time_key']
                     )
-        """    
-        for data_table in DataTable.objects.all():
-            key_unit_type = KeyUnitType.objects.get(name=data_table.key_unit_type)
-            for data_filter in DataFilter.objects.filter(key_unit_type=key_unit_type):
-                filtered_data_table, created = DataTable.objects.get_or_create_for_filter(data_filter)
-                for attribute_column in data_table.attributecolumn_set.all():
-                    attribute_column, created = AttributeColumn.objects.get_or_create(
-                        content_type=attribute_column.content_type,
-                        object_id=attribute_column.object_id,
-                        data_table=filtered_data_table,
-                        name=attribute_column.name,
-                        display_name=attribute_column.display_name,
-                        category=None,
-                        key_unit_type=attribute_column.key_unit_type,
-                        year=attribute_column.year,
-                        data_type=attribute_column.data_type,
-                        data_with_keys_query=data_filter.modify_query(attribute_column.data_with_keys_query),
-                        min=attribute_column.min,
-                        max=attribute_column.max
-                    )
-                         
-        """
 
+        for data_filter in DataFilter.objects.all():
+            keyType = data_filter.key_unit_type
+            attribute_columns = AttributeColumn.objects.filter(keyType=keyType)
+            table_name = data_filter.get_data_table_name()
+
+            for ac in attribute_columns:
+                AttributeColumn.objects.get_or_create(
+                    content_type=ac.content_type,
+                    object_id=ac.object_id,
+                    connection=ac.connection,
+                    dataTable=table_name,
+                    name=ac.name,
+                    display_name=ac.display_name,
+                    keyType=ac.keyType,
+                    year=ac.year,
+                    dataType=ac.dataType,
+                    sqlQuery=data_filter.modify_query(ac.sqlQuery),
+                    min=ac.min,
+                    max=ac.max
+                )
