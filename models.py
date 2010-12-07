@@ -277,10 +277,16 @@ class IndicatorListManager(models.Manager):
         list, created = self.get_or_create(owner=user, name=default_list_name)
         user.get_profile().indicator_lists.add(list)
         return list, created
+    
+    def create_for_user(self, user, name):
+        return self.create(
+            owner=user,
+            name=name
+        )
 
 
 class IndicatorList(models.Model):
-    name = models.CharField(max_length=200,unique=True)
+    name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200,unique=True)
     public = models.BooleanField(default=False)
     visible_in_default = models.BooleanField(default=False)
@@ -305,7 +311,7 @@ class IndicatorList(models.Model):
 
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
-        unique_slugify(self, "%s" % (self.name, ))
+        unique_slugify(self, "%s %s" % (self.owner.username, self.name, ))
         super(IndicatorList, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -314,6 +320,11 @@ class IndicatorList(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('indicators-list_hierarchy', [], {'indicator_list_slug': self.slug})
+
+    class Meta:
+        unique_together = (
+            ('name', 'owner', ),
+        )
 
 class AnonymizedEnrollmentManager(models.Manager):
     def _insert_batch(self, cursor, columns, rows):
