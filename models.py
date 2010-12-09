@@ -268,21 +268,31 @@ class IndicatorData(models.Model):
         if self.data_type.lower() in ('numeric',):
             return self.numeric
 
+def _default_ilist_name(user):
+    return "%s's Indicators" % user.email
+
 class IndicatorListManager(models.Manager):
     def get_or_create_default_for_user(self, user):
-        default_list_name = "%s's Indicators" % user.email
+        default_list_name = _default_ilist_name(user)
         list, created = self.get_or_create(owner=user, name=default_list_name)
         user.get_profile().indicator_lists.add(list)
         return list, created
+    
+    def create_for_user(self, user, name):
+        return self.create(
+            owner=user,
+            name=name
+        )
 
 
 class IndicatorList(models.Model):
-    name = models.CharField(max_length=200,unique=True)
+    name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200,unique=True)
     public = models.BooleanField(default=False)
     visible_in_default = models.BooleanField(default=False)
     owner = models.ForeignKey(User,null=True,blank=True)
     created = models.DateField(auto_now_add=True)
+    visible_in_weave = models.BooleanField(default=True)
     indicators = models.ManyToManyField(Indicator)
     
     objects = IndicatorListManager()
@@ -295,10 +305,13 @@ class IndicatorList(models.Model):
                 Q(object_id__in=Indicator.objects.filter(visible_in_all_lists=True))
             )
    
+    @property
+    def can_be_deleted(self):
+        return self.name != _default_ilist_name(self.owner)
 
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
-        unique_slugify(self, "%s" % (self.name, ))
+        unique_slugify(self, "%s %s" % (self.owner.username, self.name, ))
         super(IndicatorList, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -307,6 +320,11 @@ class IndicatorList(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('indicators-list_hierarchy', [], {'indicator_list_slug': self.slug})
+
+    class Meta:
+        unique_together = (
+            ('name', 'owner', ),
+        )
 
 class AnonymizedEnrollmentManager(models.Manager):
     def _insert_batch(self, cursor, columns, rows):

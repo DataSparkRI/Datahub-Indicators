@@ -12,7 +12,7 @@ from weave.models import ClientConfiguration
 def default(request):
     lists = []
     if request.user.is_authenticated():
-        for list in request.user.get_profile().indicator_lists.all():
+        for list in request.user.indicatorlist_set.filter(visible_in_weave=True):
             lists.append({
                 'name': list.name,
                 'attr_col_Q': list.attribute_column_Q
