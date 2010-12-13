@@ -275,7 +275,6 @@ class IndicatorListManager(models.Manager):
     def get_or_create_default_for_user(self, user):
         default_list_name = _default_ilist_name(user)
         list, created = self.get_or_create(owner=user, name=default_list_name)
-        user.get_profile().indicator_lists.add(list)
         return list, created
     
     def create_for_user(self, user, name):
@@ -319,7 +318,7 @@ class IndicatorList(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('indicators-list_hierarchy', [], {'indicator_list_slug': self.slug})
+        return ('indicators-indicator_list', [], {'indicator_list_slug': self.slug})
 
     class Meta:
         unique_together = (
