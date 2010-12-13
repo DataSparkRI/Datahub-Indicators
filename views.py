@@ -45,16 +45,6 @@ def admin(request):
 def indicator_list(request, indicator_list_slug):
     """ The public landing page for an Indicator List. Can be used
     for sharing iLists
-
-    Possible viewing environments:
-
-    1. user owns the list
-    2. list was shared with the user, but they do not own
-    3. was not shared with the user and they do not own it
-    
-    1: provide full editing capabilities (let users remove indicators and share)
-    2: user can copy to their iLists, or print/download
-    3: forbidden
     """
     indicator_list = get_object_or_404(IndicatorList, slug=indicator_list_slug)
 
