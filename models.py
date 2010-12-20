@@ -244,6 +244,7 @@ class Indicator(models.Model):
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
         unique_slugify(self, "%s" % (self.name, ))
+        self.update_metadata()
         super(Indicator, self).save(*args, **kwargs)
 
     def __unicode__(self):
