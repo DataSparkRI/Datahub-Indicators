@@ -1,10 +1,26 @@
 import datetime
+import os
 import time
 
 from celery.decorators import task
 
 from indicators.util import get_dynamic_indicator_def, generate_indicator_data
 from indicators.models import Indicator
+
+def _get_batch_logger(batch_dir):
+    import logging
+
+    logger = logging.getLogger("default_indicator_logger")
+    fh = logging.FileHandler(os.path.join(batch_dir, 'batch.log'))
+    fh.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(message)s")
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # bypass the root logger
+    logger.propagate = False
+
+    return logger
 
 @task
 def insert_dynamic_data(indicator_id):
@@ -42,3 +58,21 @@ def create_indicator_data(indicator, start_time=None):
     if start_time:
         import datetime
         print '%s finished in %d seconds' % (indicator, (datetime.datetime.now() - start_time).seconds)
+
+@task
+def indicator_debug_batch(indicators_to_run, batch_folder):
+    from core.indicators import indicator_list
+    
+    # whip up a logger that outputs to the batch directory for the indicators
+    logger = _get_batch_logger(batch_folder)
+    [idef(debug=True,logger=logger).csv_output(idef.__name__,path=batch_folder)
+        for idef in indicator_list() 
+        if idef.__name__ in indicators_to_run]
+
+    logger.debug('Batch Finished')
+
+    # create a tar.gz of the batch directory
+    os.system('tar -cvzf %s %s' % (
+        os.path.join(batch_folder, 'batch.tar.gz'), batch_folder, )
+    )
+

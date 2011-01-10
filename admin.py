@@ -14,12 +14,13 @@ def batch_debug_indicators(modeladmin, request, queryset):
 
     - [indicator name].csv for each indicator selected
     - [indicator name]_debug.csv for each indicator selected
-    - log.txt
+    - batch.log
     
     The indicator generation is scheduled in celery, and output is directed to
-    log.txt (TODO).
+    batch.log.
     """
     from core.indicators import indicator_list
+    from indicators.tasks import indicator_debug_batch
     
     # create a directory to store the results of this debug batch
     batch_id = unicode(uuid.uuid1())
@@ -29,9 +30,7 @@ def batch_debug_indicators(modeladmin, request, queryset):
     # map the queryset to names, for matching against definition classes
     indicators_to_run = [indicator.name for indicator in queryset]
 
-    [idef(debug=True).csv_output(idef.__name__,path=batch_folder)
-        for idef in indicator_list() 
-        if idef.__name__ in indicators_to_run]
+    indicator_debug_batch(indicators_to_run, batch_folder)
 batch_debug_indicators.short_description = "Run a debug batch on the selected indicators"
 
 def load_indicators(modeladmin, request, queryset):

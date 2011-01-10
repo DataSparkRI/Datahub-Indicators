@@ -112,3 +112,4 @@ def indicator_csv(request, indicator_slug):
         writer.writerow(row_data)
     
     return response
+
