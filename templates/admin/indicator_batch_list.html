@@ -1,0 +1,30 @@
+{% extends "admin/change_list.html" %}
+
+{% block title %}List of debug batches{% endblock %}
+
+{% block content %}
+<div id="content-main">
+<h1>List of debug batches completed or in progress:</h1>
+ {% if batches %}
+ <table>
+       <thead>
+            <tr>
+                <th>uuid</th>
+                <th># indicators</th>
+                <th>Finished?</th>
+            </tr>
+        </thead>
+    <tbody>
+  {% for batch in batches %}
+        <tr class="{% cycle "row1" "row2" %}">
+         <td><a href="#">{{ batch.uuid }}</a></td>
+         <td>{{ batch.num_indicators }}</td>
+         <td>{{ batch.finished }}</td>
+        </tr>
+
+  {% endfor %}
+       </tbody>
+      </table>
+ {% endif %}
+{% endblock content %}
+
