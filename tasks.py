@@ -60,6 +60,14 @@ def create_indicator_data(indicator, start_time=None):
         print '%s finished in %d seconds' % (indicator, (datetime.datetime.now() - start_time).seconds)
 
 @task
+def indicator_debug_output(indicator_def, output_folder):
+    # whip up a logger that outputs to the batch directory for the indicators
+    #logger = _get_batch_logger(output_folder)
+    print output_folder
+    indicator_def(debug=True).csv_output(indicator_def.__name__,path=output_folder)
+
+
+@task
 def indicator_debug_batch(indicators_to_run, batch_folder):
     from core.indicators import indicator_list
     
@@ -75,4 +83,8 @@ def indicator_debug_batch(indicators_to_run, batch_folder):
     os.system('tar -cvzf %s %s' % (
         os.path.join(batch_folder, 'batch.tar.gz'), batch_folder, )
     )
+
+@task
+def pwd():
+    print os.path.abspath('.')
 
