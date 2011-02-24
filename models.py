@@ -70,7 +70,7 @@ class Indicator(models.Model):
     short_definition = models.TextField()
     long_definition = models.TextField()
     purpose = models.TextField(blank=True) # aka rationale/implications
-    universe = models.CharField(max_length=100, blank=True)
+    universe = models.CharField(max_length=300, blank=True)
     limitations = models.TextField(blank=True)
     routine_use = models.TextField(blank=True)
     
