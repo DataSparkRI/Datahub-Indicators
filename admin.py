@@ -52,6 +52,10 @@ class IndicatorPregenPartInline(admin.TabularInline):
     model = IndicatorPregenPart
 
 class IndicatorAdmin(admin.ModelAdmin):
+    class Media:
+        css = { 
+            "all": ("stylesheets/extend_tag_textbox.css", "stylesheets/extend_universe_textbox.css",)
+        }
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published', 'load_pending', 'last_load_completed')
     list_editable = ('visible_in_all_lists', 'published',)
     list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published',)
@@ -62,6 +66,7 @@ class IndicatorAdmin(admin.ModelAdmin):
     inlines = [
         IndicatorPregenPartInline,
     ]
+    
 
     try:
         from indicators.load import DataImporter
