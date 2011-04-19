@@ -3,6 +3,7 @@ import os
 import time
 
 from celery.decorators import task
+from django.db import reset_queries
 
 from indicators.util import get_dynamic_indicator_def, generate_indicator_data
 from indicators.models import Indicator
@@ -50,6 +51,7 @@ def insert_dynamic_data(indicator_id):
     indicator.update_metadata()
     indicator.mark_load_complete()
     indicator.save()
+    reset_queries() # normally handled during a web request
     print "Inserted %d values for %s" % (count, indicator)
 
 @task
