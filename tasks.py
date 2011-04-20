@@ -23,7 +23,7 @@ def _get_batch_logger(batch_dir):
 
     return logger
 
-@task
+@task(ignore_result=True) # Nothing is returned, so we can safely ignore results
 def insert_dynamic_data(indicator_id):
     """ Run the indicator, and create IndicatorData objects for the results """
     indicator = Indicator.objects.get(id=indicator_id)
