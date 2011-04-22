@@ -102,19 +102,16 @@ try:
             return count
         
         def _run_all(self, indicator_list=None, ignore_celery=False):
-            from django.db.utils import IntegrityError
-            
-            import copy
-            
             if not indicator_list:
                 indicator_list = Indicator.objects.all()
-
-            IndicatorData.objects.filter(indicator__in=indicator_list).delete()
-            for i in indicator_list:
-                i.mark_load_pending()
-                i.save()
             
-            for indicator in indicator_list:
+            IndicatorData.objects.filter(indicator__in=indicator_list).delete()
+
+            # instead of using mark_load_pending, which should be used in the
+            # general case, do a bulk update here for speed
+            indicator_list.update(load_pending=True)
+
+            for indicator in indicator_list.iterator():
                 print 'Inserting pre-gen data for %s...' % indicator
                 if self.insert_pregen_data(indicator) > 0:
                     indicator.mark_load_complete()
