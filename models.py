@@ -230,7 +230,7 @@ class Indicator(models.Model):
         possible_names.append(translated_name + 'INDICATOR')
         
         resolved_def = None
-        for indicator_def in indicator_list():
+        for indicator_def in indicator_list(include_new=True):
             if indicator_def.__name__.upper() in possible_names:
                 if resolved_def:
                     print "Found multiple definitions for %s:" % self.name
