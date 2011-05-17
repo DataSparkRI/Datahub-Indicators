@@ -73,6 +73,7 @@ class Indicator(models.Model):
     universe = models.CharField(max_length=300, blank=True)
     limitations = models.TextField(blank=True)
     routine_use = models.TextField(blank=True)
+    last_audited = models.DateTimeField(blank=True, null=True, help_text="Blank or null means it has never been audited")
     
     #quantitative information
     min = models.IntegerField(null=True,blank=True)
