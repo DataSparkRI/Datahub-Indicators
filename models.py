@@ -68,8 +68,8 @@ class Indicator(models.Model):
     file_name = models.CharField(max_length=100, blank=True)
     display_name = models.CharField(max_length=100)   
     short_definition = models.TextField()
-    long_definition = models.TextField()
-    purpose = models.TextField(blank=True) # aka rationale/implications
+    long_definition = models.TextField(help_text="This field is Markdown enabled.")
+    purpose = models.TextField(blank=True, help_text="This field is Markdown enabled.") # aka rationale/implications
     universe = models.CharField(max_length=300, blank=True)
     limitations = models.TextField(blank=True)
     routine_use = models.TextField(blank=True)
