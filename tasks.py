@@ -4,9 +4,11 @@ import time
 
 from celery.decorators import task
 from django.db import reset_queries
+from django.conf import settings
 
+from core.models import IndicatorResult
 from indicators.util import get_dynamic_indicator_def, generate_indicator_data
-from indicators.models import Indicator
+from indicators.models import Indicator, IndicatorData
 
 def _get_batch_logger(batch_dir):
     import logging
@@ -34,26 +36,50 @@ def insert_dynamic_data(indicator_id):
     indicator_def = get_dynamic_indicator_def(indicator)
     if not indicator_def:
         return
+
+    class_name = indicator_def.__name__
+    IndicatorResult.objects.filter(class_name=class_name).delete()
+
     results = indicator_def(debug=True).create()
     
     for key, value in results.iteritems():
-        indicator_data = generate_indicator_data(
-            indicator,
-            key[0].key_unit_type,
-            key[0].key_value,
-            key[1].time_type,
-            key[1].time_key,
-            value,
-            data_type='numeric'
+        if not value is None:
+            value = str(value)
+        IndicatorResult.objects.create(
+            class_name=class_name,
+            agg_key=key[0],
+            time_key=key[1],
+            value=value
         )
-        indicator_data.save(force_insert=True)
         count += 1
-    indicator.update_metadata()
-    indicator.mark_load_complete()
-    indicator.save()
     reset_queries() # normally handled during a web request
     print "Inserted %d values for %s" % (count, indicator)
 
+@task
+def move_to_portal(indicators, portal_name):
+    if portal_name not in settings.DATABASES:
+        raise Exception('%s is not a configured database')
+    
+    for indicator in indicators:
+        if indicator.indicatorpregenpart_set.count() > 0:
+            # skip indicators that aren't "dynamic" indicators
+            continue
+        indicator_def = get_dynamic_indicator_def(indicator)
+        results = IndicatorResult.objects.filter(class_name=indicator_def.__name__)
+        IndicatorData.objects.using(portal_name).filter(indicator=indicator).delete()
+        for result in results:
+            indicator_data = generate_indicator_data(
+                indicator,
+                result.agg_key.key_unit_type,
+                result.agg_key.key_value,
+                result.time_key.time_type,
+                result.time_key.time_key,
+                result.value,
+                data_type='numeric'
+            )
+            indicator_data.save(force_insert=True,using=portal_name) 
+
+    
 @task
 def create_indicator_data(indicator, start_time=None):
     indicator.create()
