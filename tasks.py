@@ -26,22 +26,17 @@ def _get_batch_logger(batch_dir):
     return logger
 
 @task(ignore_result=True) # Nothing is returned, so we can safely ignore results
-def insert_dynamic_data(indicator_id):
+def insert_dynamic_data(indicator_def):
     """ Run the indicator, and create IndicatorData objects for the results """
-    indicator = Indicator.objects.get(id=indicator_id)
-
-    print "Start %s" % indicator
+    class_name = indicator_def.__name__
+    print "Start %s" % class_name
 
     count = 0
-    indicator_def = get_dynamic_indicator_def(indicator)
     if not indicator_def:
         return
 
-    class_name = indicator_def.__name__
     IndicatorResult.objects.filter(class_name=class_name).delete()
-
     results = indicator_def(debug=True).create()
-    
     for key, value in results.iteritems():
         if not value is None:
             value = str(value)
@@ -53,19 +48,19 @@ def insert_dynamic_data(indicator_id):
         )
         count += 1
     reset_queries() # normally handled during a web request
-    print "Inserted %d values for %s" % (count, indicator)
+    print "Inserted %d values for %s" % (count, class_name)
 
 @task
-def move_to_portal(indicators, portal_name):
+def move_to_portal(indicator_defs, portal_name):
     if portal_name not in settings.DATABASES:
-        raise Exception('%s is not a configured database')
+        raise Exception('%s is not a configured database' % portal_name)
     
-    for indicator in indicators:
+    for i_def in indicator_defs:
+        indicator = Indicator.objects.get_for_def(i_def)
         if indicator.indicatorpregenpart_set.count() > 0:
             # skip indicators that aren't "dynamic" indicators
             continue
-        indicator_def = get_dynamic_indicator_def(indicator)
-        results = IndicatorResult.objects.filter(class_name=indicator_def.__name__)
+        results = IndicatorResult.objects.filter(class_name=i_def.__name__)
         IndicatorData.objects.using(portal_name).filter(indicator=indicator).delete()
         for result in results:
             indicator_data = generate_indicator_data(
