@@ -60,7 +60,7 @@ class IndicatorPregenPart(models.Model):
         return u"%s in %s" % (self.column_name, self.file_name)
 
 class IndicatorManager(models.Manager):
-    def get_for_def(self, indicator_def):
+    def get_for_def(self, indicator_def, using='portal'):
         import re
         name = indicator_def.__name__
 
@@ -72,7 +72,7 @@ class IndicatorManager(models.Manager):
         possible_names = []
         possible_names.append(name)
         possible_names.append(re.sub(r'Indicator$','',name))
-        return self.get(Q(name__iexact=possible_names[0]) | Q(name__iexact=possible_names[1]))
+        return self.using(using).get(Q(name__iexact=possible_names[0]) | Q(name__iexact=possible_names[1]))
     
 class Indicator(models.Model):    
     #qualitative information

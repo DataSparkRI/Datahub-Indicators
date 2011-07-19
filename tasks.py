@@ -56,7 +56,7 @@ def move_to_portal(indicator_defs, portal_name):
         raise Exception('%s is not a configured database' % portal_name)
     
     for i_def in indicator_defs:
-        indicator = Indicator.objects.using(portal_name).get_for_def(i_def)
+        indicator = Indicator.get_for_def(i_def, using=portal_name)
         if indicator.indicatorpregenpart_set.count() > 0:
             # skip indicators that aren't "dynamic" indicators
             continue
