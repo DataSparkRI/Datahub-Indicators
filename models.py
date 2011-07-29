@@ -68,11 +68,12 @@ class Indicator(models.Model):
     file_name = models.CharField(max_length=100, blank=True)
     display_name = models.CharField(max_length=100)   
     short_definition = models.TextField()
-    long_definition = models.TextField()
-    purpose = models.TextField(blank=True) # aka rationale/implications
-    universe = models.CharField(max_length=100, blank=True)
+    long_definition = models.TextField(help_text="This field is Markdown enabled.")
+    purpose = models.TextField(blank=True, help_text="This field is Markdown enabled.") # aka rationale/implications
+    universe = models.CharField(max_length=300, blank=True)
     limitations = models.TextField(blank=True)
     routine_use = models.TextField(blank=True)
+    last_audited = models.DateTimeField(blank=True, null=True, help_text="Blank or null means it has never been audited")
     
     #quantitative information
     min = models.IntegerField(null=True,blank=True)
@@ -230,7 +231,7 @@ class Indicator(models.Model):
         possible_names.append(translated_name + 'INDICATOR')
         
         resolved_def = None
-        for indicator_def in indicator_list():
+        for indicator_def in indicator_list(include_new=True):
             if indicator_def.__name__.upper() in possible_names:
                 if resolved_def:
                     print "Found multiple definitions for %s:" % self.name
@@ -244,6 +245,7 @@ class Indicator(models.Model):
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
         unique_slugify(self, "%s" % (self.name, ))
+        self.update_metadata()
         super(Indicator, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -275,7 +277,6 @@ class IndicatorListManager(models.Manager):
     def get_or_create_default_for_user(self, user):
         default_list_name = _default_ilist_name(user)
         list, created = self.get_or_create(owner=user, name=default_list_name)
-        user.get_profile().indicator_lists.add(list)
         return list, created
     
     def create_for_user(self, user, name):
@@ -319,7 +320,7 @@ class IndicatorList(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('indicators-list_hierarchy', [], {'indicator_list_slug': self.slug})
+        return ('indicators-indicator_list', [], {'indicator_list_slug': self.slug})
 
     class Meta:
         unique_together = (
