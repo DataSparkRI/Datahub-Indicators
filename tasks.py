@@ -41,9 +41,11 @@ def insert_dynamic_data(indicator_def):
         if not value is None:
             value = str(value)
         IndicatorResult.objects.create(
+            time_type=key[1].time_type,
+            time_key=key[1].time_key,
+            key_unit_type=key[0].key_unit_type,
+            key_value=key[0].key_value,
             class_name=class_name,
-            agg_key=key[0],
-            time_key=key[1],
             value=value
         )
         count += 1
@@ -65,10 +67,10 @@ def move_to_portal(indicator_defs, portal_name):
         for result in results:
             indicator_data = generate_indicator_data(
                 indicator,
-                result.agg_key.key_unit_type,
-                result.agg_key.key_value,
-                result.time_key.time_type,
-                result.time_key.time_key,
+                result.key_unit_type,
+                result.key_value,
+                result.time_type,
+                result.time_key,
                 result.value,
                 data_type='numeric'
             )
