@@ -11,6 +11,7 @@ from taggit.managers import TaggableManager
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
+from indicators.fields import RoundingDecimalField
 
 INDICATOR_TYPES = (
     ('csv', 'csv'),
@@ -29,10 +30,10 @@ DATA_TYPE_CHOICES = (
 )
 
 UNIT_CHOICES = (
-    ('percent', 'percent'),
-    ('count', 'count'),
-    ('rate', 'rate'),
-    ('other', 'other') ,
+    ('percent', 'percent'), # zero decimal places
+    ('count', 'count'),     # zero decimal places
+    ('rate', 'rate'),       # two decimal places
+    ('other', 'other') ,    # two decimal places
 )
 
 
@@ -259,7 +260,7 @@ class IndicatorData(models.Model):
     key_unit_type = models.CharField(max_length=50,choices=KEY_UNIT_TYPE_CHOICES,db_index=True)
     key_value = models.CharField(max_length=100,db_index=True)
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES)
-    numeric = models.FloatField(null=True)
+    numeric = RoundingDecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
     string = models.CharField(max_length=100,null=True)
     
     @property

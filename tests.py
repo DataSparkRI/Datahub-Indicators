@@ -58,4 +58,12 @@ class TimeTranslationTest(TestCase):
         self.failUnlessEqual(AttributeColumn.objects.all().count(), 1)
         self.failUnlessEqual(AttributeColumn.objects.all()[0].year, '')
 
-
+class RoundingDecimalTest(TestCase):
+    def test_float_accepted(self):
+        from django.core import exceptions
+        from indicators.models import Indicator, IndicatorData
+        i = Indicator.objects.create(name='test')
+        try:
+            data = IndicatorData.objects.create(indicator=i,numeric=1.123123123)
+        except (TypeError, exceptions.ValidationError):
+            self.fail("Float could not be used for the numeric field")
