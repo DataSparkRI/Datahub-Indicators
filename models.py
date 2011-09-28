@@ -61,8 +61,20 @@ class IndicatorPregenPart(models.Model):
         return u"%s in %s" % (self.column_name, self.file_name)
 
 class IndicatorManager(models.Manager):
-    pass
+    def get_for_def(self, indicator_def, using='portal'):
+        import re
+        name = indicator_def.__name__
 
+        # This might not be an exact reversal of resolve_indicator_def
+        # in all cases, but functions well enough
+        name = re.sub(r'Num(?=[A-Z0-9])', '#', name)
+        name = re.sub(r'Pct(?=[A-Z0-9])', '#', name)
+
+        possible_names = []
+        possible_names.append(name)
+        possible_names.append(re.sub(r'Indicator$','',name))
+        return self.using(using).get(Q(name__iexact=possible_names[0]) | Q(name__iexact=possible_names[1]))
+    
 class Indicator(models.Model):    
     #qualitative information
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
