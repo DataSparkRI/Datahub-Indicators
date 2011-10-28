@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Deleting field 'Indicator.suppresion_threshold'
-        db.delete_column('indicators_indicator', 'suppresion_threshold')
+        #db.delete_column('indicators_indicator', 'suppresion_threshold')
 
         # Adding field 'Indicator.suppression_numerator'
         db.add_column('indicators_indicator', 'suppression_numerator', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
@@ -21,7 +21,7 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         
         # Adding field 'Indicator.suppresion_threshold'
-        db.add_column('indicators_indicator', 'suppresion_threshold', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
+        #db.add_column('indicators_indicator', 'suppresion_threshold', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
 
         # Deleting field 'Indicator.suppression_numerator'
         db.delete_column('indicators_indicator', 'suppression_numerator')
