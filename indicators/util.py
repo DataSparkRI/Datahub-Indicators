@@ -1,3 +1,5 @@
+import decimal
+
 from core.indicators import indicator_list
 
 def clean_value(val):
@@ -40,7 +42,7 @@ def generate_indicator_data(indicator, key_type, key_value,
     if data_type == 'numeric':
         if value == '':
             value = None
-        indicator_data_kwargs['numeric'] = value
+        indicator_data_kwargs['numeric'] = round_value_for_unit(value, indicator.unit)
     
     indicator_data_kwargs['key_unit_type'] = key_type
     
@@ -56,3 +58,10 @@ def generate_indicator_data(indicator, key_type, key_value,
     indicator_data_kwargs['indicator'] = indicator
     return IndicatorData(**indicator_data_kwargs)
 
+def round_value_for_unit(value, unit):
+    if value is None:
+        return value
+    decimals = 0
+    if unit in ('rate', 'other'):
+        decimals = 2
+    return decimal.Decimal(str(round(value, decimals)))
