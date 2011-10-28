@@ -11,7 +11,7 @@ class Migration(DataMigration):
             ppsd_datasource = orm.DataSource.objects.get(short='PPSD')
             ppsd_datasource.icon_path = 'PPSD.png'
             ppsd_datasource.save()
-        except DataSource.DoesNotExist:
+        except:
             pass
 
     def backwards(self, orm):
