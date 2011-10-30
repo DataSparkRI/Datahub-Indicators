@@ -7,10 +7,9 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        for data in orm.IndicatorData.objects.all():
-            if not data.numeric is None:
-                data.decimal_numeric = data.numeric
-                data.save()
+        for data in orm.IndicatorData.objects.filter(numeric__isnull=False).iterator():
+            data.decimal_numeric = data.numeric
+            data.save()
 
     def backwards(self, orm):
         "Write your backwards methods here."
