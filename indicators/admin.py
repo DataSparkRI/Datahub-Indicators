@@ -3,7 +3,8 @@ import uuid
 
 from django.conf import settings
 from django.contrib import admin
-from indicators.models import DataSource, IndicatorList, Indicator, IndicatorPregenPart
+from indicators.models import DataSource, IndicatorList, Indicator, \
+    IndicatorPregenPart, DataFilter
 
 # Actions available in Core
 def batch_debug_indicators(modeladmin, request, queryset):
@@ -118,3 +119,4 @@ class IndicatorAdmin(admin.ModelAdmin):
 admin.site.register(DataSource)
 admin.site.register(IndicatorList)
 admin.site.register(Indicator, IndicatorAdmin)
+admin.site.register(DataFilter)

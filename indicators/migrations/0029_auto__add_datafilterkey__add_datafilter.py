@@ -8,26 +8,32 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Deleting field 'Indicator.suppresion_threshold'
-        # db.delete_column('indicators_indicator', 'suppresion_threshold')
+        # Adding model 'DataFilterKey'
+        db.create_table('indicators_datafilterkey', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('data_filter', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['indicators.DataFilter'])),
+            ('key_value', self.gf('django.db.models.fields.CharField')(max_length=100)),
+        ))
+        db.send_create_signal('indicators', ['DataFilterKey'])
 
-        # Adding field 'Indicator.suppression_numerator'
-        db.add_column('indicators_indicator', 'suppression_numerator', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
-
-        # Adding field 'Indicator.suppression_denominator'
-        db.add_column('indicators_indicator', 'suppression_denominator', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
+        # Adding model 'DataFilter'
+        db.create_table('indicators_datafilter', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, blank=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
+            ('display', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('key_unit_type', self.gf('django.db.models.fields.CharField')(max_length=256)),
+        ))
+        db.send_create_signal('indicators', ['DataFilter'])
 
 
     def backwards(self, orm):
         
-        # Adding field 'Indicator.suppresion_threshold'
-        db.add_column('indicators_indicator', 'suppresion_threshold', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
+        # Deleting model 'DataFilterKey'
+        db.delete_table('indicators_datafilterkey')
 
-        # Deleting field 'Indicator.suppression_numerator'
-        db.delete_column('indicators_indicator', 'suppression_numerator')
-
-        # Deleting field 'Indicator.suppression_denominator'
-        db.delete_column('indicators_indicator', 'suppression_denominator')
+        # Deleting model 'DataFilter'
+        db.delete_table('indicators_datafilter')
 
 
     models = {
@@ -38,7 +44,7 @@ class Migration(SchemaMigration):
             'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
         },
         'auth.permission': {
-            'Meta': {'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
+            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
             'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -51,9 +57,9 @@ class Migration(SchemaMigration):
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'blank': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
@@ -61,7 +67,7 @@ class Migration(SchemaMigration):
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
         'contenttypes.contenttype': {
-            'Meta': {'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
@@ -77,6 +83,20 @@ class Migration(SchemaMigration):
             'grade': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'school_year': ('django.db.models.fields.CharField', [], {'max_length': '9', 'db_index': 'True'})
+        },
+        'indicators.datafilter': {
+            'Meta': {'object_name': 'DataFilter'},
+            'display': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'key_unit_type': ('django.db.models.fields.CharField', [], {'max_length': '256'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
+        },
+        'indicators.datafilterkey': {
+            'Meta': {'object_name': 'DataFilterKey'},
+            'data_filter': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['indicators.DataFilter']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'key_value': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'indicators.datasource': {
             'Meta': {'object_name': 'DataSource'},
@@ -96,15 +116,16 @@ class Migration(SchemaMigration):
             'display_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'file_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_audited': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'last_load_completed': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'limitations': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'load_pending': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'load_pending': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'long_definition': ('django.db.models.fields.TextField', [], {}),
             'max': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'min': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
             'notes': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'published': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'blank': 'True'}),
+            'published': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'purpose': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'query_level': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'raw_datasources': ('django.db.models.fields.TextField', [], {}),
@@ -115,8 +136,8 @@ class Migration(SchemaMigration):
             'suppression_denominator': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'suppression_numerator': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'unit': ('django.db.models.fields.CharField', [], {'default': "'other'", 'max_length': '10'}),
-            'universe': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'visible_in_all_lists': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'universe': ('django.db.models.fields.CharField', [], {'max_length': '300', 'blank': 'True'}),
+            'visible_in_all_lists': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'years_available': ('django.db.models.fields.CommaSeparatedIntegerField', [], {'max_length': '200'}),
             'years_available_display': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         },
@@ -133,15 +154,16 @@ class Migration(SchemaMigration):
             'time_type': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'indicators.indicatorlist': {
-            'Meta': {'object_name': 'IndicatorList'},
+            'Meta': {'unique_together': "(('name', 'owner'),)", 'object_name': 'IndicatorList'},
             'created': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'indicators': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['indicators.Indicator']", 'symmetrical': 'False'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '200'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'public': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '200', 'db_index': 'True'}),
-            'visible_in_default': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'})
+            'visible_in_default': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'visible_in_weave': ('django.db.models.fields.BooleanField', [], {'default': 'True'})
         },
         'indicators.indicatorpregenpart': {
             'Meta': {'object_name': 'IndicatorPregenPart'},
