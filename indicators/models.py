@@ -49,7 +49,7 @@ class DataSource(models.Model):
         return self.name
 
 class IndicatorPregenPart(models.Model):
-    indicator = models.ForeignKey('Indicator')
+    indicator = models.ForeignKey('Indicator', related_name='pregenparts')
     file_name = models.CharField(max_length=100)
     column_name = models.CharField(max_length=100)
     key_type = models.CharField(max_length=100)
