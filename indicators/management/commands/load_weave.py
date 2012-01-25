@@ -7,8 +7,10 @@ from django.db import IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.core.management.base import BaseCommand, CommandError
 
-from indicators.models import Indicator, IndicatorData, DataFilter
+from indicators.models import Indicator, IndicatorData
 from weave.models import AttributeColumn
+from weave_addons.models import DataFilter
+
 
 class WeaveExporter(object):
     def time_translations(self, input):

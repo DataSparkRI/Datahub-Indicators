@@ -6,7 +6,9 @@ import uuid
 from django.conf import settings
 from django.contrib import admin, messages
 from indicators.models import DataSource, IndicatorList, Indicator, \
-    IndicatorPregenPart, DataFilter, IndicatorData
+    IndicatorPregenPart, IndicatorData
+from weave_addons.models import DataFilter
+
 
 # Actions available in Core
 def batch_debug_indicators(modeladmin, request, queryset):
