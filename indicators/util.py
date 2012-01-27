@@ -1,6 +1,5 @@
 import decimal
 
-from core.indicators import indicator_list
 
 def clean_value(val):
     if hasattr(val, 'strip') and callable(val.strip):

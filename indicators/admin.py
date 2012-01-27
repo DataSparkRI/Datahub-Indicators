@@ -7,7 +7,6 @@ from django.conf import settings
 from django.contrib import admin, messages
 from indicators.models import DataSource, IndicatorList, Indicator, \
     IndicatorPregenPart, IndicatorData
-from weave_addons.models import DataFilter
 
 
 # Actions available in Core
@@ -24,7 +23,10 @@ def batch_debug_indicators(modeladmin, request, queryset):
     The indicator generation is scheduled in celery, and output is directed to
     batch.log.
     """
-    from core.indicators import indicator_list
+    try:
+        from core.indicators import indicator_list
+    except ImportError:
+        return
     from indicators.tasks import indicator_debug_batch
     
     # create a directory to store the results of this debug batch
@@ -200,4 +202,3 @@ class IndicatorAdmin(admin.ModelAdmin):
 admin.site.register(DataSource)
 admin.site.register(IndicatorList)
 admin.site.register(Indicator, IndicatorAdmin)
-admin.site.register(DataFilter)

@@ -1,0 +1,58 @@
+{% extends "admin/change_form.html" %}
+
+{% block title %}Regenerate Weave on Portals{% endblock %}
+
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="/admin/">Home</a> &rsaquo; Regenerate Weave on Portals</div>{% endblock %}
+
+{% block content %}
+<div id="content-main" class="datahub">
+  <h3>Regenerate Weave on Portals</h3>
+{% if made_attempt %}
+  {% if process_id == 0 %}
+  <p style="background-color: green; color: white;">
+    Finished the Regenerate Weave process.
+  </p>
+  {% else %}
+  <p class="error" style="background-color: red; color: white;">
+    There was an error while running the Regenerate Weave process.  I
+    don't know what the error was. Please check the logs.
+  </p>
+  {% endif %}
+{% else %}
+
+  <form action="" method="post" id="regen-form">{% csrf_token %}
+    <div>
+      <fieldset class="module aligned">
+        {% for field in form %}
+          <div class="form-row {{ form.name }}"><div>
+          {{ field.errors }}
+          <label for="{{ field.html_name }}" class="required">{{ field.label }}:</label>
+          {{ field }}
+          {% if field.help_text %}<p class="help">{{ field.help_text }}</p>{% endif %}
+          </div></div>
+        {% endfor %}
+        <p class="notice">
+          This will overwrite data currently on that system.  Are you
+          sure you want to do this?
+        </p>
+        </fieldset>
+      <div class="submit-row">
+        <input type="submit" value="Regenerate Weave" />
+      </div>
+    </div>
+  </form>
+  <div id="processing" style="display: none">
+    Please wait for the process to complete.
+  </div>
+  <script type="text/javascript">
+    var f = document.getElementById('regen-form');
+    var msg = document.getElementById('processing');
+    f.onsubmit = function() {
+        f.style.display = 'none';
+        msg.style.display = 'block';
+        return true;
+    };
+  </script>
+{% endif %}
+</div>
+{% endblock content %}
