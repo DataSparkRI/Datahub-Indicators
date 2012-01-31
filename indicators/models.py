@@ -126,7 +126,10 @@ class Indicator(models.Model):
     
     def weave_name(self):
         return self.display_name
-    
+
+    def weave_title(self, time_key):
+        return u"%s, %s" % (self.display_name, time_key, )
+
     def get_time_types_available(self):
         return self.indicatordata_set.values_list('time_type',flat=True).distinct()
     
