@@ -12,7 +12,10 @@ from taggit.managers import TaggableManager
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
 from indicators.fields import RoundingDecimalField
+<<<<<<< HEAD
+=======
 
+>>>>>>> develop
 
 INDICATOR_TYPES = (
     ('csv', 'csv'),

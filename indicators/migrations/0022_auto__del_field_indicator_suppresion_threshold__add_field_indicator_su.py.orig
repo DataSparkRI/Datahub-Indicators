@@ -9,7 +9,11 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Deleting field 'Indicator.suppresion_threshold'
+<<<<<<< HEAD
+        #db.delete_column('indicators_indicator', 'suppresion_threshold')
+=======
         # db.delete_column('indicators_indicator', 'suppresion_threshold')
+>>>>>>> develop
 
         # Adding field 'Indicator.suppression_numerator'
         db.add_column('indicators_indicator', 'suppression_numerator', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
