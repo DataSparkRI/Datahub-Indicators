@@ -2,7 +2,9 @@
   <OpenIndicatorsDataSource name="OpenIndicatorsDataSource">
     <alertEnabled>true</alertEnabled>
     <attributeHierarchy encoding="XML">
-    <backgroundColor>15198183</backgroundColor>
+  <WeaveProperties name="WeaveProperties">
+    <backgroundColor>13421772</backgroundColor>
+  </WeaveProperties>
 
     <hierarchy name="DataHub">
     {% for list in lists %}
