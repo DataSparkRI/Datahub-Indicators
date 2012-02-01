@@ -2,6 +2,8 @@
   <OpenIndicatorsDataSource name="OpenIndicatorsDataSource">
     <alertEnabled>true</alertEnabled>
     <attributeHierarchy encoding="XML">
+    <backgroundColor>15198183</backgroundColor>
+
     <hierarchy name="DataHub">
     {% for list in lists %}
     {% attributecolumn_list_hierarchy list.name list.attr_col_Q %}
