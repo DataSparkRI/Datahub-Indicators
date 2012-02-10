@@ -114,7 +114,7 @@ class Indicator(models.Model):
     visible_in_all_lists = models.BooleanField(default=False)
     
     slug = models.SlugField(unique=True,db_index=True,null=False)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     load_pending = models.BooleanField(default=False)
     last_load_completed = models.DateTimeField(null=True,blank=True)
