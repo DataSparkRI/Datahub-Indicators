@@ -4,9 +4,14 @@ import os
 import uuid
 
 from django.conf import settings
+<<<<<<< HEAD
 from django.contrib import admin, messages
 from indicators.models import DataSource, IndicatorList, Indicator, \
     IndicatorPregenPart, IndicatorData
+
+=======
+from django.contrib import admin
+from indicators.models import DataSource, IndicatorList, Indicator, IndicatorPregenPart
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib.admin.filterspecs import FilterSpec
 from indicators.fields import RoundingDecimalField, FileNameField
@@ -62,6 +67,7 @@ def _register_front(cls, test, factory):
 
 FilterSpec.register_front = classmethod(_register_front)
 FilterSpec.register_front(lambda f: isinstance(f, FileNameField), IndicatorSourceListFilter)
+>>>>>>> szymong/develop
 
 # Actions available in Core
 def batch_debug_indicators(modeladmin, request, queryset):
@@ -127,7 +133,12 @@ class IndicatorAdmin(admin.ModelAdmin):
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published', 
                     'load_pending', 'last_load_completed', 'last_audited',)
     list_editable = ('visible_in_all_lists', 'published',)
+<<<<<<< HEAD
+    list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 
+                   'load_pending', 'published', 'last_audited')
+=======
     list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published', 'last_audited', 'file_name')
+>>>>>>> szymong/develop
     search_fields = ('name', 'datasources__short_name', 'short_definition',
                      'long_definition', 'notes', 'file_name')
     exclude = ('raw_tags', 'raw_datasources', 'years_available_display', 
