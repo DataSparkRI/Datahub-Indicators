@@ -18,9 +18,13 @@ class RoundingDecimalField(models.DecimalField):
 			raise exceptions.ValidationError(msg)
 
 from south.modelsinspector import add_introspection_rules
+<<<<<<< HEAD
+add_introspection_rules([], ["^indicators\.fields\.RoundingDecimalField"])
+=======
 add_introspection_rules([], ["^indicators\.fields\.RoundingDecimalField"])
 
 class FileNameField(models.CharField):
     None
     
 add_introspection_rules([], ["^indicators\.fields\.FileNameField"])
+>>>>>>> develop
