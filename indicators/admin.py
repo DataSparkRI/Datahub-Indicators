@@ -173,7 +173,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                             'time_type': pregenpart.time_type,
                             'time_key': pregenpart.time_value,
                             'key_unit_type': pregenpart.key_type,
-                            'key_value': val,
+                            'key_value': pregenpart.column_name,
                             'data_type': data_type,
                             'numeric': numeric,
                             'string': string
