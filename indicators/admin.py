@@ -156,10 +156,13 @@ class IndicatorAdmin(admin.ModelAdmin):
                     return obj
                 reader = csv.reader(csv_file)
                 cols = reader.next()
-                if pregenpart.column_name in cols:
-                    col = cols.index(pregenpart.column_name)
+                if pregenpart.column_name in cols \
+                        and pregenpart.key_column in cols:
+                    name_col = cols.index(pregenpart.column_name)
+                    key_col = cols.index(pregenpart.key_column)
                     for row in reader:
-                        val = row[col]
+                        val = row[name_col]
+                        key_value = row[key_col]
                         try:
                             float(val)
                             data_type = 'numeric'
@@ -173,7 +176,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                             'time_type': pregenpart.time_type,
                             'time_key': pregenpart.time_value,
                             'key_unit_type': pregenpart.key_type,
-                            'key_value': pregenpart.column_name,
+                            'key_value': key_value,
                             'data_type': data_type,
                             'numeric': numeric,
                             'string': string
