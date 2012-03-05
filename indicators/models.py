@@ -43,11 +43,15 @@ class DataSource(models.Model):
     short_name = models.CharField(max_length=12) # to display in lists, etc
     name = models.CharField(max_length=100)
     url = models.URLField(verify_exists=False)
-    icon_path = models.CharField(max_length=50)
+    icon_file = models.ImageField(upload_to='datasource_icons', blank=True, null=True)
     description = models.TextField(blank=True)
     
     def __unicode__(self):
         return self.name
+
+    
+    def icon_path(self):
+        return self.icon_file.url
 
 class IndicatorPregenPart(models.Model):
     indicator = models.ForeignKey('Indicator', related_name='pregenparts')
