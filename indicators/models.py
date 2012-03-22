@@ -11,8 +11,7 @@ from taggit.managers import TaggableManager
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
-from indicators.fields import RoundingDecimalField, FileNameField
-
+from indicators.fields import RoundingDecimalField
 
 INDICATOR_TYPES = (
     ('csv', 'csv'),
@@ -43,18 +42,14 @@ class DataSource(models.Model):
     short_name = models.CharField(max_length=12) # to display in lists, etc
     name = models.CharField(max_length=100)
     url = models.URLField(verify_exists=False)
-    icon_file = models.ImageField(upload_to='datasource_icons', blank=True, null=True)
+    icon_path = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     
     def __unicode__(self):
         return self.name
 
-    
-    def icon_path(self):
-        return self.icon_file.url
-
 class IndicatorPregenPart(models.Model):
-    indicator = models.ForeignKey('Indicator', related_name='pregenparts')
+    indicator = models.ForeignKey('Indicator')
     file_name = models.CharField(max_length=100)
     column_name = models.CharField(max_length=100)
     key_type = models.CharField(max_length=100)
@@ -83,7 +78,7 @@ class IndicatorManager(models.Manager):
 class Indicator(models.Model):    
     #qualitative information
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
-    file_name = FileNameField(max_length=100, blank=True)
+    file_name = models.CharField(max_length=100, blank=True)
     display_name = models.CharField(max_length=100)   
     short_definition = models.TextField()
     long_definition = models.TextField(help_text="This field is Markdown enabled.")
@@ -108,8 +103,8 @@ class Indicator(models.Model):
     # calculated meta-data and fields
     data_levels_available = models.CharField(max_length=200, blank=True)
     query_level = models.CharField(max_length=100, blank=True)
-    suppression_numerator = models.IntegerField(null=True, blank=True, help_text="Cells < value are suppressed. Cells >= value appear in output.")
-    suppression_denominator = models.IntegerField(null=True, blank=True, help_text="Cells < value are suppressed. Cells >= value appear in output.")
+    suppression_numerator = models.IntegerField(null=True, blank=True)
+    suppression_denominator = models.IntegerField(null=True, blank=True)
     years_available_display = models.CharField(max_length=200)
     years_available = models.CommaSeparatedIntegerField(max_length=200)
     datasources = models.ManyToManyField(DataSource)

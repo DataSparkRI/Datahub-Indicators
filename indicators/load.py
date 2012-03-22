@@ -192,8 +192,7 @@ except ImportError:
     from django.contrib.contenttypes.models import ContentType
 
     from indicators.models import Indicator, IndicatorData
-    from weave.models import AttributeColumn
-    from weave_addons.models import DataFilter
+    from weave.models import AttributeColumn, DataFilter
 
     class WeaveExporter(object):
         def time_translations(self, input):
