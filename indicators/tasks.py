@@ -5,11 +5,10 @@ import time
 from celery.decorators import task
 from django.db import reset_queries
 from django.conf import settings
-from django.core import management
 
+from core.models import IndicatorResult
 from indicators.util import get_dynamic_indicator_def, generate_indicator_data
 from indicators.models import Indicator, IndicatorData
-
 
 def _get_batch_logger(batch_dir):
     import logging
@@ -29,12 +28,6 @@ def _get_batch_logger(batch_dir):
 @task(ignore_result=True) # Nothing is returned, so we can safely ignore results
 def insert_dynamic_data(indicator_def):
     """ Run the indicator, and create IndicatorData objects for the results """
-
-    try:
-        from core.models import IndicatorResult
-    except ImportError:
-        return
-
     class_name = indicator_def.__name__
     print "Start %s" % class_name
 
@@ -63,12 +56,7 @@ def insert_dynamic_data(indicator_def):
 def move_to_portal(indicator_defs, portal_name):
     if portal_name not in settings.DATABASES:
         raise Exception('%s is not a configured database' % portal_name)
-
-    try:
-        from core.models import IndicatorResult
-    except ImportError:
-        return
-
+    
     for i_def in indicator_defs:
         indicator = Indicator.objects.get_for_def(i_def, using=portal_name)
         if indicator.indicatorpregenpart_set.count() > 0:
@@ -106,10 +94,7 @@ def indicator_debug_output(indicator_def, output_folder):
 
 @task
 def indicator_debug_batch(indicators_to_run, batch_folder):
-    try:
-        from core.indicators import indicator_list
-    except ImportError:
-        return
+    from core.indicators import indicator_list
     
     # whip up a logger that outputs to the batch directory for the indicators
     logger = _get_batch_logger(batch_folder)
@@ -128,17 +113,3 @@ def indicator_debug_batch(indicators_to_run, batch_folder):
 def pwd():
     print os.path.abspath('.')
 
-
-@task
-def regenerate_weave(portal_name='portal'):
-    if portal_name not in settings.DATABASES:
-        raise Exception('%s is not a configured database' % portal_name)
-
-    try:
-        from weave.models import AttributeColumn
-    except ImportError:
-        return
-
-    # first delete all the attribute columns
-    AttributeColumn.objects.using(portal_name).all().delete()
-    management.call_command('load_weave', portal_name=portal_name)
