@@ -1,6 +1,11 @@
 {% load weave_tags %}<Weave encoding="dynamic">
   <WeaveProperties name="WeaveProperties">
     <backgroundColor>15198183</backgroundColor>
+    <collabServerIP>demo.oicweave.org</collabServerIP>
+    <collabServerName>ivpr-vm</collabServerName>
+    <collabServerPort>5222</collabServerPort>
+    <collabServerRoomToJoin>demo</collabServerRoomToJoin>
+    <collabSpectating>false</collabSpectating>
     <cssStyleSheetName>weaveStyle.css</cssStyleSheetName>
     <dashboardMode>false</dashboardMode>
     <dashedSelectionBox>5,5</dashedSelectionBox>
@@ -11,11 +16,11 @@
       <color>0</color>
       <font>Sophia Nubian</font>
       <italic>false</italic>
-      <size>12</size>
+      <size>11</size>
       <underline>false</underline>
     </defaultTextFormat>
     <enableAboutMenu>true</enableAboutMenu>
-    <enableAdd2DHistogram>true</enableAdd2DHistogram>
+    <enableAdd2DHistogram>false</enableAdd2DHistogram>
     <enableAddAttributeMenuTool>true</enableAddAttributeMenuTool>
     <enableAddBarChart>true</enableAddBarChart>
     <enableAddCollaborationTool>false</enableAddCollaborationTool>
@@ -41,10 +46,12 @@
     <enableAddThermometerTool>true</enableAddThermometerTool>
     <enableAddTimeSliderTool>true</enableAddTimeSliderTool>
     <enableAddWeaveDataSource>true</enableAddWeaveDataSource>
+    <enableAnnotation>true</enableAnnotation>
     <enableBitmapFilters>true</enableBitmapFilters>
     <enableCascadeAllWindows>true</enableCascadeAllWindows>
     <enableClearCurrentSelection>true</enableClearCurrentSelection>
     <enableCloseAllWindows>true</enableCloseAllWindows>
+    <enableCollaborationBar>false</enableCollaborationBar>
     <enableCreateSubsets>true</enableCreateSubsets>
     <enableDataMenu>true</enableDataMenu>
     <enableDebugAlert>false</enableDebugAlert>
@@ -54,7 +61,6 @@
     <enableExportApplicationScreenshot>true</enableExportApplicationScreenshot>
     <enableExportCSV>true</enableExportCSV>
     <enableExportToolImage>true</enableExportToolImage>
-    <enableFullscreen>true</enableFullscreen>
     <enableFullScreen>false</enableFullScreen>
     <enableGeometryProbing>true</enableGeometryProbing>
     <enableManageSavedSelections>true</enableManageSavedSelections>
@@ -66,6 +72,7 @@
     <enableNewDataset>true</enableNewDataset>
     <enableNewUserWizard>true</enableNewUserWizard>
     <enablePanelCoordsPercentageMode>true</enablePanelCoordsPercentageMode>
+    <enablePenTool>true</enablePenTool>
     <enableProbeAnimation>true</enableProbeAnimation>
     <enableProbeLines>true</enableProbeLines>
     <enableProbeToolTip>true</enableProbeToolTip>
@@ -83,6 +90,7 @@
     <enableSubsetControls>true</enableSubsetControls>
     <enableSubsetSelectionBox>true</enableSubsetSelectionBox>
     <enableSubsetsMenu>true</enableSubsetsMenu>
+    <enableThreadPriorities>false</enableThreadPriorities>
     <enableTileAllWindows>true</enableTileAllWindows>
     <enableToolAttributeEditing>true</enableToolAttributeEditing>
     <enableToolControls>true</enableToolControls>
@@ -96,6 +104,7 @@
     <jriServiceURL>/WeaveServices/JRIService</jriServiceURL>
     <macroLibraries>weave.api::WeaveAPI</macroLibraries>
     <macros encoding="dynamic"/>
+    <maxComputationTimePerFrame>100</maxComputationTimePerFrame>
     <maxTooltipRecordsShown>1</maxTooltipRecordsShown>
     <pageTitle>Open Indicators Weave</pageTitle>
     <panelTitleTextFormat>
@@ -103,7 +112,7 @@
       <color>16777215</color>
       <font>Verdana</font>
       <italic>false</italic>
-      <size>11</size>
+      <size>10</size>
       <underline>false</underline>
     </panelTitleTextFormat>
     <pdbServiceURL>/WeavePDBService/PDBService</pdbServiceURL>
@@ -111,12 +120,14 @@
     <probeInnerGlowBlur>5</probeInnerGlowBlur>
     <probeInnerGlowColor>16777215</probeInnerGlowColor>
     <probeInnerGlowStrength>10</probeInnerGlowStrength>
+    <probeLineFormatter>str = replace(lpad(string, 8, "\t"), "\t", "  ");
+str + " (" + title + ")"</probeLineFormatter>
     <probeOuterGlowAlpha>1</probeOuterGlowAlpha>
     <probeOuterGlowBlur>3</probeOuterGlowBlur>
     <probeOuterGlowColor>0</probeOuterGlowColor>
     <probeOuterGlowStrength>3</probeOuterGlowStrength>
     <probeToolTipBackgroundAlpha>1</probeToolTipBackgroundAlpha>
-    <probeToolTipBackgroundColor>13421772</probeToolTipBackgroundColor>
+    <probeToolTipBackgroundColor>15198183</probeToolTipBackgroundColor>
     <probeToolTipFontColor>0</probeToolTipFontColor>
     <probeToolTipMaxWidth>400</probeToolTipMaxWidth>
     <rServiceURL>/WeaveServices/RService</rServiceURL>
@@ -124,6 +135,7 @@
 Google|http://www.google.com/search?q=
 Google Images|http://images.google.com/images?q=
 Google Maps|http://maps.google.com/maps?t=h&amp;q=</searchServiceURLs>
+    <SecondaryKeyNumColumn_useGlobalMinMaxValues>true</SecondaryKeyNumColumn_useGlobalMinMaxValues>
     <selectionAlphaAmount>0.5</selectionAlphaAmount>
     <selectionBlurringAmount>4</selectionBlurringAmount>
     <shadowAlpha>0.5</shadowAlpha>
@@ -132,12 +144,14 @@ Google Maps|http://maps.google.com/maps?t=h&amp;q=</searchServiceURLs>
     <shadowColor>0</shadowColor>
     <shadowDistance>2</shadowDistance>
     <showAttributeSelector>true</showAttributeSelector>
+    <showCollaborationEditor>false</showCollaborationEditor>
     <showColorController>true</showColorController>
     <showCopyright>false</showCopyright>
     <showEquationEditor>true</showEquationEditor>
     <showKeyTypeInColumnTitle>false</showKeyTypeInColumnTitle>
     <showProbeToolTipEditor>true</showProbeToolTipEditor>
     <showSelectedRecordsText>true</showSelectedRecordsText>
+    <showSessionHistoryControls>false</showSessionHistoryControls>
     <showVisToolCloseDialog>false</showVisToolCloseDialog>
     <startupJavaScript/>
     <toolInteractions>
@@ -153,25 +167,23 @@ wheel</zoom>
       <zoomOut>shift,dclick</zoomOut>
       <zoomToExtent>ctrl,alt,shift,dclick</zoomToExtent>
     </toolInteractions>
-    <version>1.0 Beta (Tue Jan 31 04:00:08 EST 2012)</version>
+    <version>1.0 Beta (Fri Apr  6 07:30:06 EDT 2012)</version>
     <windowSnapGridSize>1%</windowSnapGridSize>
-    <workspaceHeight>NaN</workspaceHeight>
+    <workspaceHeight>600</workspaceHeight>
     <workspaceMultiplier>1</workspaceMultiplier>
-    <workspaceWidth>NaN</workspaceWidth>
+    <workspaceWidth>940</workspaceWidth>
   </WeaveProperties>
   <ColorColumn name="defaultColorColumn">
     <internalDynamicColumn encoding="dynamic">
       <GlobalObjectReference name="defaultColorBinColumn"/>
     </internalDynamicColumn>
-    <ramp encoding="xml">
-      <colorRamp category="basic" source="OIC" name="5-Color">
-        <node position="0" color="0xEFF3FF"/>
-        <node position="0.25" color="0xBDD7E7"/>
-        <node position="0.5" color="0x6BAED6"/>
-        <node position="0.75" color="0x3182BD"/>
-        <node position="1" color="0x08519C"/>
-      </colorRamp>
-    </ramp>
+    <ramp>&lt;colorRamp name="5-Color" source="OIC" category="basic"&gt;
+  &lt;node color="0xEFF3FF" position="0"/&gt;
+  &lt;node color="0xBDD7E7" position="0.25"/&gt;
+  &lt;node color="0x6BAED6" position="0.5"/&gt;
+  &lt;node color="0x3182BD" position="0.75"/&gt;
+  &lt;node color="0x08519C" position="1"/&gt;
+&lt;/colorRamp&gt;</ramp>
     <recordColors/>
   </ColorColumn>
   <BinnedColumn name="defaultColorBinColumn">
@@ -200,8 +212,8 @@ wheel</zoom>
   <KeySet name="defaultSelectionKeySet"/>
   <KeySet name="defaultProbeKeySet"/>
   <KeySet name="alwaysHighlightKeySet"/>
-  <LinkableHashMap encoding="dynamic" name="savedSelections"/>
-  <LinkableHashMap encoding="dynamic" name="savedSubsets"/>
+  <LinkableHashMap name="savedSelections" encoding="dynamic"/>
+  <LinkableHashMap name="savedSubsets" encoding="dynamic"/>
   <WeaveDataSource name="WeaveDataSource">
     <attributeHierarchy encoding="xml">
       <hierarchy name="DataHub">
@@ -213,6 +225,101 @@ wheel</zoom>
     <hierarchyURL/>
     <url>/WeaveServices/DataService</url>
   </WeaveDataSource>
-  <LinkableHashMap encoding="dynamic" name="Probe Header Columns"/>
-  <LinkableHashMap encoding="dynamic" name="Probed Columns"/>
+  <LinkableHashMap name="Probe Header Columns" encoding="dynamic">
+    <ReferencedColumn name="ReferencedColumn">
+      <dynamicColumnReference encoding="dynamic">
+        <HierarchyColumnReference>
+          <dataSourceName>WeaveDataSource</dataSourceName>
+          <hierarchyPath encoding="xml">
+            <hierarchy>
+              <category title="Data Tables" name="Data Tables">
+                <category title="School" name="School">
+                  <attribute title="School and District Name, SY10-11" object_id="2311" name="School and District Name" dataTable="School" dataType="string" keyType="School" year="SY10-11" content_type_id="28" id="268781"/>
+                </category>
+              </category>
+            </hierarchy>
+          </hierarchyPath>
+        </HierarchyColumnReference>
+      </dynamicColumnReference>
+    </ReferencedColumn>
+    <ReferencedColumn name="ReferencedColumn2">
+      <dynamicColumnReference encoding="dynamic">
+        <HierarchyColumnReference>
+          <dataSourceName>WeaveDataSource</dataSourceName>
+          <hierarchyPath encoding="xml">
+            <hierarchy>
+              <category title="Data Tables" name="Data Tables">
+                <category title="U.S. States" name="U.S. States">
+                  <attribute title="State Abbreviation, 2000" object_id="2233" name="State Abbreviation" dataTable="U.S. States" dataType="string" keyType="U.S. States" year="2000" content_type_id="28" id="269410"/>
+                </category>
+              </category>
+            </hierarchy>
+          </hierarchyPath>
+        </HierarchyColumnReference>
+      </dynamicColumnReference>
+    </ReferencedColumn>
+  </LinkableHashMap>
+  <LinkableHashMap name="Probed Columns" encoding="dynamic"/>
+  <CustomTool name="CustomTool">
+    <buttonRadius>3</buttonRadius>
+    <children encoding="dynamic">
+      <SimpleInteractiveVisualization name="visualization">
+        <axesAlpha>NaN</axesAlpha>
+        <axesColor>0</axesColor>
+        <axesThickness>NaN</axesThickness>
+        <enableAutoZoomToExtent>true</enableAutoZoomToExtent>
+        <enableAutoZoomToSelection>false</enableAutoZoomToSelection>
+        <enableAutoZoomXToNiceNumbers>false</enableAutoZoomXToNiceNumbers>
+        <enableAutoZoomYToNiceNumbers>false</enableAutoZoomYToNiceNumbers>
+        <enableFixedAspectRatio>false</enableFixedAspectRatio>
+        <enableProbe>true</enableProbe>
+        <enableSelection>true</enableSelection>
+        <enableZoomAndPan>true</enableZoomAndPan>
+        <gridLineAlpha>NaN</gridLineAlpha>
+        <gridLineColor>0</gridLineColor>
+        <gridLineThickness>NaN</gridLineThickness>
+        <includeNonSelectableLayersInAutoZoom>false</includeNonSelectableLayersInAutoZoom>
+        <layers encoding="dynamic"/>
+        <marginBottom>0</marginBottom>
+        <marginLeft>0</marginLeft>
+        <marginRight>0</marginRight>
+        <marginTop>0</marginTop>
+        <maxZoomLevel>16</maxZoomLevel>
+        <minScreenSize>128</minScreenSize>
+        <minZoomLevel>0</minZoomLevel>
+        <overrideXMax>NaN</overrideXMax>
+        <overrideXMin>NaN</overrideXMin>
+        <overrideYMax>NaN</overrideYMax>
+        <overrideYMin>NaN</overrideYMin>
+        <zoomBounds>
+          <xMax>NaN</xMax>
+          <xMin>NaN</xMin>
+          <yMax>NaN</yMax>
+          <yMin>NaN</yMin>
+        </zoomBounds>
+      </SimpleInteractiveVisualization>
+    </children>
+    <closeable>true</closeable>
+    <draggable>true</draggable>
+    <enableBorders>true</enableBorders>
+    <enableSubMenu>false</enableSubMenu>
+    <enableTitle>false</enableTitle>
+    <maximizable>true</maximizable>
+    <maximized>false</maximized>
+    <minimizable>true</minimizable>
+    <minimized>false</minimized>
+    <panelBackgroundColor>NaN</panelBackgroundColor>
+    <panelBorderColor>NaN</panelBorderColor>
+    <panelHeight>92%</panelHeight>
+    <panelStyleList>backgroundImage: http://local.provplan.org/hublocal/WeaveIntro.png;</panelStyleList>
+    <panelTitle>Getting Started</panelTitle>
+    <panelWidth>81%</panelWidth>
+    <panelX>11%</panelX>
+    <panelY>3%</panelY>
+    <pinnable>true</pinnable>
+    <pinnableToBack>false</pinnableToBack>
+    <pinned>false</pinned>
+    <pinnedToBack>false</pinnedToBack>
+    <resizeable>true</resizeable>
+  </CustomTool>
 </Weave>
