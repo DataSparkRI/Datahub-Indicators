@@ -220,8 +220,6 @@ wheel</zoom>
         {% for list in lists %}
         {% attributecolumn_list_hierarchy list.name list.attr_col_Q %}
         {% endfor %}
-      </hierarchy>
-      <hierarchy name="Open Indicators Server">
          <category title="Geometry Collections" name="Geometry Collections">
           <attribute title="PVD Neighborhoods" dataType="geometry" keyType="pvdnhoods" name="PVD Neighborhoods"/>
           <attribute title="RI Municipalities" dataType="geometry" keyType="RI Municipalities" name="RI Municipalities"/>
