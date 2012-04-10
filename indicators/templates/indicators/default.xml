@@ -221,6 +221,18 @@ wheel</zoom>
         {% attributecolumn_list_hierarchy list.name list.attr_col_Q %}
         {% endfor %}
       </hierarchy>
+      <hierarchy name="Open Indicators Server">
+         <category title="Geometry Collections" name="Geometry Collections">
+          <attribute title="PVD Neighborhoods" dataType="geometry" keyType="pvdnhoods" name="PVD Neighborhoods"/>
+          <attribute title="RI Municipalities" dataType="geometry" keyType="RI Municipalities" name="RI Municipalities"/>
+          <attribute title="RI Public Elementary Schools" dataType="geometry" keyType="School" name="RI Public Elementary Schools"/>
+          <attribute title="RI Public High Schools" dataType="geometry" keyType="School" name="RI Public High Schools"/>
+          <attribute title="RI Public Middle Schools" dataType="geometry" keyType="School" name="RI Public Middle Schools"/>
+          <attribute title="RI Public Schools" dataType="geometry" keyType="School" name="RI Public Schools"/>
+          <attribute title="RI Tracts -- Census 2000" dataType="geometry" keyType="RI Tracts - Census 2000" name="RI Tracts -- Census 2000"/>
+          <attribute title="U.S. States &amp; DC" dataType="geometry" keyType="U.S. States" name="U.S. States &amp; DC"/>
+        </category>
+      </hierarchy>
     </attributeHierarchy>
     <hierarchyURL/>
     <url>/WeaveServices/DataService</url>
