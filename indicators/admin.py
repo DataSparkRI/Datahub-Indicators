@@ -106,6 +106,7 @@ class IndicatorAdmin(admin.ModelAdmin):
             
         ('Django Internals', { 'fields':(
             'published',
+            'retired',
             'visible_in_all_lists',
             'slug',
             'tags',
