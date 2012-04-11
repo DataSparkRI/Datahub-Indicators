@@ -113,6 +113,7 @@ class Indicator(models.Model):
     datasources = models.ManyToManyField(DataSource)
     
     published = models.BooleanField(default=True)
+    retired =models.BooleanField(default=False)
     visible_in_all_lists = models.BooleanField(default=False)
     
     slug = models.SlugField(unique=True,db_index=True,null=False)
