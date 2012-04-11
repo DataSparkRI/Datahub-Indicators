@@ -215,15 +215,17 @@ class IndicatorAdmin(admin.ModelAdmin):
                     col = cols.index(pregenpart.column_name)
                     for row in reader:
                         val = row[col]
-                        try:
+
+                        if obj.data_type == 'numeric':
                             float(val)
                             data_type = 'numeric'
                             numeric = val
                             string = None
-                        except ValueError:
+                        elif obj.data_type =='string':
                             data_type = 'string'
                             string = val
                             numeric = None
+                        
                         new_data.append({
                             'time_type': pregenpart.time_type,
                             'time_key': pregenpart.time_value,
