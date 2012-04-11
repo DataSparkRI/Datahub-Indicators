@@ -70,17 +70,11 @@ class IndicatorAdmin(admin.ModelAdmin):
             "all": ("stylesheets/extend_tag_textbox.css", 
                     "stylesheets/extend_universe_textbox.css",)
         }
-<<<<<<< HEAD
-    list_display = ('name', 'data_type', 'visible_in_all_lists', 'published', 
-                    'load_pending', 'last_load_completed', 'last_audited',)
-    list_editable = ('visible_in_all_lists', 'published',)
-    list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 
-                   'load_pending', 'published', 'last_audited')
-=======
+
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published','retired', 'load_pending', 'last_load_completed', 'last_audited',)
     list_editable = ('visible_in_all_lists', 'published','retired',)
     list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published', 'last_audited')
->>>>>>> amedrano
+
     search_fields = ('name', 'datasources__short_name', 'short_definition',
                      'long_definition', 'notes', 'file_name')
     exclude = ('raw_tags', 'raw_datasources', 'years_available_display', 
