@@ -216,7 +216,8 @@ class IndicatorAdmin(admin.ModelAdmin):
                     name_col = cols.index(pregenpart.column_name)
                     key_col = cols.index(pregenpart.key_column)
                     for row in reader:
-                        val = row[col]
+                        val = row[name_col]
+                        key_value = row[key_col]
 
                         if obj.data_type == 'numeric':
                             float(val)
