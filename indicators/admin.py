@@ -220,6 +220,9 @@ class IndicatorAdmin(admin.ModelAdmin):
                         key_value = row[key_col]
 
                         if obj.data_type == 'numeric':
+                            #check for blank values
+                            if val =="":
+                                val = "0"
                             float(val)
                             data_type = 'numeric'
                             numeric = val
