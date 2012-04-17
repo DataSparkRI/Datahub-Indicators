@@ -19,8 +19,8 @@ def get_dynamic_indicator_def(indicator):
 
 def generate_indicator_data(indicator, key_type, key_value, 
         time_type, time_key, value, data_type=None):
-    from webportal.indicators.models import IndicatorData
-    import datahub.indicators.conversion as conversion
+    from indicators.models import IndicatorData
+    import indicators.conversion as conversion
     indicator_data_kwargs = {}
     
     value = clean_value(value)
