@@ -72,9 +72,9 @@ def move_to_portal(indicator_defs, portal_name):
 
     for i_def in indicator_defs:
         indicator = Indicator.objects.get_for_def(i_def, using=portal_name)
-        if indicator.indicatorpregenpart_set.count() > 0:
+       # if indicator.indicatorpregenpart_set.count() > 0:
             # skip indicators that aren't "dynamic" indicators
-            continue
+            #continue
         results = IndicatorResult.objects.filter(class_name=i_def.__name__)
         IndicatorData.objects.using(portal_name).filter(indicator=indicator).delete()
         for result in results:
