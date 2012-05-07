@@ -221,7 +221,7 @@ class IndicatorAdmin(admin.ModelAdmin):
 
                         if obj.data_type == 'numeric':
                             #check for blank values
-                            if val =="":
+                            if val =="" or val==None or val==" ":
                                 val = None
                             else:
                                 float(val)
@@ -229,6 +229,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                             data_type = 'numeric'
                             numeric = val
                             string = None
+
                         elif obj.data_type =='string':
                             data_type = 'string'
                             string = val
