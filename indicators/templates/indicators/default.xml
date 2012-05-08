@@ -1,5 +1,4 @@
-{% load weave_tags %}
-<Weave encoding="dynamic">
+{% load weave_tags %}<Weave encoding="dynamic">
 <CustomTool name="CustomTool">
     <buttonRadius>3</buttonRadius>
     <children encoding="dynamic">
