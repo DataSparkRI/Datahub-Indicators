@@ -107,7 +107,7 @@
     <enableAddRScriptEditor>false</enableAddRScriptEditor>
     <enableAddScatterplot>true</enableAddScatterplot>
     <enableAddThermometerTool>true</enableAddThermometerTool>
-    <enableAddTimeSliderTool>true</enableAddTimeSliderTool>
+    <enableAddTimeSliderTool>false</enableAddTimeSliderTool>
     <enableAddWeaveDataSource>true</enableAddWeaveDataSource>
     <enableAnnotation>true</enableAnnotation>
     <enableBitmapFilters>true</enableBitmapFilters>
@@ -168,7 +168,7 @@
     <macroLibraries>weave.api::WeaveAPI</macroLibraries>
     <macros encoding="dynamic"/>
     <maxComputationTimePerFrame>100</maxComputationTimePerFrame>
-    <maxTooltipRecordsShown>1</maxTooltipRecordsShown>
+    <maxTooltipRecordsShown>3</maxTooltipRecordsShown>
     <pageTitle>Open Indicators Weave</pageTitle>
     <panelTitleTextFormat>
       <bold>false</bold>
@@ -315,6 +315,7 @@ wheel</zoom>
         </HierarchyColumnReference>
       </dynamicColumnReference>
     </ReferencedColumn>
+	<!---
     <ReferencedColumn name="ReferencedColumn2">
       <dynamicColumnReference encoding="dynamic">
         <HierarchyColumnReference>
@@ -330,7 +331,7 @@ wheel</zoom>
           </hierarchyPath>
         </HierarchyColumnReference>
       </dynamicColumnReference>
-    </ReferencedColumn>
+    </ReferencedColumn>-->
   </LinkableHashMap>
   <!--
   <LinkableHashMap name="Probed Columns" encoding="dynamic"/>
