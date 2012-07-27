@@ -445,5 +445,5 @@ class AnonymizedEnrollment(models.Model):
     enroll_date = models.DateField(null=True)
     exit_date = models.DateField(null=True)
     exit_type = models.CharField(max_length=200)
-    
+    multi_year = models.CharField(max_length=200, db_index=True, null=True)
     objects = AnonymizedEnrollmentManager()
