@@ -8,14 +8,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Deleting field 'IndicatorData.numeric'
-        db.delete_column('indicators_indicatordata', 'numeric')
+        # Changing field 'Indicator.file_name'
+        db.alter_column('indicators_indicator', 'file_name', self.gf('indicators.fields.FileNameField')(max_length=100, blank=True))
 
 
     def backwards(self, orm):
         
-        # Adding field 'IndicatorData.numeric'
-        db.add_column('indicators_indicatordata', 'numeric', self.gf('django.db.models.fields.FloatField')(null=True), keep_default=False)
+        # Changing field 'Indicator.file_name'
+        db.alter_column('indicators_indicator', 'file_name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True))
 
 
     models = {
@@ -69,7 +69,7 @@ class Migration(SchemaMigration):
         'indicators.datasource': {
             'Meta': {'object_name': 'DataSource'},
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'icon_path': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'icon_file': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'short': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
@@ -82,7 +82,7 @@ class Migration(SchemaMigration):
             'data_type': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
             'datasources': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['indicators.DataSource']", 'symmetrical': 'False'}),
             'display_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'file_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'file_name': ('indicators.fields.FileNameField', [], {'max_length': '100', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_audited': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'last_load_completed': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
@@ -98,6 +98,7 @@ class Migration(SchemaMigration):
             'query_level': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'raw_datasources': ('django.db.models.fields.TextField', [], {}),
             'raw_tags': ('django.db.models.fields.TextField', [], {}),
+            'retired': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'routine_use': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'short_definition': ('django.db.models.fields.TextField', [], {}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
@@ -112,11 +113,11 @@ class Migration(SchemaMigration):
         'indicators.indicatordata': {
             'Meta': {'object_name': 'IndicatorData'},
             'data_type': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
-            'decimal_numeric': ('indicators.fields.RoundingDecimalField', [], {'null': 'True', 'max_digits': '20', 'decimal_places': '2', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'indicator': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['indicators.Indicator']"}),
             'key_unit_type': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'}),
             'key_value': ('django.db.models.fields.CharField', [], {'max_length': '100', 'db_index': 'True'}),
+            'numeric': ('indicators.fields.RoundingDecimalField', [], {'null': 'True', 'max_digits': '20', 'decimal_places': '2', 'blank': 'True'}),
             'string': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True'}),
             'time_key': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'time_type': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '50', 'null': 'True', 'blank': 'True'})
