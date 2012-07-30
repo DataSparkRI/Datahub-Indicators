@@ -163,11 +163,14 @@ class Indicator(models.Model):
         2000,2001,2002,2004 --> 2000-02,2004
         """
         years = set()
+        multi_years = set()
         for time_type, time_key in self.indicatordata_set.filter(time_key__isnull=False).exclude(numeric__isnull=True,string__isnull=True).values_list('time_type', 'time_key').distinct():
             if time_type == 'School Year':
                 years.add(school_year_to_year(time_key))
             if time_type == 'Calendar Year':
                 years.add(int(time_key.split('.')[0]))
+            if time_type == 'Multi-Year':
+                multi_years.add(time_key)
         self.years_available = list(years)
         # FIXME: done in a rush, could be better
         years = sorted(years)
@@ -198,6 +201,16 @@ class Indicator(models.Model):
         
         if len(ranged_sets) > 0:
             self.years_available_display = ','.join(ranged_sets)
+        elif len(multi_years) > 0:
+            myears = []
+            for m in multi_years:
+                p = m.split('-')
+                myears.append([int(p[0]), int(p[1])])
+            myears = sorted(myears, key=lambda first_year:first_year[0] )
+            res = []
+            for p in myears:
+                res.append("%d-%d" % ( p[0], p[1]%100 ) )
+            self.years_available_display = ','.join(res)    
         else:
             self.years_available_display = ''
 
