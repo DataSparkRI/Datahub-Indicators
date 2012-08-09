@@ -123,7 +123,6 @@ class IndicatorAdmin(admin.ModelAdmin):
             "all": ("stylesheets/extend_tag_textbox.css", 
                     "stylesheets/extend_universe_textbox.css",)
         }
-
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published','retired', 'load_pending', 'last_load_completed', 'last_audited',)
     list_editable = ('visible_in_all_lists', 'published','retired',)
     list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published','retired',  'last_audited')
