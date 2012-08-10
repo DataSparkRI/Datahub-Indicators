@@ -162,8 +162,16 @@ class Indicator(models.Model):
         
         2000,2001,2002,2004 --> 2000-02,2004
         """
+        def convert_multi_years_range_to_years(range):
+            parts = range.split("-")
+            res = set()
+            for year in xrange(int(parts[0]), int(parts[1])+1):
+                res.add(year)
+            return res
+
         years = set()
         multi_years = set()
+        multi_years_available = set()
         for time_type, time_key in self.indicatordata_set.filter(time_key__isnull=False).exclude(numeric__isnull=True,string__isnull=True).values_list('time_type', 'time_key').distinct():
             if time_type == 'School Year':
                 years.add(school_year_to_year(time_key))
@@ -171,12 +179,16 @@ class Indicator(models.Model):
                 years.add(int(time_key.split('.')[0]))
             if time_type == 'Multi-Year':
                 multi_years.add(time_key)
-        self.years_available = list(years)
+                multi_years_available.update(convert_multi_years_range_to_years(time_key))
+        years_av = years.copy()
+        years_av.update(multi_years_available)
+        self.years_available = list(years_av)
         # FIXME: done in a rush, could be better
         years = sorted(years)
         ranged_sets = []
         last_year = None
         start = None
+
         for year in years:
             if not last_year:
                 start = year
@@ -201,7 +213,7 @@ class Indicator(models.Model):
         
         if len(ranged_sets) > 0:
             self.years_available_display = ','.join(ranged_sets)
-        elif len(multi_years) > 0:
+        if len(multi_years) > 0:
             myears = []
             for m in multi_years:
                 p = m.split('-')
@@ -209,8 +221,11 @@ class Indicator(models.Model):
             myears = sorted(myears, key=lambda first_year:first_year[0] )
             res = []
             for p in myears:
-                res.append("%d-%d" % ( p[0], p[1]%100 ) )
-            self.years_available_display = ','.join(res)    
+                res.append("%s-%s" % ( p[0], str(p[1])[2:4] ) )
+            if self.years_available_display == '':
+                self.years_available_display = ','.join(res)
+            else:
+                self.years_available_display += ',' + ','.join(res)
         else:
             self.years_available_display = ''
 
@@ -373,7 +388,7 @@ class AnonymizedEnrollmentManager(models.Manager):
         """ Expects a list of dict-based record definitions """
         from django.db import connections, transaction
         cursor = connections['portal'].cursor()
-        
+    
         batch_size = 100000
         row_sqls = []
         count = 0
