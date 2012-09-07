@@ -12,10 +12,17 @@ def default(request):
     lists = []
     if request.user.is_authenticated():
         for list in request.user.indicatorlist_set.filter(visible_in_weave=True):
+            if (list.name == 'Default - List of All Available Indicators'):
+                user_i_count = list.indicators.all().count()
+                i_count = Indicator.objects.filter(published=True).count()
+                if (user_i_count != i_count):
+                    list.indicators = Indicator.objects.filter(published=True)
+
             lists.append({
                 'name': list.name,
                 'attr_col_Q': list.attribute_column_Q
             })
+
     else:
         lists.append({
             'name': 'All Indicators',

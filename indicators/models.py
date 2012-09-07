@@ -323,6 +323,11 @@ def _default_ilist_name(user):
 
 class IndicatorListManager(models.Manager):
     def get_or_create_default_for_user(self, user):
+        # default ilist of all available indicators
+        ilist_all, created = self.get_or_create(owner=user, name='Default - List of All Available Indicators')
+        ilist_all.indicators = Indicator.objects.filter(published=True)
+
+        # empty user-specific ilist
         default_list_name = _default_ilist_name(user)
         list, created = self.get_or_create(owner=user, name=default_list_name)
         return list, created
