@@ -134,7 +134,9 @@ class Indicator(models.Model):
         return u"%s, %s" % (self.display_name, time_key, )
 
     def get_time_types_available(self):
-        return self.indicatordata_set.values_list('time_type',flat=True).distinct()
+
+        return self.indicatordata_set.distinct()
+        #return self.indicatordata_set.values_list('time_type',flat=True).distinct()
     
     def get_key_unit_types_available(self):
         return self.indicatordata_set.values_list('key_unit_type',flat=True).distinct()
@@ -148,6 +150,48 @@ class Indicator(models.Model):
 
     #def get_time_keys_available(self, time_type):
     #    return self.indicatordata_set.values_list('time_key',flat=True).distinct()
+
+    def get_types_and_times(self):
+
+	def sort_date_range():
+		return
+
+	def compress_date_range(time):
+		return "%s%s" % (time[:5], time[7:]) #2000-2010 -> 2000-10
+
+	def time_format(types_and_times_dict):
+		for type_key in types_and_times_dict:
+			if type_key == 'Calendar Year':
+				if not types_and_times_dict[type_key]:
+					del(types_and_times_dict[type_key])
+					continue
+				types_and_times_dict[type_key] = sorted(types_and_times_dict[type_key])
+			elif type_key == 'Multi-Year' or type_key == 'School Year':
+				if not types_and_times_dict[type_key]:
+					del(types_and_times_dict[type_key])
+					continue
+				types_and_times_dict[type_key] = map(lambda x:x[1], sorted(map(lambda a:[map(int,a.split('-')),a], types_and_times_dict[type_key])))
+				types_and_times_dict[type_key] = map(compress_date_range, types_and_times_dict[type_key])
+			elif type_key == 'Academic Term':
+				if not types_and_times_dict[type_key]:
+					del(types_and_times_dict[type_key])
+					continue
+				types_and_times_dict[type_key] = sorted(types_and_times_dict[type_key])
+			else:
+				if not types_and_times_dict[type_key]:
+					del(types_and_times_dict[type_key])
+		return types_and_times_dict
+
+	types_and_times_dict = {}
+ 	time_types = self.indicatordata_set.values_list('time_type',flat=True).distinct()
+	type_and_times = self.indicatordata_set.filter(time_key__isnull=False).exclude(numeric__isnull=True,string__isnull=True).values_list('time_type', 'time_key').distinct()
+	for time_type in time_types:
+		types_and_times_dict[time_type] = []
+		for type_and_time in type_and_times:
+			a, b = type_and_time
+			if a == time_type:
+				types_and_times_dict[time_type].append(b)
+	return time_format(types_and_times_dict)
 
     def get_key_values_available(self, key_unit_type):
         return self.indicatordata_set.values_list('key_value',flat=True).distinct()
