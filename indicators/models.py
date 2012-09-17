@@ -87,7 +87,7 @@ class Indicator(models.Model):
     long_definition = models.TextField(help_text="This field is Markdown enabled.")
     purpose = models.TextField(blank=True, help_text="This field is Markdown enabled.") # aka rationale/implications
     universe = models.CharField(max_length=300, blank=True)
-    limitations = models.TextField(blank=True)
+    limitations = models.TextField(blank=True, help_text="This field is Markdown enabled.")
     routine_use = models.TextField(blank=True)
     last_audited = models.DateTimeField(blank=True, null=True, help_text="Blank or null means it has never been audited")
     
@@ -172,7 +172,7 @@ class Indicator(models.Model):
 					continue
 				types_and_times_dict[type_key] = map(lambda x:x[1], sorted(map(lambda a:[map(int,a.split('-')),a], types_and_times_dict[type_key])))
 				types_and_times_dict[type_key] = map(compress_date_range, types_and_times_dict[type_key])
-			elif type_key == 'Academic Term':
+			elif type_key == 'Term':
 				if not types_and_times_dict[type_key]:
 					del(types_and_times_dict[type_key])
 					continue
