@@ -134,9 +134,7 @@ class Indicator(models.Model):
         return u"%s, %s" % (self.display_name, time_key, )
 
     def get_time_types_available(self):
-
-        return self.indicatordata_set.distinct()
-        #return self.indicatordata_set.values_list('time_type',flat=True).distinct()
+        return self.indicatordata_set.values_list('time_type',flat=True).distinct()
     
     def get_key_unit_types_available(self):
         return self.indicatordata_set.values_list('key_unit_type',flat=True).distinct()
