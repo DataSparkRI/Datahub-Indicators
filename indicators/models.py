@@ -277,10 +277,17 @@ class Indicator(models.Model):
         from taggit.utils import parse_tags
         self.tags.set(*parse_tags(self.raw_tags))
 
+    def taggit_to_raw(self):
+	tags = []
+	for tag in self.tags.all():
+		tags.append(tag.name)
+	self.raw_tags = ', '.join(tags)
+
     def update_metadata(self):
         self.set_years_available()
         #self.parse_tags()
         #self.assign_datasources()
+	self.taggit_to_raw() #tags updated in admin must be added to "raw_tags" for text search to work properly
     
     def mark_load_complete(self):
         self.load_pending = False
@@ -337,8 +344,8 @@ class Indicator(models.Model):
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
         unique_slugify(self, "%s" % (self.name, ))
-        self.update_metadata()
         super(Indicator, self).save(*args, **kwargs)
+        self.update_metadata()
 
     def __unicode__(self):
         return self.name
