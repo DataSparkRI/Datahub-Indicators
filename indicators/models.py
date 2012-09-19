@@ -8,10 +8,12 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from taggit.managers import TaggableManager
+from taggit.models import TaggedItem
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
 from indicators.fields import RoundingDecimalField,FileNameField
+from django.db.models.signals import post_save
 
 INDICATOR_TYPES = (
     ('csv', 'csv'),
@@ -77,7 +79,7 @@ class IndicatorManager(models.Manager):
         possible_names.append(name)
         possible_names.append(re.sub(r'Indicator$','',name))
         return self.using(using).get(Q(name__iexact=possible_names[0]) | Q(name__iexact=possible_names[1]))
-    
+
 class Indicator(models.Model):    
     #qualitative information
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
@@ -275,17 +277,10 @@ class Indicator(models.Model):
         from taggit.utils import parse_tags
         self.tags.set(*parse_tags(self.raw_tags))
 
-    def taggit_to_raw(self):
-	tags = []
-	for tag in self.tags.all():
-		tags.append(tag.name)
-	self.raw_tags = ', '.join(tags)
-
     def update_metadata(self):
         self.set_years_available()
         #self.parse_tags()
         #self.assign_datasources()
-	self.taggit_to_raw() #tags updated in admin must be added to "raw_tags" for text search to work properly
     
     def mark_load_complete(self):
         self.load_pending = False
@@ -342,11 +337,23 @@ class Indicator(models.Model):
     def save(self, *args, **kwargs):
         from webportal.unique_slugify import unique_slugify
         unique_slugify(self, "%s" % (self.name, ))
-        super(Indicator, self).save(*args, **kwargs)
         self.update_metadata()
+        super(Indicator, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
+
+#tags updated in admin must be added to "raw_tags" for text search to work properly
+    #this gets called after a tag is added
+def taggit_to_raw(sender, **kwargs):
+    taggeditem = kwargs['instance']
+    indicator = taggeditem.content_object
+    tags = []
+    for tag in indicator.tags.all():
+        tags.append(tag.name)
+    indicator.raw_tags = ', '.join(tags)
+    indicator.save()
+post_save.connect(taggit_to_raw, sender=TaggedItem)
 
 class IndicatorData(models.Model):
     indicator = models.ForeignKey(Indicator)
