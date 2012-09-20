@@ -8,12 +8,10 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from taggit.managers import TaggableManager
-from taggit.models import TaggedItem
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
 from indicators.fields import RoundingDecimalField,FileNameField
-from django.db.models.signals import post_save
 
 INDICATOR_TYPES = (
     ('csv', 'csv'),
@@ -342,18 +340,6 @@ class Indicator(models.Model):
 
     def __unicode__(self):
         return self.name
-
-#tags updated in admin must be added to "raw_tags" for text search to work properly
-    #this gets called after a tag is added
-def taggit_to_raw(sender, **kwargs):
-    taggeditem = kwargs['instance']
-    indicator = taggeditem.content_object
-    tags = []
-    for tag in indicator.tags.all():
-        tags.append(tag.name)
-    indicator.raw_tags = ', '.join(tags)
-    indicator.save()
-post_save.connect(taggit_to_raw, sender=TaggedItem)
 
 class IndicatorData(models.Model):
     indicator = models.ForeignKey(Indicator)
