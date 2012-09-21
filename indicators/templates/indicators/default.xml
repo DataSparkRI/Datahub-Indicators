@@ -1,5 +1,5 @@
 {% load weave_tags %}<Weave encoding="dynamic">
-<CustomTool name="CustomTool">
+  <CustomTool name="CustomTool">
     <buttonRadius>3</buttonRadius>
     <children encoding="dynamic">
       <SimpleInteractiveVisualization name="visualization">
@@ -60,9 +60,8 @@
     <pinned>false</pinned>
     <pinnedToBack>true</pinnedToBack>
     <resizeable>true</resizeable>
-  </CustomTool>  
-
-<WeaveProperties name="WeaveProperties">
+  </CustomTool>
+  <WeaveProperties name="WeaveProperties">
     <backgroundColor>15198183</backgroundColor>
     <collabServerIP>demo.oicweave.org</collabServerIP>
     <collabServerName>ivpr-vm</collabServerName>
@@ -104,7 +103,7 @@
     <enableAddPieChartHistogram>true</enableAddPieChartHistogram>
     <enableAddRadViz>false</enableAddRadViz>
     <enableAddRamachandranPlot>false</enableAddRamachandranPlot>
-    <enableAddRScriptEditor>false</enableAddRScriptEditor>
+    <enableAddRScriptEditor>true</enableAddRScriptEditor>
     <enableAddScatterplot>true</enableAddScatterplot>
     <enableAddThermometerTool>true</enableAddThermometerTool>
     <enableAddTimeSliderTool>false</enableAddTimeSliderTool>
@@ -291,6 +290,8 @@ wheel</zoom>
           <attribute title="RI Public Middle Schools" dataType="geometry" keyType="School" name="RI Public Middle Schools"/>
           <attribute title="RI Public Schools" dataType="geometry" keyType="School" name="RI Public Schools"/>
           <attribute title="RI Tracts -- Census 2000" dataType="geometry" keyType="RI Tracts - Census 2000" name="RI Tracts -- Census 2000"/>
+          <attribute name="RI Tracts -- Census 2010" keyType="RI Tracts - Census 2010" dataType="geometry" title="RI Tracts -- Census 2010"/>
+          <attribute name="RI Zip Codes" keyType="RI Zip Codes" dataType="geometry" title="RI Zip Codes"/>
           <attribute title="U.S. States &amp; DC" dataType="geometry" keyType="U.S. States" name="U.S. States &amp; DC"/>
         </category>
       </hierarchy>
@@ -1051,7 +1052,7 @@ wheel</zoom>
             <minVisibleScale>0</minVisibleScale>
             <plotter encoding="dynamic">
               <RegressionLinePlotter>
-                <drawLine>false</drawLine>
+                <drawLine>true</drawLine>
                 <keySet>
                   <keyFilter encoding="dynamic">
                     <GlobalObjectReference name="defaultSubsetKeyFilter"/>
