@@ -5,7 +5,7 @@ import uuid
 
 from django.conf import settings
 from django.contrib import admin, messages
-from indicators.models import DataSource, IndicatorList, Indicator,IndicatorPregenPart, IndicatorData
+from indicators.models import DataSource, IndicatorList, Indicator,IndicatorPregenPart, IndicatorData, TypeIndicatorLookup
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib.admin.filterspecs import FilterSpec
 from indicators.fields import RoundingDecimalField, FileNameField
@@ -267,3 +267,4 @@ class IndicatorAdmin(admin.ModelAdmin):
 admin.site.register(DataSource)
 admin.site.register(IndicatorList)
 admin.site.register(Indicator, IndicatorAdmin)
+admin.site.register(TypeIndicatorLookup)

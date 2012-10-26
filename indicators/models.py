@@ -11,7 +11,7 @@ from taggit.managers import TaggableManager
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
-from indicators.fields import RoundingDecimalField,FileNameField
+from indicators.fields import RoundingDecimalField, FileNameField
 
 INDICATOR_TYPES = (
     ('csv', 'csv'),
@@ -36,6 +36,13 @@ UNIT_CHOICES = (
     ('other', 'other') ,    # two decimal places
 )
 
+class TypeIndicatorLookup(models.Model):
+    name = models.CharField(max_length=100)
+    key_unit_type = models.CharField(max_length=100)
+    indicator_id = models.CharField(max_length=10)
+
+    def __unicode__(self):
+        return self.name
 
 class DataSource(models.Model):
     short = models.CharField(max_length=11)

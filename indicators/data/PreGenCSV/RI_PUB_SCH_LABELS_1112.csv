@@ -1,301 +1,300 @@
-is_open,school_year,LabelStateCode,LabelSchoolNameShort,LabelSchoolNameLong,LabelDistCode,LabelDistrict,LabelSch+District,LabelGradeConfig,LabelCharterSch,LabelSchCoreCity4,LabelSchCoreCity5,LabelSchCoreCity6,LabelGradeConfigAbbr,LabelSchCity,nces_code,LabelElementary,LabelMiddle,LabelHigh,LabelSchMCSch,LabelSchMCElemSch
-Y,2011-2012,01103,Primrose Hill,Primrose Hill School,01,Barrington,Primrose Hill - Barrington,Emh,N,N,,N,PK to 3,Barrington,440003000006,Y,N,N,N,N
-Y,2011-2012,08603,Blackstone Valley Prep Elem 2,Blackstone Valley Prep Elementary 2 School,47,"Blackstone Valley Prep, A RI Mayoral Academy",Blackstone Valley Prep Elem 2 - Blackstone Valley Prep RIMA,Emh,Y,N,,N,K to K,Cumberland,,Y,N,N,N,N
-Y,2011-2012,28607,RI Nurses Inst. Mid. College HS,RI Nurses Institute Middle College Charter High School,63,Rhode Island Nurses Institute Middle College,RI Nurses Inst. Mid. College HS - RI Nurses Inst. Mid. College Charter,emH,Y,Y,,Y,10 to 12,Providence,,N,N,Y,N,N
-Y,2011-2012,01104,Nayatt School,Nayatt School,01,Barrington,Nayatt School - Barrington,Emh,N,N,,N,PK to 3,Barrington,440003000004,Y,N,N,N,N
-Y,2011-2012,01105,Hampden Meadows,Hampden Meadows School,01,Barrington,Hampden Meadows - Barrington,Emh,N,N,,N,4 to 5,Barrington,440003000003,Y,N,N,N,N
-Y,2011-2012,01106,Barrington HS,Barrington High School,01,Barrington,Barrington HS - Barrington,emH,N,N,,N,9 to 12,Barrington,440003000001,N,N,Y,N,N
-Y,2011-2012,01108,Barrington MS,Barrington Middle School,01,Barrington,Barrington MS - Barrington,eMh,N,N,,N,6 to 8,Barrington,440003000002,N,Y,N,N,N
-Y,2011-2012,01109,Sowams,Sowams Elementary School,01,Barrington,Sowams - Barrington,Emh,N,N,,N,K to 3,Barrington,440003000005,Y,N,N,N,N
-Y,2011-2012,03104,Burrillville MS,Burrillville Middle School,03,Burrillville,Burrillville MS - Burrillville,eMh,N,N,,N,6 to 8,Harrisville,440009000383,N,Y,N,N,N
-Y,2011-2012,03105,Steere Farm,Steere Farm Elementary School,03,Burrillville,Steere Farm - Burrillville,Emh,N,N,,N,PK to 5,Pascoag,440009000057,Y,N,N,N,N
-Y,2011-2012,03107,Callahan,William L. Callahan School,03,Burrillville,Callahan - Burrillville,Emh,N,N,,N,2 to 5,Harrisville,440009000022,Y,N,N,N,N
-Y,2011-2012,03108,Levy,Austin T. Levy School,03,Burrillville,Levy - Burrillville,Emh,N,N,,N,K to 1,Harrisville,440009000018,Y,N,N,N,N
-Y,2011-2012,03109,Burrillville HS,Burrillville High School,03,Burrillville,Burrillville HS - Burrillville,emH,N,N,,N,9 to 12,Harrisville,440009000019,N,N,Y,N,N
-Y,2011-2012,04101,Ella Risk,Ella Risk School,04,Central Falls,Ella Risk - Central Falls,Emh,N,Y,,Y,1 to 4,Central Falls,440012000027,Y,N,N,N,N
-Y,2011-2012,04104,Harold Hunt,Capt. G. Harold Hunt School,04,Central Falls,Harold Hunt - Central Falls,Emh,N,Y,,Y,PK to 1,Central Falls,440012000025,Y,N,N,N,N
-Y,2011-2012,04105,Robertson,Margaret I. Robertson School,04,Central Falls,Robertson - Central Falls,Emh,N,Y,,Y,5 to 5,Central Falls,440012000028,Y,N,N,N,N
-Y,2011-2012,04106,Veterans Mem.,Veterans Memorial Elementary,04,Central Falls,Veterans Mem. - Central Falls,Emh,N,Y,,Y,1 to 4,Central Falls,440012000385,Y,N,N,N,N
-Y,2011-2012,04108,Central Falls SHS,Central Falls High School,04,Central Falls,Central Falls SHS - Central Falls,emH,N,Y,,Y,9 to 12,Central Falls,440012000026,N,N,Y,N,N
-Y,2011-2012,04115,Calcutt MS,Calcutt Middle School,04,Central Falls,Calcutt MS - Central Falls,eMh,N,Y,,Y,6 to 8,Central Falls,440012000024,N,Y,N,N,N
-Y,2011-2012,04601,Learning Community,The Learning Community Charter School,59,Learning Community,Learning Community - Learning Comm. Charter,Emh,Y,Y,,Y,K to 8,Central Falls,440000600326,Y,Y,N,N,N
-Y,2011-2012,04602,Segue Institute,Segue Institute for Learning,46,Segue Institute for Learning,Segue Institute - Segue Inst. Learning,eMh,Y,Y,,Y,6 to 8,Central Falls,440001400472,N,Y,N,N,N
-Y,2011-2012,06104,AS Feinstein MS,Alan Shawn Feinstein Middle School Of Coventry,06,Coventry,AS Feinstein MS - Coventry,eMh,N,N,,N,6 to 8,Coventry,440021000465,N,Y,N,N,N
-Y,2011-2012,06109,Western Coventry,Western Coventry School,06,Coventry,Western Coventry - Coventry,Emh,N,N,,N,K to 5,Coventry,440021000041,Y,N,N,N,N
-Y,2011-2012,06112,Hopkins Hill,Hopkins Hill School,06,Coventry,Hopkins Hill - Coventry,Emh,N,N,,N,PK to 5,Coventry,440021000035,Y,N,N,N,N
-Y,2011-2012,06116,Tiogue,Tiogue School,06,Coventry,Tiogue - Coventry,Emh,N,N,,N,K to 5,Coventry,440021000365,Y,N,N,N,N
-Y,2011-2012,06117,Blackrock,Blackrock School,06,Coventry,Blackrock - Coventry,Emh,N,N,,N,PK to 5,Coventry,440021000031,Y,N,N,N,N
-Y,2011-2012,06119,Coventry HS,Coventry High School,06,Coventry,Coventry HS - Coventry,emH,N,N,,N,9 to 12,Coventry,440021000032,N,N,Y,N,N
-Y,2011-2012,06121,Washington Oak,Washington Oak School,06,Coventry,Washington Oak - Coventry,Emh,N,N,,N,PK to 5,Coventry,440021000034,Y,N,N,N,N
-Y,2011-2012,07103,Oak Lawn,Oak Lawn School,07,Cranston,Oak Lawn - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000059,Y,N,N,N,N
-Y,2011-2012,07110,Waterman,Daniel D. Waterman School,07,Cranston,Waterman - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000046,Y,N,N,N,N
-Y,2011-2012,07112,Chester Barrows,Chester W. Barrows School,07,Cranston,Chester Barrows - Cranston,Emh,N,N,,N,PK to 5,Cranston,440024000043,Y,N,N,N,N
-Y,2011-2012,07113,Cranston HS East,Cranston High School East,07,Cranston,Cranston HS East - Cranston,emH,N,N,,N,9 to 12,Cranston,440024000044,N,N,Y,N,N
-Y,2011-2012,07115,Bain MS,Hugh B. Bain Middle School,07,Cranston,Bain MS - Cranston,eMh,N,N,,N,7 to 8,Cranston,440024000053,N,Y,N,N,N
-Y,2011-2012,07116,Dutemple,William R. Dutemple School,07,Cranston,Dutemple - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000068,Y,N,N,N,N
-Y,2011-2012,07117,Rhodes,Edward S. Rhodes School,07,Cranston,Rhodes - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000049,Y,N,N,N,N
-Y,2011-2012,07118,Eden Park,Eden Park School,07,Cranston,Eden Park - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000047,Y,N,N,N,N
-Y,2011-2012,07119,Gladstone St.,Gladstone Street School,07,Cranston,Gladstone St. - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000051,Y,N,N,N,N
-Y,2011-2012,07120,Stadium,Stadium School,07,Cranston,Stadium - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000063,Y,N,N,N,N
-Y,2011-2012,07121,Woodridge,Woodridge School,07,Cranston,Woodridge - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000069,Y,N,N,N,N
-Y,2011-2012,07122,Garden City,Garden City School,07,Cranston,Garden City - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000050,Y,N,N,N,N
-Y,2011-2012,07123,Park View MS,Park View Middle School,07,Cranston,Park View MS - Cranston,eMh,N,N,,N,7 to 8,Cranston,440024000060,N,Y,N,N,N
-Y,2011-2012,07124,Peters,George J. Peters School,07,Cranston,Peters - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000351,Y,N,N,N,N
-Y,2011-2012,07125,Arlington,Arlington School,07,Cranston,Arlington - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000042,Y,N,N,N,N
-Y,2011-2012,07126,Cranston HS West,Cranston High School West,07,Cranston,Cranston HS West - Cranston,emH,N,N,,N,9 to 12,Cranston,440024000045,N,N,Y,N,N
-Y,2011-2012,07127,Stone Hill,Stone Hill School,07,Cranston,Stone Hill - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000064,Y,N,N,N,N
-Y,2011-2012,07128,Glen Hills,Glen Hills School,07,Cranston,Glen Hills - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000052,Y,N,N,N,N
-Y,2011-2012,07129,Western Hills,Western Hills Middle School,07,Cranston,Western Hills - Cranston,eMh,N,N,,N,7 to 8,Cranston,440024000067,N,Y,N,N,N
-Y,2011-2012,07130,Edgewood Highland,Edgewood Highland School,07,Cranston,Edgewood Highland - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000048,Y,N,N,N,N
-Y,2011-2012,07134,Hope Highlands,Hope Highlands Elementary School,07,Cranston,Hope Highlands - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000007,Y,N,N,N,N
-Y,2011-2012,07135,NEL/CPS HS,NE Laborers'/Cranston Public Schools Construction Career Academy,07,Cranston,NEL/CPS HS - Cranston,emH,Y,N,,N,9 to 12,Cranston,440024000229,N,N,Y,N,N
-Y,2011-2012,07136,Orchard Farms,Orchard Farms Elementary School,07,Cranston,Orchard Farms - Cranston,Emh,N,N,,N,PK to 6,Cranston,440024000277,Y,N,N,N,N
-Y,2011-2012,07702,DCYF Alt. Ed.,DCYF Alternative Education Program,67,DCYF,DCYF Alt. Ed. - DCYF,eMH,N,N,,N,6 to 12,Cranston,440000900413,N,Y,Y,N,N
-Y,2011-2012,08107,B.F. Norton,B.F. Norton Elementary School,08,Cumberland,B.F. Norton - Cumberland,Emh,N,N,,N,K to 5,Cumberland,440027000039,Y,N,N,N,N
-Y,2011-2012,08108,Garvin Mem.,Garvin Memorial School,08,Cumberland,Garvin Mem. - Cumberland,Emh,N,N,,N,K to 5,Cumberland,440027000081,Y,N,N,N,N
-Y,2011-2012,08109,Community,Community School,08,Cumberland,Community - Cumberland,Emh,N,N,,N,K to 5,Cumberland,440027000075,Y,N,N,N,N
-Y,2011-2012,08110,McLaughlin Cumb. Hill,John J. McLaughlin Cumberland Hill School,08,Cumberland,McLaughlin Cumb. Hill - Cumberland,Emh,N,N,,N,1 to 5,Cumberland,440027000077,Y,N,N,N,N
-Y,2011-2012,08112,Ashton,Ashton School,08,Cumberland,Ashton - Cumberland,Emh,N,N,,N,K to 5,Cumberland,440027000070,Y,N,N,N,N
-Y,2011-2012,08114,Cumberland HS,Cumberland High School,08,Cumberland,Cumberland HS - Cumberland,emH,N,N,,N,9 to 12,Cumberland,440027000076,N,N,Y,N,N
-Y,2011-2012,08115,McCourt MS,Joseph L. McCourt Middle School,08,Cumberland,McCourt MS - Cumberland,eMh,N,N,,N,6 to 8,Cumberland,440027000078,N,Y,N,N,N
-Y,2011-2012,08116,N. Cumberland MS,North Cumberland Middle School,08,Cumberland,N. Cumberland MS - Cumberland,eMh,N,N,,N,6 to 8,Cumberland,440027000082,N,Y,N,N,N
-Y,2011-2012,08601,Blackstone Valley Prep Elem 1,Blackstone Valley Prep Elementary School,47,"Blackstone Valley Prep, A RI Mayoral Academy",Blackstone Valley Prep Elem 1 - Blackstone Valley Prep RIMA,Emh,Y,N,,N,K to 2,Cumberland,440001500473,Y,N,N,N,N
-Y,2011-2012,08602,Blackstone Valley Prep MS,Blackstone Valley Prep Middle School,47,"Blackstone Valley Prep, A RI Mayoral Academy",Blackstone Valley Prep MS - Blackstone Valley Prep RIMA,eMh,Y,N,,N,5 to 6,Cumberland,440001500475,Y,N,N,N,N
-Y,2011-2012,09102,Eldredge,James H. Eldredge Elementary School,09,East Greenwich,Eldredge - E. Greenwich,Emh,N,N,,N,4 to 5,East Greenwich,440030000089,Y,N,N,N,N
-Y,2011-2012,09103,Cole MS,Archie R. Cole Middle School,09,East Greenwich,Cole MS - E. Greenwich,eMh,N,N,,N,6 to 8,East Greenwich,440030000087,N,Y,N,N,N
-Y,2011-2012,09105,Frenchtown,Frenchtown School,09,East Greenwich,Frenchtown - E. Greenwich,Emh,N,N,,N,K to 3,East Greenwich,440030000088,Y,N,N,N,N
-Y,2011-2012,09106,E. Greenwich HS,East Greenwich High School,09,East Greenwich,E. Greenwich HS - E. Greenwich,emH,N,N,,N,9 to 12,East Greenwich,440030000086,N,N,Y,N,N
-Y,2011-2012,09107,Meadowbrook Farms,Meadowbrook Farms School,09,East Greenwich,Meadowbrook Farms - E. Greenwich,Emh,N,N,,N,PK to 3,East Greenwich,440030000090,Y,N,N,N,N
-Y,2011-2012,09108,Hanaford,George Hanaford School,09,East Greenwich,Hanaford - E. Greenwich,Emh,N,N,,N,4 to 5,East Greenwich,440030000377,Y,N,N,N,N
-Y,2011-2012,10109,Martin MS,Edward R. Martin Middle School,10,East Providence,Martin MS - E. Providence,eMh,N,N,,N,6 to 8,East Providence,440033000348,N,Y,N,N,N
-Y,2011-2012,10111,Oldham,James R. D. Oldham School,10,East Providence,Oldham - E. Providence,Emh,N,N,,N,K to 5,Riverside,440033000094,Y,N,N,N,N
-Y,2011-2012,10112,East Providence HS,East Providence High School,10,East Providence,East Providence HS - E. Providence,emH,N,N,,N,9 to 12,East Providence,440033000097,N,N,Y,N,N
-Y,2011-2012,10113,Kent Heights,Kent Heights School,10,East Providence,Kent Heights - E. Providence,Emh,N,N,,N,K to 5,East Providence,440033000099,Y,N,N,N,N
-Y,2011-2012,10114,Waddington,Alice M. Waddington School,10,East Providence,Waddington - E. Providence,Emh,N,N,,N,K to 5,Riverside,440033000092,Y,N,N,N,N
-Y,2011-2012,10116,Hennessey,Agnes B. Hennessey School,10,East Providence,Hennessey - E. Providence,Emh,N,N,,N,K to 5,East Providence,440033000091,Y,N,N,N,N
-Y,2011-2012,10117,Whiteknact,Emma G. Whiteknact School,10,East Providence,Whiteknact - E. Providence,Emh,N,N,,N,K to 5,East Providence,440033000109,Y,N,N,N,N
-Y,2011-2012,10121,Meadowcrest ECFC (PreK),Meadowcrest Early Childhood Center,10,East Providence,Meadowcrest ECFC (PreK) - E. Providence,Emh,N,N,,N,PK to PK,Riverside,440033000101,Y,N,N,N,N
-Y,2011-2012,10122,Riverside MS,Riverside Middle School,10,East Providence,Riverside MS - E. Providence,eMh,N,N,,N,6 to 8,Riverside,440033000105,N,Y,N,N,N
-Y,2011-2012,10123,Silver Spring,Silver Spring School,10,East Providence,Silver Spring - E. Providence,Emh,N,N,,N,K to 5,East Providence,440033000106,Y,N,N,N,N
-Y,2011-2012,10124,Orlo Ave,Orlo Avenue School,10,East Providence,Orlo Ave - E. Providence,Emh,N,N,,N,K to 5,East Providence,440033000103,Y,N,N,N,N
-Y,2011-2012,10125,Francis,Myron J. Francis Elementary School,10,East Providence,Francis - E. Providence,Emh,N,N,,N,K to 5,Rumford,440033000389,Y,N,N,N,N
-Y,2011-2012,10130,E. Prov. Career & Tech,East Providence Area Career and Technical Center,10,East Providence,E. Prov. Career & Tech - E. Providence,emH,N,N,,N,9 to 12,East Providence,440000200459,N,N,Y,N,N
-Y,2011-2012,12101,Paine,Captain Isaac Paine Elementary School,12,Foster,Paine - Foster,Emh,N,N,,N,K to 5,Foster,440039000114,Y,N,N,N,N
-Y,2011-2012,13103,Fogarty Mem.,Fogarty Memorial School,13,Glocester,Fogarty Mem. - Glocester,Emh,N,N,,N,K to 5,North Scituate,440045000119,Y,N,N,N,N
-Y,2011-2012,13104,West Glocester,West Glocester Elementary,13,Glocester,West Glocester - Glocester,Emh,N,N,,N,PK to 5,Chepachet,440045000403,Y,N,N,N,N
-Y,2011-2012,15101,Jamestown - Lawn,Lawn Avenue School,15,Jamestown,Jamestown - Lawn - Jamestown,eMh,N,N,,N,5 to 8,Jamestown,440051000123,N,Y,N,N,N
-Y,2011-2012,15102,Jamestown - Melrose,Melrose Avenue School,15,Jamestown,Jamestown - Melrose - Jamestown,Emh,N,N,,N,PK to 4,Jamestown,440051000404,Y,N,N,N,N
-Y,2011-2012,16103,Thornton,Thornton School,16,Johnston,Thornton - Johnston,Emh,N,N,,N,1 to 5,Johnston,440054000131,Y,N,N,N,N
-Y,2011-2012,16106,Brown Ave,Brown Avenue School,16,Johnston,Brown Ave - Johnston,Emh,N,N,,N,1 to 5,Johnston,440054000125,Y,N,N,N,N
-Y,2011-2012,16108,Barnes,Sarah Dyer Barnes School,16,Johnston,Barnes - Johnston,Emh,N,N,,N,1 to 5,Johnston,440054000130,Y,N,N,N,N
-Y,2011-2012,16109,Winsor Hill,Winsor Hill School,16,Johnston,Winsor Hill - Johnston,Emh,N,N,,N,1 to 5,Johnston,440054000132,Y,N,N,N,N
-Y,2011-2012,16110,Graniteville (PreK),Graniteville School,16,Johnston,Graniteville (PreK) - Johnston,Emh,N,N,,N,PK to PK,Johnston,440054000127,Y,N,N,N,N
-Y,2011-2012,16111,Ferri MS,Nicholas A. Ferri Middle School,16,Johnston,Ferri MS - Johnston,eMh,N,N,,N,6 to 8,Johnston,440054000129,N,Y,N,N,N
-Y,2011-2012,16112,Johnston SHS,Johnston Senior High School,16,Johnston,Johnston SHS - Johnston,emH,N,N,,N,9 to 12,Johnston,440054000128,N,N,Y,N,N
-Y,2011-2012,16114,Early Childhood Ctr,Early Childhood Center,16,Johnston,Early Childhood Ctr - Johnston,Emh,N,N,,N,PK to K,Johnston,440054000452,Y,N,N,N,N
-Y,2011-2012,17106,Lonsdale,Lonsdale Elementary School,17,Lincoln,Lonsdale - Lincoln,Emh,N,N,,N,PK to 5,Lincoln,440057000137,Y,N,N,N,N
-Y,2011-2012,17109,Lincoln Central,Lincoln Central Elementary School,17,Lincoln,Lincoln Central - Lincoln,Emh,N,N,,N,K to 5,Lincoln,440057000134,Y,N,N,N,N
-Y,2011-2012,17110,Lincoln SHS,Lincoln Senior High School,17,Lincoln,Lincoln SHS - Lincoln,emH,N,N,,N,9 to 12,Lincoln,440057000135,N,N,Y,N,N
-Y,2011-2012,17112,Saylesville,Saylesville Elementary School,17,Lincoln,Saylesville - Lincoln,Emh,N,N,,N,K to 5,Lincoln,440057000139,Y,N,N,N,N
-Y,2011-2012,17113,Northern Lincoln,Northern Lincoln Elementary School,17,Lincoln,Northern Lincoln - Lincoln,Emh,N,N,,N,PK to 5,Manville,440057000138,Y,N,N,N,N
-Y,2011-2012,17117,Lincoln MS,Lincoln Middle School,17,Lincoln,Lincoln MS - Lincoln,eMh,N,N,,N,6 to 8,Lincoln,440057000062,N,Y,N,N,N
-Y,2011-2012,17701,Davies Career-Tech HS,William M. Davies Career & Technical Center,40,Davies Career & Tech,Davies Career-Tech HS - Davies CTECH,emH,N,N,,N,9 to 12,Lincoln,440000400379,N,N,Y,N,N
-Y,2011-2012,18101,Wilbur & McMahon,Wilbur & McMahon Schools,18,Little Compton,Wilbur & McMahon - Little Compton,Emh,N,N,,N,K to 8,Little Compton,440060000140,Y,Y,N,N,N
-Y,2011-2012,19106,Aquidneck,Aquidneck School,19,Middletown,Aquidneck - Middletown,Emh,N,N,,N,PK to 3,Middletown,440063000141,Y,N,N,N,N
-Y,2011-2012,19107,Forest Ave.,Forest Avenue School,19,Middletown,Forest Ave. - Middletown,Emh,N,N,,N,K to 3,Middletown,440063000405,Y,N,N,N,N
-Y,2011-2012,19111,Middletown HS,Middletown High School,19,Middletown,Middletown HS - Middletown,emH,N,N,,N,9 to 12,Middletown,440063000147,N,N,Y,N,N
-Y,2011-2012,19114,Gaudet,Joseph H. Gaudet School,19,Middletown,Gaudet - Middletown,eMh,N,N,,N,5 to 8,Middletown,440063000144,N,Y,N,N,N
-Y,2011-2012,19117,Gaudet LA,Joseph H. Gaudet Learning Academy,19,Middletown,Gaudet LA - Middletown,Emh,N,N,,N,4 to 4,Middletown,440063000471,Y,N,N,N,N
-Y,2011-2012,20102,Narragansett,Narragansett Elementary School,20,Narragansett,Narragansett - Narragansett,Emh,N,N,,N,PK to 4,Narragansett,440066000150,Y,N,N,N,N
-Y,2011-2012,20103,Narragansett Pier,Narragansett Pier School,20,Narragansett,Narragansett Pier - Narragansett,eMh,N,N,,N,5 to 8,Narragansett,440066000396,N,Y,N,N,N
-Y,2011-2012,20104,Narragansett HS,Narragansett High School,20,Narragansett,Narragansett HS - Narragansett,emH,N,N,,N,9 to 12,Narragansett,440066000151,N,N,Y,N,N
-Y,2011-2012,21102,Cranston-Calvert,Cranston - Calvert School,21,Newport,Cranston-Calvert - Newport,Emh,N,N,,Y,K to 4,Newport,440072000154,Y,N,N,N,N
-Y,2011-2012,21106,Thompson MS,Frank E. Thompson Middle School,21,Newport,Thompson MS - Newport,eMh,N,N,,Y,5 to 8,Newport,440072000155,N,Y,N,N,N
-Y,2011-2012,21110,Sullivan,Dr. M. H. Sullivan School,21,Newport,Sullivan - Newport,Emh,N,N,,Y,K to 4,Newport,440072000161,Y,N,N,N,N
-Y,2011-2012,21111,Rogers HS,Rogers High School,21,Newport,Rogers HS - Newport,emH,N,N,,Y,9 to 12,Newport,440072000159,N,N,Y,N,N
-Y,2011-2012,21112,Coggeshall,Coggeshall School,21,Newport,Coggeshall - Newport,Emh,N,N,,Y,K to 4,Newport,440072000153,Y,N,N,N,N
-Y,2011-2012,21114,Underwood,William J. Underwood School,21,Newport,Underwood - Newport,Emh,N,N,,Y,PK to 4,Newport,440072000163,Y,N,N,N,N
-Y,2011-2012,22101,Block Island,Block Island School,22,New Shoreham,Block Island - New Shoreham,EMH,N,N,,N,K to 12,Block Island,440069000149,Y,Y,Y,N,N
-Y,2011-2012,23105,Wickford MS,Wickford Middle School,23,North Kingstown,Wickford MS - N. Kingstown,eMh,N,N,,N,6 to 8,North Kingstown,440075000172,N,Y,N,N,N
-Y,2011-2012,23108,North Kingstown SHS,North Kingstown Senior High School,23,North Kingstown,North Kingstown SHS - N. Kingstown,emH,N,N,,N,9 to 12,North Kingstown,440075000168,N,N,Y,N,N
-Y,2011-2012,23109,Fishing Cove,Fishing Cove Elementary School,23,North Kingstown,Fishing Cove - N. Kingstown,Emh,N,N,,N,PK to 5,North Kingstown,440075000398,Y,N,N,N,N
-Y,2011-2012,23110,Forest Park,Forest Park Elementary School,23,North Kingstown,Forest Park - N. Kingstown,Emh,N,N,,N,K to 5,North Kingstown,440075000166,Y,N,N,N,N
-Y,2011-2012,23111,Hamilton,Hamilton Elementary School,23,North Kingstown,Hamilton - N. Kingstown,Emh,N,N,,N,K to 5,North Kingstown,440075000167,Y,N,N,N,N
-Y,2011-2012,23112,Davisville MS,Davisville Middle School,23,North Kingstown,Davisville MS - N. Kingstown,eMh,N,N,,N,6 to 8,North Kingstown,440075000165,N,Y,N,N,N
-Y,2011-2012,23113,Henseler Quidnesset,Suzanne M. Henseler Quidnessett Elementary School,23,North Kingstown,Henseler Quidnesset - N. Kingstown,Emh,N,N,,N,K to 5,North Kingstown,440075000169,Y,N,N,N,N
-Y,2011-2012,23114,Stony Lane,Stony Lane Elementary School,23,North Kingstown,Stony Lane - N. Kingstown,Emh,N,N,,N,K to 5,North Kingstown,440075000170,Y,N,N,N,N
-Y,2011-2012,23601,Compass,The Compass School,55,Compass Charter School,Compass - Compass Charter,Emh,Y,N,,N,K to 8,Kingston,440003500245,Y,Y,N,N,N
-Y,2011-2012,24103,Marieville,Marieville Elementary School,24,North Providence,Marieville - N. Providence,Emh,N,N,,N,PK to 5,North Providence,440078000179,Y,N,N,N,N
-Y,2011-2012,24105,North Providence HS,North Providence High School,24,North Providence,North Providence HS - N. Providence,emH,N,N,,N,9 to 12,North Providence,440078000180,N,N,Y,N,N
-Y,2011-2012,24106,Stephen Olney,Stephen Olney School,24,North Providence,Stephen Olney - N. Providence,Emh,N,N,,N,K to 5,North Providence,440078000181,Y,N,N,N,N
-Y,2011-2012,24107,McGuire,James L. McGuire School,24,North Providence,McGuire - N. Providence,Emh,N,N,,N,K to 5,North Providence,440078000177,Y,N,N,N,N
-Y,2011-2012,24108,Whelan,Dr. Joseph A Whelan Elementary School,24,North Providence,Whelan - N. Providence,Emh,N,N,,N,K to 5,North Providence,440078000182,Y,N,N,N,N
-Y,2011-2012,24109,Centredale,Centredale School,24,North Providence,Centredale - N. Providence,Emh,N,N,,N,PK to 5,North Providence,440078000174,Y,N,N,N,N
-Y,2011-2012,24110,Greystone,Greystone School,24,North Providence,Greystone - N. Providence,Emh,N,N,,N,PK to 5,North Providence,440078000176,Y,N,N,N,N
-Y,2011-2012,24111,Ricci MS,Dr. Edward A. Ricci Middle School,24,North Providence,Ricci MS - N. Providence,eMh,N,N,,N,6 to 8,North Providence,440078000178,N,Y,N,N,N
-Y,2011-2012,24112,Birchwood MS,Birchwood Middle School,24,North Providence,Birchwood MS - N. Providence,eMh,N,N,,N,6 to 8,North Providence,440078000173,N,Y,N,N,N
-Y,2011-2012,25106,Halliwell Mem.,Dr. Harry L. Halliwell Memorial School,25,North Smithfield,Halliwell Mem. - N. Smithfield,Emh,N,N,,N,3 to 5,Slatersville,440081000184,Y,N,N,N,N
-Y,2011-2012,25108,North Smithfield HS,North Smithfield High School,25,North Smithfield,North Smithfield HS - N. Smithfield,emH,N,N,,N,9 to 12,North Smithfield,440081000186,N,N,Y,N,N
-Y,2011-2012,25109,North Smithfield MS,North Smithfield Middle School,25,North Smithfield,North Smithfield MS - N. Smithfield,eMh,N,N,,N,6 to 8,North Smithfield,440081000469,N,Y,N,N,N
-Y,2011-2012,25110,North Smithfield Elem.,North Smithfield Elementary School,25,North Smithfield,North Smithfield Elem. - N. Smithfield,Emh,N,N,,N,PK to 3,North Smithfield,440081000399,Y,N,N,N,N
-Y,2011-2012,26103,Jenks JHS,Joseph Jenks Junior High School,26,Pawtucket,Jenks JHS - Pawtucket,eMh,N,Y,,Y,7 to 8,Pawtucket,440084000197,N,Y,N,N,N
-Y,2011-2012,26105,Tolman SHS,William E. Tolman Senior High School,26,Pawtucket,Tolman SHS - Pawtucket,emH,N,Y,,Y,9 to 12,Pawtucket,440084000202,N,N,Y,N,N
-Y,2011-2012,26106,Slater JHS,Samuel Slater Junior High School,26,Pawtucket,Slater JHS - Pawtucket,eMh,N,Y,,Y,7 to 8,Pawtucket,440084000200,N,Y,N,N,N
-Y,2011-2012,26107,Goff JHS,Goff Junior High School,26,Pawtucket,Goff JHS - Pawtucket,eMh,N,Y,,Y,7 to 8,Pawtucket,440084000198,N,Y,N,N,N
-Y,2011-2012,26109,J. Walsh HS for Arts,JM Walsh School for the Performing & Visual Arts,26,Pawtucket,J. Walsh HS for Arts - Pawtucket,emH,N,Y,,Y,9 to 12,Pawtucket,440084000466,N,N,Y,N,N
-Y,2011-2012,26110,Potter-Burns,Potter-Burns School,26,Pawtucket,Potter-Burns - Pawtucket,Emh,N,Y,,Y,K to 6,Pawtucket,440084000196,Y,N,N,N,N
-Y,2011-2012,26111,Greene,Nathanael Greene School,26,Pawtucket,Greene - Pawtucket,Emh,N,Y,,Y,K to 6,Pawtucket,440084000199,Y,N,N,N,N
-Y,2011-2012,26113,Fallon Mem.,Fallon Memorial School,26,Pawtucket,Fallon Mem. - Pawtucket,Emh,N,Y,,Y,PK to 6,Pawtucket,440084000192,Y,N,N,N,N
-Y,2011-2012,26115,Curtis Mem.,Flora S. Curtis Memorial School,26,Pawtucket,Curtis Mem. - Pawtucket,Emh,N,Y,,Y,PK to 6,Pawtucket,440084000193,Y,N,N,N,N
-Y,2011-2012,26116,Curvin-McCabe,Curvin-McCabe School,26,Pawtucket,Curvin-McCabe - Pawtucket,Emh,N,Y,,Y,K to 6,Pawtucket,440084000189,Y,N,N,N,N
-Y,2011-2012,26118,Shea SHS,Shea Senior High School,26,Pawtucket,Shea SHS - Pawtucket,emH,N,Y,,Y,9 to 12,Pawtucket,440084000201,N,N,Y,N,N
-Y,2011-2012,26119,Winters,Henry J. Winters School,26,Pawtucket,Winters - Pawtucket,Emh,N,Y,,Y,K to 6,Pawtucket,440084000195,Y,N,N,N,N
-Y,2011-2012,26120,Baldwin,Elizabeth Baldwin School,26,Pawtucket,Baldwin - Pawtucket,Emh,N,Y,,Y,K to 6,Pawtucket,440084000191,Y,N,N,N,N
-Y,2011-2012,26121,Cunningham,M. Virginia Cunningham School,26,Pawtucket,Cunningham - Pawtucket,Emh,N,Y,,Y,K to 6,Pawtucket,440084000190,Y,N,N,N,N
-Y,2011-2012,26122,Little,Agnes E. Little School,26,Pawtucket,Little - Pawtucket,Emh,N,Y,,Y,K to 6,Pawtucket,440084000187,Y,N,N,N,N
-Y,2011-2012,26125,Varieur,Francis J. Varieur School,26,Pawtucket,Varieur - Pawtucket,Emh,N,Y,,Y,PK to 6,Pawtucket,440084000194,Y,N,N,N,N
-Y,2011-2012,26601,Int'l Charter,International Charter School,53,International Charter,Int'l Charter - Int'l Charter,Emh,Y,Y,,Y,K to 5,Pawtucket,440003400226,Y,N,N,N,N
-Y,2011-2012,26602,Blackstone Academy,Blackstone Academy Charter School,54,Blackstone Academy,Blackstone Academy - Blackstone Acad. Charter,emH,Y,Y,,Y,9 to 12,Pawtucket,440003600246,N,N,Y,N,N
-Y,2011-2012,27104,Hathaway,Howard Hathaway School,27,Portsmouth,Hathaway - Portsmouth,Emh,N,N,,N,K to 3,Portsmouth,440087000204,Y,N,N,N,N
-Y,2011-2012,27106,Portsmouth HS,Portsmouth High School,27,Portsmouth,Portsmouth HS - Portsmouth,emH,N,N,,N,9 to 12,Portsmouth,440087000207,N,N,Y,N,N
-Y,2011-2012,27111,Melville,Melville Elementary School,27,Portsmouth,Melville - Portsmouth,Emh,N,N,,N,PK to 3,Portsmouth,440087000206,Y,N,N,N,N
-Y,2011-2012,27112,Portsmouth MS,Portsmouth Middle School,27,Portsmouth,Portsmouth MS - Portsmouth,eMh,N,N,,N,4 to 8,Portsmouth,440087000208,N,Y,N,N,N
-Y,2011-2012,28103,Lima Anx,Alfred Lima Annex,28,Providence,Lima Anx - Providence,Emh,N,Y,,Y,PK to 5,Providence,440090000237,Y,N,N,Y,Y
-Y,2011-2012,28106,Spaziano Anx,Frank Spaziano Annex,28,Providence,Spaziano Anx - Providence,Emh,N,Y,,Y,K to 2,Providence,440090000093,Y,N,N,N,N
-Y,2011-2012,28113,Alvarez HS,Dr. Jorge Alvarez High School,28,Providence,Alvarez HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000344,N,N,Y,N,N
-Y,2011-2012,28115,Messer,Asa Messer Elementary School,28,Providence,Messer - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000213,Y,N,N,N,N
-Y,2011-2012,28116,ASF @ Broad,Alan Shawn Feinstein Elementary at Broad Street,28,Providence,ASF @ Broad - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000215,Y,N,N,N,N
-Y,2011-2012,28121,Lima,Alfred Lima Sr. Elementary School,28,Providence,Lima - Providence,Emh,N,Y,,Y,2 to 5,Providence,440090000124,Y,N,N,Y,Y
-Y,2011-2012,28122,Fortes,Charles Fortes Elementary School,28,Providence,Fortes - Providence,Emh,N,Y,,Y,PK to 1,Providence,440090000133,Y,N,N,Y,Y
-Y,2011-2012,28127,Webster Ave.,Webster Avenue School,28,Providence,Webster Ave. - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000247,Y,N,N,N,N
-Y,2011-2012,28130,Veazie St.,Veazie Street School,28,Providence,Veazie St. - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000013,Y,N,N,N,N
-Y,2011-2012,28131,Birch Voc. HS,Birch Vocational Center,28,Providence,Birch Voc. HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000214,N,N,Y,N,N
-Y,2011-2012,28134,Spaziano,Frank Spaziano Avenue Elementary School,28,Providence,Spaziano - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000228,Y,N,N,N,N
-Y,2011-2012,28135,West,George J. West Elementary School,28,Providence,West - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000222,Y,N,N,N,N
-Y,2011-2012,28137,Hopkins MS,Esek Hopkins Middle School,28,Providence,Hopkins MS - Providence,eMh,N,Y,,Y,6 to 8,Providence,440090000401,N,Y,N,N,N
-Y,2011-2012,28138,Kennedy,Robert F. Kennedy Elementary School,28,Providence,Kennedy - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000241,Y,N,N,N,N
-Y,2011-2012,28139,Central HS,Central High School,28,Providence,Central HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000217,N,N,Y,Y,N
-Y,2011-2012,28140,Lauro,Carl G. Lauro Elementary School,28,Providence,Lauro - Providence,Emh,N,Y,,Y,PK to 5,Providence,440090000227,Y,N,N,N,N
-Y,2011-2012,28142,Reservoir Ave.,Reservoir Avenue School,28,Providence,Reservoir Ave. - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000240,Y,N,N,N,N
-Y,2011-2012,28143,Bishop MS,Nathan Bishop Middle School,28,Providence,Bishop MS - Providence,eMh,N,Y,,Y,6 to 8,Providence,440090000474,N,Y,N,N,N
-y,2011-2012,28144,Stuart MS,Gilbert Stuart Middle School,28,Providence,Stuart MS - Providence,eMh,N,Y,,Y,6 to 8,Providence,440090000223,N,Y,N,Y,N
-Y,2011-2012,28145,Greene MS,Nathanael Greene Middle School,28,Providence,Greene MS - Providence,eMh,N,Y,,Y,6 to 8,Providence,440090000234,N,Y,N,N,N
-y,2011-2012,28147,Roger Williams MS,Roger Williams Middle School,28,Providence,Roger Williams MS - Providence,eMh,N,Y,,Y,6 to 8,Providence,440090000242,N,Y,N,Y,N
-Y,2011-2012,28150,Mt. Pleasant HS,Mount Pleasant High School,28,Providence,Mt. Pleasant HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000232,N,N,Y,N,N
-y,2011-2012,28151,Gregorian,Vartan Gregorian Elementary School,28,Providence,Gregorian - Providence,Emh,N,Y,,Y,PK to 5,Providence,440090000221,Y,N,N,N,N
-Y,2011-2012,28153,D'Abate,William D'Abate Elementary School,28,Providence,D'Abate - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000248,Y,N,N,N,N
-Y,2011-2012,28156,Bailey,Robert L. Bailey IV Elementary School,28,Providence,Bailey - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000071,Y,N,N,Y,Y
-Y,2011-2012,28157,Feinstein @ Sackett St.,Lillian Feinstein Elementary @ Sackett Street,28,Providence,Feinstein @ Sackett St. - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000243,Y,N,N,Y,Y
-Y,2011-2012,28160,Fogarty,Mary E. Fogarty Elementary School,28,Providence,Fogarty - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000231,Y,N,N,Y,Y
-Y,2011-2012,28161,Kizirian,Harry Kizirian Elementary School,28,Providence,Kizirian - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000216,Y,N,N,N,N
-Y,2011-2012,28162,Woods & Young,The Sgt. Cornel Young Jr. & Charlotte Woods Elementary School @ The B. Joe Clanton Complex,28,Providence,Woods & Young - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000156,Y,N,N,Y,Y
-Y,2011-2012,28163,King,Dr. Martin Luther King Jr. Elementary School,28,Providence,King - Providence,Emh,N,Y,,Y,K to 5,Providence,440090000230,Y,N,N,N,N
-Y,2011-2012,28164,Classical HS,Classical High School,28,Providence,Classical HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000218,N,N,Y,Y,N
-Y,2011-2012,28165,Pleasant View,Pleasant View School,28,Providence,Pleasant View - Providence,Emh,N,Y,,Y,PK to 5,Providence,440090000236,Y,N,N,N,N
-Y,2011-2012,28167,UCAP,Urban Collaborative Accelerated Program,49,Urban Collaborative,UCAP - Providence,eMh,N,Y,,Y,7 to 8,Providence,440000500271,N,Y,N,N,N
-Y,2011-2012,28170,Times2,Times2 Academy,28,Providence,Times2 - Providence,EMH,Y,Y,,Y,K to 12,Providence,440090000157,Y,Y,Y,N,N
-Y,2011-2012,28178,ACES (HS),Academy for Career Exploration,28,Providence,ACES (HS) - Providence,emH,Y,Y,,Y,9 to 12,Providence,440090000055,N,N,Y,N,N
-Y,2011-2012,28181,Carnevale,Anthony Carnevale Elementary School,28,Providence,Carnevale - Providence,Emh,N,Y,,Y,PK to 5,Providence,440090000162,Y,N,N,N,N
-Y,2011-2012,28182,DelSesto MS,Governor Christopher DelSesto Middle School,28,Providence,DelSesto MS - Providence,eMh,N,Y,,Y,6 to 8,Providence,440090000175,N,Y,N,N,N
-Y,2011-2012,28187,E-Cubed Academy (HS),E-Cubed Academy,28,Providence,E-Cubed Academy (HS) - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000323,N,N,Y,N,N
-Y,2011-2012,28189,Cooley/PAIS HS @ Juanita Sanchez,William B. Cooley Senior High School & Providence Academy of International Studies @ The Juanita San,28,Providence,Cooley/PAIS HS @ Juanita Sanchez - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000209,N,N,Y,Y,N
-Y,2011-2012,28193,Prov Career & Tech HS,Providence Career & Technical Academy,28,Providence,Prov Career & Tech HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000467,N,N,Y,Y,N
-Y,2011-2012,28601,Highlander,Highlander Charter School,28,Highlander,Highlander - Highlander Charter,Emh,Y,Y,,Y,K to 8,Providence,440003100455,Y,Y,N,N,N
-Y,2011-2012,28602,Cuffee,Paul Cuffee Charter School,51,Paul Cuffee Charter Sch,Cuffee - Cuffee Charter,EMH,Y,Y,,Y,K to 10,Providence,440003200220,Y,Y,Y,N,N
-Y,2011-2012,28603,Hope Info Tech HS,Hope Information Technology School,28,Providence,Hope Info Tech HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000314,N,N,Y,N,N
-Y,2011-2012,28605,Hope Arts HS,Hope Arts School,28,Providence,Hope Arts HS - Providence,emH,N,Y,,Y,9 to 12,Providence,440090000322,N,N,Y,N,N
-Y,2011-2012,28606,TAPA,Trinity Academy for the Performing Arts,61,Trinity Academy for the Performing Arts,TAPA - TAPA Charter,eMh,Y,Y,,Y,7 to 8,Providence,440001800478,N,Y,N,N,N
-Y,2011-2012,28702,R.I. Sch for the Deaf,Rhode Island School for the Deaf,50,R.I. Sch for the Deaf,R.I. Sch for the Deaf - State Operated,EMH,N,Y,,Y,PK to 12,Providence,440000100380,Y,Y,Y,N,N
-Y,2011-2012,28703,The MET,Metropolitan Regional Career & Technical Center,60,MET Career & Tech,The MET - State Operated,emH,N,Y,,Y,9 to 12,Providence,440000300121,N,N,Y,N,N
-Y,2011-2012,30102,Hope,Hope Elementary School,30,Scituate,Hope - Scituate,Emh,N,N,,N,K to 5,Hope,440096000253,Y,N,N,N,N
-Y,2011-2012,30103,Clayville,Clayville Elementary School,30,Scituate,Clayville - Scituate,Emh,N,N,,N,K to 5,Clayville,440096000252,Y,N,N,N,N
-Y,2011-2012,30104,Scituate HS,Scituate High School,30,Scituate,Scituate HS - Scituate,emH,N,N,,N,9 to 12,North Scituate,440096000255,N,N,Y,N,N
-Y,2011-2012,30105,Scituate MS,Scituate Middle School,30,Scituate,Scituate MS - Scituate,eMh,N,N,,N,6 to 8,North Scituate,440096000036,N,Y,N,N,N
-Y,2011-2012,30106,North Scituate Elem.,North Scituate Elementary School,30,Scituate,North Scituate Elem. - Scituate,Emh,N,N,,N,PK to 5,North Scituate,440096000254,Y,N,N,N,N
-Y,2011-2012,31103,Winsor,William Winsor School,31,Smithfield,Winsor - Smithfield,Emh,N,N,,N,K to 5,Smithfield,440099000261,Y,N,N,N,N
-Y,2011-2012,31104,Old County Rd,Old County Road School,31,Smithfield,Old County Rd - Smithfield,Emh,N,N,,N,K to 5,Smithfield,440099000258,Y,N,N,N,N
-Y,2011-2012,31105,McCabe,Anna M. McCabe School,31,Smithfield,McCabe - Smithfield,Emh,N,N,,N,PK to 5,Smithfield,440099000256,Y,N,N,N,N
-Y,2011-2012,31107,Smithfield SHS,Smithfield Senior High School,31,Smithfield,Smithfield SHS - Smithfield,emH,N,N,,N,9 to 12,Smithfield,440099000259,N,N,Y,N,N
-Y,2011-2012,31108,LaPerche,Raymond C. LaPerche School,31,Smithfield,LaPerche - Smithfield,Emh,N,N,,N,K to 5,Smithfield,440099000257,Y,N,N,N,N
-Y,2011-2012,31109,Gallagher MS,Vincent J. Gallagher Middle School,31,Smithfield,Gallagher MS - Smithfield,eMh,N,N,,N,6 to 8,Smithfield,440099000260,N,Y,N,N,N
-Y,2011-2012,32103,Wakefield,Wakefield Elementary School,32,South Kingstown,Wakefield - S. Kingstown,Emh,N,N,,N,K to 4,Wakefield,440102000269,Y,N,N,N,N
-Y,2011-2012,32104,Hazard (PreK),Hazard School,32,South Kingstown,Hazard (PreK) - S. Kingstown,Emh,N,N,,N,PK to PK,Wakefield,440102000102,Y,N,N,N,N
-Y,2011-2012,32107,Peace Dale,Peace Dale Elementary School,32,South Kingstown,Peace Dale - S. Kingstown,Emh,N,N,,N,K to 4,Peace Dale,440102000264,Y,N,,N,N
-Y,2011-2012,32108,South Kingstown HS,South Kingstown High School,32,South Kingstown,South Kingstown HS - S. Kingstown,emH,N,N,,N,9 to 12,Wakefield,440102000265,N,N,Y,N,N
-Y,2011-2012,32110,Curtis Corner MS,Curtis Corner Middle School,32,South Kingstown,Curtis Corner MS - S. Kingstown,eMh,N,N,,N,7 to 8,Wakefield,440102000266,N,Y,N,N,N
-Y,2011-2012,32112,West Kingston,West Kingston Elementary School,32,South Kingstown,West Kingston - S. Kingstown,Emh,N,N,,N,K to 4,West Kingston,440102000270,Y,N,N,N,N
-Y,2011-2012,32113,Matunuck,Matunuck School,32,South Kingstown,Matunuck - S. Kingstown,Emh,N,N,,N,K to 4,Wakefield,440102000263,Y,N,N,N,N
-Y,2011-2012,32114,Broad Rock MS,Broad Rock Middle School,32,South Kingstown,Broad Rock MS - S. Kingstown,Emh,N,N,,N,5 to 6,Wakefield,440102000210,Y,Y,N,N,N
-Y,2011-2012,32601,Kingston Hill,Kingston Hill Academy,52,Kingston Hill Academy,Kingston Hill - Kingston Hill Charter,Emh,Y,N,,N,K to 5,Saunderstown,440003300225,Y,N,N,N,N
-Y,2011-2012,33105,Ranger,Walter E. Ranger School,33,Tiverton,Ranger - Tiverton,Emh,N,N,,N,K to 4,Tiverton,440105000276,Y,N,N,N,N
-Y,2011-2012,33106,Fort Barton,Fort Barton School,33,Tiverton,Fort Barton - Tiverton,Emh,N,N,,N,K to 4,Tiverton,440105000357,Y,N,N,N,N
-Y,2011-2012,33107,Pocasset,Pocasset School,33,Tiverton,Pocasset - Tiverton,Emh,N,N,,N,PK to 4,Tiverton,440105000273,Y,N,N,N,N
-Y,2011-2012,33108,Tiverton HS,Tiverton High School,33,Tiverton,Tiverton HS - Tiverton,emH,N,N,,N,9 to 12,Tiverton,440105000274,N,N,Y,N,N
-Y,2011-2012,33110,Tiverton MS,Tiverton Middle School,33,Tiverton,Tiverton MS - Tiverton,eMh,N,N,,N,5 to 8,Tiverton,440105000275,N,Y,N,N,N
-Y,2011-2012,35101,Norwood,Norwood School,35,Warwick,Norwood - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000298,Y,N,N,N,N
-Y,2011-2012,35104,Oakland Beach,Oakland Beach Elementary School,35,Warwick,Oakland Beach - Warwick,Emh,N,N,,N,PK to 6,Warwick,440111000299,Y,N,N,N,N
-Y,2011-2012,35114,Greenwood,Greenwood School,35,Warwick,Greenwood - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000291,Y,N,N,N,N
-Y,2011-2012,35118,Aldrich JHS,Aldrich Junior High School,35,Warwick,Aldrich JHS - Warwick,eMh,N,N,,N,7 to 8,Warwick,440111000283,N,Y,N,N,N
-Y,2011-2012,35119,Wyman,Wyman School,35,Warwick,Wyman - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000312,Y,N,N,N,N
-Y,2011-2012,35120,Gorton JHS,Gorton Junior High School,35,Warwick,Gorton JHS - Warwick,eMh,N,N,,N,7 to 8,Warwick,440111000289,N,Y,N,N,N
-Y,2011-2012,35121,Robertson,E. G. Robertson School,35,Warwick,Robertson - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000304,Y,N,N,N,N
-Y,2011-2012,35123,Lippitt,Lippitt School,35,Warwick,Lippitt - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000296,Y,N,N,N,N
-Y,2011-2012,35124,Holden,Randall Holden School,35,Warwick,Holden - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000292,Y,N,N,N,N
-Y,2011-2012,35125,Francis,Francis School,35,Warwick,Francis - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000288,Y,N,N,N,N
-Y,2011-2012,35127,Sherman,Sherman School,35,Warwick,Sherman - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000306,Y,N,N,N,N
-Y,2011-2012,35128,Holliman,Holliman School,35,Warwick,Holliman - Warwick,Emh,N,N,,N,PK to 6,Warwick,440111000293,Y,N,N,N,N
-Y,2011-2012,35129,Wickes,John Wickes School,35,Warwick,Wickes - Warwick,Emh,N,N,,N,PK to 6,Warwick,440111000310,Y,N,N,N,N
-Y,2011-2012,35130,Warwick Vet. Mem. HS,Warwick Veterans Memorial High School,35,Warwick,Warwick Vet. Mem. HS - Warwick,emH,N,N,,N,9 to 12,Warwick,440111000309,N,N,Y,N,N
-Y,2011-2012,35131,Cedar Hill,Cedar Hill School,35,Warwick,Cedar Hill - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000285,Y,N,N,N,N
-Y,2011-2012,35132,Park,Park School,35,Warwick,Park - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000300,Y,N,N,N,N
-Y,2011-2012,35133,Warwick Neck,Warwick Neck School,35,Warwick,Warwick Neck - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000308,Y,N,N,N,N
-Y,2011-2012,35134,Pilgrim HS,Pilgrim High School,35,Warwick,Pilgrim HS - Warwick,emH,N,N,,N,9 to 12,Warwick,440111000301,N,N,Y,N,N
-Y,2011-2012,35135,Scott,Harold F. Scott School,35,Warwick,Scott - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000305,Y,N,N,N,N
-Y,2011-2012,35136,Hoxsie,Cottrell F. Hoxsie School,35,Warwick,Hoxsie - Warwick,Emh,N,N,,N,K to 6,Warwick,440111000294,Y,N,N,N,N
-Y,2011-2012,35137,Drum Rock,Drum Rock Early Childhood Center,35,Warwick,Drum Rock - Warwick,Emh,N,N,,N,PK to K,Warwick,440111000287,Y,N,N,N,N
-Y,2011-2012,35138,Toll Gate HS,Toll Gate High School,35,Warwick,Toll Gate HS - Warwick,emH,N,N,,N,9 to 12,Warwick,440111000307,N,N,Y,N,N
-Y,2011-2012,35139,Winman JHS,Winman Junior High School,35,Warwick,Winman JHS - Warwick,eMh,N,N,,N,7 to 8,Warwick,440111000311,N,Y,N,N,N
-Y,2011-2012,36101,Bradford,Bradford Elementary School,36,Westerly,Bradford - Westerly,Emh,N,N,,N,PK to 4,Bradford,440117000375,Y,N,N,N,N
-Y,2011-2012,36103,Westerly MS,Westerly Middle School,36,Westerly,Westerly MS - Westerly,eMh,N,N,,N,5 to 8,Westerly,440117000319,N,Y,N,N,N
-Y,2011-2012,36104,Westerly HS,Westerly High School,36,Westerly,Westerly HS - Westerly,emH,N,N,,N,9 to 12,Westerly,440117000325,N,N,Y,N,N
-Y,2011-2012,36106,State St.,State Street School,36,Westerly,State St. - Westerly,Emh,N,N,,N,K to 4,Westerly,440117000362,Y,N,N,N,N
-Y,2011-2012,36109,Dunn's Corners,Dunn's Corners School,36,Westerly,Dunn's Corners - Westerly,Emh,N,N,,N,K to 4,Westerly,440117000321,Y,N,N,N,N
-Y,2011-2012,36111,Springbrook,Springbrook Elementary School,36,Westerly,Springbrook - Westerly,Emh,N,N,,N,K to 4,Westerly,440117000120,Y,N,N,N,N
-Y,2011-2012,38104,Horgan,John F. Horgan Elementary School,38,West Warwick,Horgan - W. Warwick,Emh,N,N,,Y,PK to 4,West Warwick,440114000315,Y,N,N,N,N
-Y,2011-2012,38106,West Warwick SHS,West Warwick Senior High School,38,West Warwick,West Warwick SHS - W. Warwick,emH,N,N,,Y,9 to 12,West Warwick,440114000318,N,N,Y,N,N
-Y,2011-2012,38107,Deering MS,John F. Deering Middle School,38,West Warwick,Deering MS - W. Warwick,eMh,N,N,,Y,5 to 8,West Warwick,440114000313,N,Y,N,N,N
-Y,2011-2012,38109,Greenbush,Greenbush Elementary School,38,West Warwick,Greenbush - W. Warwick,Emh,N,N,,Y,PK to 4,West Warwick,440114000402,Y,N,N,N,N
-Y,2011-2012,38111,Wakefield Hills,Wakefield Hills Elementary School,38,West Warwick,Wakefield Hills - W. Warwick,Emh,N,N,,Y,PK to 4,West Warwick,440114000238,Y,N,N,N,N
-Y,2011-2012,39101,Harris,Harris School,39,Woonsocket,Harris - Woonsocket,Emh,N,Y,,Y,K to 5,Woonsocket,440120000336,Y,N,N,N,N
-Y,2011-2012,39110,Pothier,Governor Aram J. Pothier School,39,Woonsocket,Pothier - Woonsocket,Emh,N,Y,,Y,PK to 2,Woonsocket,440120000340,Y,N,N,N,N
-Y,2011-2012,39112,Fifth Ave.,Fifth Avenue School,39,Woonsocket,Fifth Ave. - Woonsocket,Emh,N,Y,,Y,K to 2,Woonsocket,440120000332,Y,N,N,N,N
-Y,2011-2012,39115,Woonsocket MS,Woonsocket Middle School,39,Woonsocket,Woonsocket MS - Woonsocket,eMh,N,Y,,Y,6 to 8,Woonsocket,440120000346,N,Y,N,N,N
-Y,2011-2012,39117,Citizens Mem.,Citizens Memorial School,39,Woonsocket,Citizens Mem. - Woonsocket,Emh,N,Y,,Y,2 to 5,Woonsocket,440120000329,Y,N,N,N,N
-Y,2011-2012,39118,Bernon Heights,Bernon Heights School,39,Woonsocket,Bernon Heights - Woonsocket,Emh,N,Y,,Y,K to 5,Woonsocket,440120000327,Y,N,N,N,N
-Y,2011-2012,39119,Globe Park,Globe Park School,39,Woonsocket,Globe Park - Woonsocket,Emh,N,Y,,Y,PK to 5,Woonsocket,440120000334,Y,N,N,N,N
-Y,2011-2012,39120,Savoie,Leo A. Savoie School,39,Woonsocket,Savoie - Woonsocket,Emh,N,Y,,Y,K to 5,Woonsocket,440120000330,Y,N,N,N,N
-Y,2011-2012,39123,Woonsocket HS,Woonsocket High School,39,Woonsocket,Woonsocket HS - Woonsocket,emH,N,Y,,Y,9 to 12,Woonsocket,440120000345,N,N,Y,N,N
-Y,2011-2012,39128,Coleman,Kevin K. Coleman Elementary School,39,Woonsocket,Coleman - Woonsocket,Emh,N,Y,,Y,3 to 5,Woonsocket,440120000331,Y,N,N,N,N
-Y,2011-2012,39601,BEACON HS,Beacon Charter High School for the Arts,58,Beacon Charter School,BEACON HS - Beacon Charter,emH,Y,Y,,Y,9 to 12,Woonsocket,440000800297,N,N,Y,N,N
-Y,2011-2012,96104,Guiteras,Guiteras School,96,Bristol Warren,Guiteras - Bristol-Warren,Emh,N,N,,N,K to 5,Bristol,440006500012,Y,N,N,N,N
-Y,2011-2012,96105,Colt-Andrews,Colt Andrews School,96,Bristol Warren,Colt-Andrews - Bristol-Warren,Emh,N,N,,N,K to 5,Bristol,440006500468,Y,N,N,N,N
-Y,2011-2012,96106,Rockwell,Rockwell School,96,Bristol Warren,Rockwell - Bristol-Warren,Emh,N,N,,N,K to 5,Bristol,440006500016,Y,N,N,N,N
-Y,2011-2012,96107,Mt. Hope HS,Mt. Hope High School,96,Bristol Warren,Mt. Hope HS - Bristol-Warren,emH,N,N,,N,9 to 12,Bristol,440006500009,N,N,Y,N,N
-Y,2011-2012,96112,Kickemuit MS,Kickemuit Middle School,96,Bristol Warren,Kickemuit MS - Bristol-Warren,eMh,N,N,,N,6 to 8,Warren,440006500282,N,Y,N,N,N
-Y,2011-2012,96113,Cole,Hugh Cole School,96,Bristol Warren,Cole - Bristol-Warren,Emh,N,N,,N,PK to 5,Warren,440006500278,Y,N,N,N,N
-Y,2011-2012,97101,Wawaloam,Wawaloam School,97,Exeter-West Greenwich,Wawaloam - Exeter-W.Greenwich,Emh,N,N,,N,K to 2,Exeter,440036000038,Y,N,N,N,N
-Y,2011-2012,97102,Lineham (PreK),Mildred E. Lineham School,97,Exeter-West Greenwich,Lineham (PreK) - Exeter-W.Greenwich,Emh,N,N,,N,PK to PK,West Greenwich,440036000112,Y,N,N,N,N
-Y,2011-2012,97103,Metcalf,Metcalf School,97,Exeter-West Greenwich,Metcalf - Exeter-W.Greenwich,Emh,N,N,,N,3 to 6,Exeter,440036000111,Y,N,N,N,N
-Y,2011-2012,97105,Exeter-WG JHS,Exeter-West Greenwich Regional Junior High,97,Exeter-West Greenwich,Exeter-WG JHS - Exeter-W.Greenwich,eMh,N,N,,N,7 to 8,West Greenwich,440036000390,N,Y,N,N,N
-Y,2011-2012,97106,Exeter-WG HS,Exeter-West Greenwich Regional High School,97,Exeter-West Greenwich,Exeter-WG HS - Exeter-W.Greenwich,emH,N,N,,N,9 to 12,West Greenwich,440036000391,N,N,Y,N,N
-Y,2011-2012,97601,Greene,The Greene School,62,The Greene School,Greene - Greene School,emH,Y,N,,N,9 to 11,West Greenwich,440001700477,N,N,Y,N,N
-Y,2011-2012,98101,Chariho HS,Chariho Regional High School,98,Chariho,Chariho HS - Chariho,emH,N,N,,N,9 to 12,Wood River Junction,440015000029,N,N,Y,N,N
-Y,2011-2012,98103,Chariho MS,Chariho Regional Middle School,98,Chariho,Chariho MS - Chariho,eMh,N,N,,N,5 to 8,Wood River Junction,440015000386,N,Y,N,N,N
-Y,2011-2012,98104,Charlestown Elem.,Charlestown Elementary School,98,Chariho,Charlestown Elem. - Chariho,Emh,N,N,,N,K to 4,Charlestown,440015000030,Y,N,N,N,N
-Y,2011-2012,98105,Richmond Elem.,Chariho Regional Middle School,98,Chariho,Richmond Elem. - Chariho,Emh,N,N,,N,PK to 4,Wyoming,440015000251,Y,N,N,N,N
-Y,2011-2012,98106,Ashaway Elem.,Ashaway Elementary School,98,Chariho,Ashaway Elem. - Chariho,Emh,N,N,,N,K to 4,Ashaway,440015000122,Y,N,N,N,N
-Y,2011-2012,98107,Hope Valley Elem.,Hope Valley Elementary School,98,Chariho,Hope Valley Elem. - Chariho,Emh,N,N,,N,PK to 4,Hope Valley,440015000349,Y,N,N,N,N
-Y,2011-2012,98108,R.Y.S.E.,The R.Y.S.E. School,98,Chariho,R.Y.S.E. - Chariho,EMH,N,N,,N,PK to 12,Wood River Junction,440015000286,Y,Y,Y,N,N
-Y,2011-2012,99101,Ponaganset MS,Ponaganset Middle School,99,Foster-Glocester,Ponaganset MS - Foster-Glocester,eMh,N,N,,N,6 to 8,North Scituate,440042000117,N,Y,N,N,N
-Y,2011-2012,99102,Ponaganset HS,Ponaganset High School,99,Foster-Glocester,Ponaganset HS - Foster-Glocester,emH,N,N,,N,9 to 12,North Scituate,440042000116,N,N,Y,N,N
-Y,2011-2012,Statewide,,Statewide,St,,,EMH,,,,,,,,,,,N,N
+school_year,LabelStateCode,LabelSchoolNameShort,LabelSchoolNameLong,LabelDistCode,LabelDistrict,LabelSch+District,LabelGradeConfig,LabelCharterSch,LabelSchCoreCity4,LabelSchCoreCity5,LabelSchCoreCity6,LabelGradeConfigAbbr,LabelSchCity,LabelElementary,LabelMiddle,LabelHigh,LabelSchMCSch,LabelSchMCElemSch,ACT_CEEB_code,nces_code,ctract2010,ctract2000,neighborhood
+2011-2012,01103,Primrose Hill,Primrose Hill School,01,Barrington,Primrose Hill - Barrington,Elementary,N,N,N,N,PK to 3,Barrington,Y,N,N,N,N,,440003000006,44001030200,44001030200,
+2011-2012,01104,Nayatt School,Nayatt School,01,Barrington,Nayatt School - Barrington,Elementary,N,N,N,N,PK to 3,Barrington,Y,N,N,N,N,,440003000004,44001030400,44001030400,
+2011-2012,01105,Hampden Meadows,Hampden Meadows School,01,Barrington,Hampden Meadows - Barrington,Elementary,N,N,N,N,4 to 5,Barrington,Y,N,N,N,N,,440003000003,44001030300,44001030300,
+2011-2012,01106,Barrington HS,Barrington High School,01,Barrington,Barrington HS - Barrington,High,N,N,N,N,9 to 12,Barrington,N,N,Y,N,N,400000,440003000001,44001030200,44001030200,
+2011-2012,01108,Barrington MS,Barrington Middle School,01,Barrington,Barrington MS - Barrington,Middle,N,N,N,N,6 to 8,Barrington,N,Y,N,N,N,,440003000002,44001030100,44001030100,
+2011-2012,01109,Sowams,Sowams Elementary School,01,Barrington,Sowams - Barrington,Elementary,N,N,N,N,K to 3,Barrington,Y,N,N,N,N,,440003000005,44001030300,44001030300,
+2011-2012,03104,Burrillville MS,Burrillville Middle School,03,Burrillville,Burrillville MS - Burrillville,Middle,N,N,N,N,6 to 8,Harrisville,N,Y,N,N,N,,440009000383,44007013002,44007013002,
+2011-2012,03105,Steere Farm,Steere Farm Elementary School,03,Burrillville,Steere Farm - Burrillville,Elementary,N,N,N,N,PK to 5,Pascoag,Y,N,N,N,N,,440009000057,44007013002,44007013002,
+2011-2012,03107,Callahan,William L. Callahan School,03,Burrillville,Callahan - Burrillville,Elementary,N,N,N,N,2 to 5,Harrisville,Y,N,N,N,N,,440009000022,44007012900,44007012900,
+2011-2012,03108,Levy,Austin T. Levy School,03,Burrillville,Levy - Burrillville,Elementary,N,N,N,N,K to 1,Harrisville,Y,N,N,N,N,,440009000018,44007012900,44007012900,
+2011-2012,03109,Burrillville HS,Burrillville High School,03,Burrillville,Burrillville HS - Burrillville,High,N,N,N,N,9 to 12,Harrisville,N,N,Y,N,N,400055,440009000019,44007013002,44007013002,
+2011-2012,04101,Ella Risk,Ella Risk School,04,Central Falls,Ella Risk - Central Falls,Elementary,N,Y,Y,Y,1 to 4,Central Falls,Y,N,N,N,N,,440012000027,44007011100,44007011100,
+2011-2012,04104,Harold Hunt,Capt. G. Harold Hunt School,04,Central Falls,Harold Hunt - Central Falls,Elementary,N,Y,Y,Y,PK to 1,Central Falls,Y,N,N,N,N,,440012000025,44007011100,44007011100,
+2011-2012,04105,Robertson,Margaret I. Robertson School,04,Central Falls,Robertson - Central Falls,Elementary,N,Y,Y,Y,5 to 5,Central Falls,Y,N,N,N,N,,440012000028,44007010900,44007010900,
+2011-2012,04106,Veterans Mem.,Veterans Memorial Elementary,04,Central Falls,Veterans Mem. - Central Falls,Elementary,N,Y,Y,Y,1 to 4,Central Falls,Y,N,N,N,N,,440012000385,44007011000,44007011000,
+2011-2012,04108,Central Falls SHS,Central Falls High School,04,Central Falls,Central Falls SHS - Central Falls,High,N,Y,Y,Y,9 to 12,Central Falls,N,N,Y,N,N,400012,440012000026,44007010800,44007010800,
+2011-2012,04115,Calcutt MS,Calcutt Middle School,04,Central Falls,Calcutt MS - Central Falls,Middle,N,Y,Y,Y,6 to 8,Central Falls,N,Y,N,N,N,,440012000024,44007011000,44007011000,
+2011-2012,04601,Learning Community,The Learning Community Charter School,59,Learning Community,Learning Community - Learning Comm. Charter,"Elem,Middle",Y,Y,Y,Y,K to 8,Central Falls,Y,Y,N,N,N,,440000600326,44007010900,44007010900,
+2011-2012,04602,Segue Institute,Segue Institute for Learning,46,Segue Institute for Learning,Segue Institute - Segue Inst. Learning,Middle,Y,Y,Y,Y,6 to 8,Central Falls,N,Y,N,N,N,,440001400472,44007011000,44007011000,
+2011-2012,06104,AS Feinstein MS,Alan Shawn Feinstein Middle School Of Coventry,06,Coventry,AS Feinstein MS - Coventry,Middle,N,N,N,N,6 to 8,Coventry,N,Y,N,N,N,,440021000465,44003020601,44003020601,
+2011-2012,06109,Western Coventry,Western Coventry School,06,Coventry,Western Coventry - Coventry,Elementary,N,N,N,N,K to 5,Coventry,Y,N,N,N,N,,440021000041,44003020702,44003020702,
+2011-2012,06112,Hopkins Hill,Hopkins Hill School,06,Coventry,Hopkins Hill - Coventry,Elementary,N,N,N,N,PK to 5,Coventry,Y,N,N,N,N,,440021000035,44003020603,44003020603,
+2011-2012,06116,Tiogue,Tiogue School,06,Coventry,Tiogue - Coventry,Elementary,N,N,N,N,K to 5,Coventry,Y,N,N,N,N,,440021000365,44003020603,44003020603,
+2011-2012,06117,Blackrock,Blackrock School,06,Coventry,Blackrock - Coventry,Elementary,N,N,N,N,PK to 5,Coventry,Y,N,N,N,N,,440021000031,44003020601,44003020601,
+2011-2012,06119,Coventry HS,Coventry High School,06,Coventry,Coventry HS - Coventry,High,N,N,N,N,9 to 12,Coventry,N,N,Y,N,N,400030,440021000032,44003020703,44003020703,
+2011-2012,06121,Washington Oak,Washington Oak School,06,Coventry,Washington Oak - Coventry,Elementary,N,N,N,N,PK to 5,Coventry,Y,N,N,N,N,,440021000034,44003020703,44003020703,
+2011-2012,07103,Oak Lawn,Oak Lawn School,07,Cranston,Oak Lawn - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000059,44007014600,44007014600,
+2011-2012,07110,Waterman,Daniel D. Waterman School,07,Cranston,Waterman - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000046,44007013800,44007013800,
+2011-2012,07112,Chester Barrows,Chester W. Barrows School,07,Cranston,Chester Barrows - Cranston,Elementary,N,N,N,N,PK to 5,Cranston,Y,N,N,N,N,,440024000043,44007013500,44007013500,
+2011-2012,07113,Cranston HS East,Cranston High School East,07,Cranston,Cranston HS East - Cranston,High,N,N,N,N,9 to 12,Cranston,N,N,Y,N,N,400035,440024000044,44007014000,44007014000,
+2011-2012,07115,Bain MS,Hugh B. Bain Middle School,07,Cranston,Bain MS - Cranston,Middle,N,N,N,N,7 to 8,Cranston,N,Y,N,N,N,,440024000053,44007014700,44007014700,
+2011-2012,07116,Dutemple,William R. Dutemple School,07,Cranston,Dutemple - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000068,44007013701,44007013701,
+2011-2012,07117,Rhodes,Edward S. Rhodes School,07,Cranston,Rhodes - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000049,44007013400,44007013400,
+2011-2012,07118,Eden Park,Eden Park School,07,Cranston,Eden Park - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000047,44007013702,44007013702,
+2011-2012,07119,Gladstone St,Gladstone Street School,07,Cranston,Gladstone St - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000051,44007014100,44007014100,
+2011-2012,07120,Stadium,Stadium School,07,Cranston,Stadium - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000063,44007014000,44007014000,
+2011-2012,07121,Woodridge,Woodridge School,07,Cranston,Woodridge - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000069,44007014300,44007014300,
+2011-2012,07122,Garden City,Garden City School,07,Cranston,Garden City - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000050,44007013900,44007013900,
+2011-2012,07123,Park View MS,Park View Middle School,07,Cranston,Park View MS - Cranston,Middle,N,N,N,N,7 to 8,Cranston,N,Y,N,N,N,,440024000060,44007013600,44007013600,
+2011-2012,07124,Peters,George J. Peters School,07,Cranston,Peters - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000351,44007014700,44007014700,
+2011-2012,07125,Arlington,Arlington School,07,Cranston,Arlington - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000042,44007014700,44007014700,
+2011-2012,07126,Cranston HS West,Cranston High School West,07,Cranston,Cranston HS West - Cranston,High,N,N,N,N,9 to 12,Cranston,N,N,Y,N,N,400036,440024000045,44007014502,44007014502,
+2011-2012,07127,Stone Hill,Stone Hill School,07,Cranston,Stone Hill - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000064,44007014800,44007014800,
+2011-2012,07128,Glen Hills,Glen Hills School,07,Cranston,Glen Hills - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000052,44007014400,44007014400,
+2011-2012,07129,Western Hills,Western Hills Middle School,07,Cranston,Western Hills - Cranston,Middle,N,N,N,N,7 to 8,Cranston,N,Y,N,N,N,,440024000067,44007014502,44007014502,
+2011-2012,07130,Edgewood Highland,Edgewood Highland School,07,Cranston,Edgewood Highland - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000048,44007013500,44007013500,
+2011-2012,07134,Hope Highlands,Hope Highlands Elementary School,07,Cranston,Hope Highlands - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000007,44007014600,44007014600,
+2011-2012,07135,NEL/CPS HS,NE Laborers'/Cranston Public Schools Construction Career Academy,07,Cranston,NEL/CPS HS - Cranston,High,Y,N,N,N,9 to 12,Cranston,N,N,Y,N,N,400034,440024000229,44007014200,44007014200,
+2011-2012,07136,Orchard Farms,Orchard Farms Elementary School,07,Cranston,Orchard Farms - Cranston,Elementary,N,N,N,N,PK to 6,Cranston,Y,N,N,N,N,,440024000277,44007014600,44007014600,
+2011-2012,08107,B.F. Norton,B.F. Norton Elementary School,08,Cumberland,B.F. Norton - Cumberland,Elementary,N,N,N,N,K to 5,Cumberland,Y,N,N,N,N,,440027000039,44007011200,44007011200,
+2011-2012,08108,Garvin Mem.,Garvin Memorial School,08,Cumberland,Garvin Mem. - Cumberland,Elementary,N,N,N,N,K to 5,Cumberland,Y,N,N,N,N,,440027000081,44007011301,44007011301,
+2011-2012,08109,Community,Community School,08,Cumberland,Community - Cumberland,Elementary,N,N,N,N,K to 5,Cumberland,Y,N,N,N,N,,440027000075,44007011401,44007011401,
+2011-2012,08110,JJM Cumb. Hill,John J. McLaughlin Cumberland Hill School,08,Cumberland,JJM Cumb. Hill - Cumberland,Elementary,N,N,N,N,1 to 5,Cumberland,Y,N,N,N,N,,440027000077,44007011403,44007011403,
+2011-2012,08112,Ashton,Ashton School,08,Cumberland,Ashton - Cumberland,Elementary,N,N,N,N,K to 5,Cumberland,Y,N,N,N,N,,440027000070,44007011401,44007011401,
+2011-2012,08114,Cumberland HS,Cumberland High School,08,Cumberland,Cumberland HS - Cumberland,High,N,N,N,N,9 to 12,Cumberland,N,N,Y,N,N,400037,440027000076,44007011403,44007011403,
+2011-2012,08115,McCourt MS,Joseph L. McCourt Middle School,08,Cumberland,McCourt MS - Cumberland,Middle,N,N,N,N,6 to 8,Cumberland,N,Y,N,N,N,,440027000078,44007011200,44007011200,
+2011-2012,08116,N. Cumberland MS,North Cumberland Middle School,08,Cumberland,N. Cumberland MS - Cumberland,Middle,N,N,N,N,6 to 8,Cumberland,N,Y,N,N,N,,440027000082,44007011402,44007011402,
+2011-2012,08121,Cumberland Preschool (PreK),Cumberland Preschool Center at B.F. Norton School,08,Cumberland,Cumberland Preschool (PreK) - Cumberland,Elementary,N,N,N,N,PK to PK,Cumberland,Y,N,N,N,N,,440027000188,,,
+2011-2012,08601,Blackstone Valley Prep Elem 1,Blackstone Valley Prep Elementary School,47,"Blackstone Valley Prep, A RI Mayoral Academy",Blackstone Valley Prep Elem 1 - Blackstone Valley Prep RIMA,Elementary,Y,N,N,N,K to 2,Cumberland,Y,N,N,N,N,,440001500473,44007011200,44007011200,
+2011-2012,08602,Blackstone Valley Prep MS,Blackstone Valley Prep Middle School,47,"Blackstone Valley Prep, A RI Mayoral Academy",Blackstone Valley Prep MS - Blackstone Valley Prep RIMA,Middle,Y,N,N,N,5 to 6,Cumberland,N,Y,N,N,N,,440001500475,44007011200,44007011200,
+2011-2012,08603,Blackstone Valley Prep Elem 2,Blackstone Valley Prep Elementary 2 School,47,"Blackstone Valley Prep, A RI Mayoral Academy",Blackstone Valley Prep Elem 2 - Blackstone Valley Prep RIMA,Elementary,Y,N,N,N,K to K,Cumberland,Y,N,N,N,N,,,44007011200,44007011200,
+2011-2012,09102,Eldredge,James H. Eldredge Elementary School,09,East Greenwich,Eldredge - E. Greenwich,Elementary,N,N,N,N,4 to 5,East Greenwich,Y,N,N,N,N,,440030000089,44003020901,44003020901,
+2011-2012,09103,Cole MS,Archie R. Cole Middle School,09,East Greenwich,Cole MS - E. Greenwich,Middle,N,N,N,N,6 to 8,East Greenwich,N,Y,N,N,N,,440030000087,44003020901,44003020901,
+2011-2012,09105,Frenchtown,Frenchtown School,09,East Greenwich,Frenchtown - E. Greenwich,Elementary,N,N,N,N,K to 3,East Greenwich,Y,N,N,N,N,,440030000088,44003020903,44003020903,
+2011-2012,09106,E. Greenwich HS,East Greenwich High School,09,East Greenwich,E. Greenwich HS - E. Greenwich,High,N,N,N,N,9 to 12,East Greenwich,N,N,Y,N,N,400040,440030000086,44003020904,44003020904,
+2011-2012,09107,Meadowbrook Farms,Meadowbrook Farms School,09,East Greenwich,Meadowbrook Farms - E. Greenwich,Elementary,N,N,N,N,PK to 3,East Greenwich,Y,N,N,N,N,,440030000090,44003020904,44003020904,
+2011-2012,09108,Hanaford,George Hanaford School,09,East Greenwich,Hanaford - E. Greenwich,Elementary,N,N,N,N,4 to 5,East Greenwich,Y,N,N,N,N,,440030000377,44003020901,44003020901,
+2011-2012,10109,Martin MS,Edward R. Martin Middle School,10,East Providence,Martin MS - E. Providence,Middle,N,N,N,N,6 to 8,East Providence,N,Y,N,N,N,,440033000348,44007010501,44007010501,
+2011-2012,10111,Oldham,James R. D. Oldham School,10,East Providence,Oldham - E. Providence,Elementary,N,N,N,N,K to 5,Riverside,Y,N,N,N,N,,440033000094,44007010600,44007010600,
+2011-2012,10112,East Providence HS,East Providence High School,10,East Providence,East Providence HS - E. Providence,High,N,N,N,N,9 to 12,East Providence,N,N,Y,N,N,400050,440033000097,44007010300,44007010300,
+2011-2012,10113,Kent Heights,Kent Heights School,10,East Providence,Kent Heights - E. Providence,Elementary,N,N,N,N,K to 5,East Providence,Y,N,N,N,N,,440033000099,44007010501,44007010501,
+2011-2012,10114,Waddington,Alice M. Waddington School,10,East Providence,Waddington - E. Providence,Elementary,N,N,N,N,K to 5,Riverside,Y,N,N,N,N,,440033000092,44007010702,44007010702,
+2011-2012,10116,Hennessey,Agnes B. Hennessey School,10,East Providence,Hennessey - E. Providence,Elementary,N,N,N,N,K to 5,East Providence,Y,N,N,N,N,,440033000091,44007010400,44007010400,
+2011-2012,10117,Whiteknact,Emma G. Whiteknact School,10,East Providence,Whiteknact - E. Providence,Elementary,N,N,N,N,K to 5,East Providence,Y,N,N,N,N,,440033000109,44007010300,44007010300,
+2011-2012,10121,Meadowcrest ECFC (PreK),Meadowcrest Early Childhood Center,10,East Providence,Meadowcrest ECFC (PreK) - E. Providence,Elementary,N,N,N,N,PK to PK,Riverside,Y,N,N,N,N,,440033000101,44007010701,44007010701,
+2011-2012,10122,Riverside MS,Riverside Middle School,10,East Providence,Riverside MS - E. Providence,Middle,N,N,N,N,6 to 8,Riverside,N,Y,N,N,N,,440033000105,44007010701,44007010701,
+2011-2012,10123,Silver Spring,Silver Spring School,10,East Providence,Silver Spring - E. Providence,Elementary,N,N,N,N,K to 5,East Providence,Y,N,N,N,N,,440033000106,44007010502,44007010502,
+2011-2012,10124,Orlo Ave,Orlo Avenue School,10,East Providence,Orlo Ave - E. Providence,Elementary,N,N,N,N,K to 5,East Providence,Y,N,N,N,N,,440033000103,44007010300,44007010300,
+2011-2012,10125,Francis,Myron J. Francis Elementary School,10,East Providence,Francis - E. Providence,Elementary,N,N,N,N,K to 5,Rumford,Y,N,N,N,N,,440033000389,44007010101,44007010101,
+2011-2012,12101,Paine,Captain Isaac Paine Elementary School,12,Foster,Paine - Foster,Elementary,N,N,N,N,K to 5,Foster,Y,N,N,N,N,,440039000114,44007013300,44007013300,
+2011-2012,13103,Fogarty Mem.,Fogarty Memorial School,13,Glocester,Fogarty Mem. - Glocester,Elementary,N,N,N,N,K to 5,North Scituate,Y,N,N,N,N,,440045000119,44007013102,44007013102,
+2011-2012,13104,West Glocester,West Glocester Elementary,13,Glocester,West Glocester - Glocester,Elementary,N,N,N,N,PK to 5,Chepachet,Y,N,N,N,N,,440045000403,44007013101,44007013101,
+2011-2012,15101,Lawn Ave,Lawn Avenue School,15,Jamestown,Lawn Ave - Jamestown,Middle,N,N,N,N,5 to 8,Jamestown,N,Y,N,N,N,,440051000123,44005041300,44005041300,
+2011-2012,15102,Melrose Ave,Melrose Avenue School,15,Jamestown,Melrose Ave - Jamestown,Elementary,N,N,N,N,PK to 4,Jamestown,Y,N,N,N,N,,440051000404,44005041300,44005041300,
+2011-2012,16103,Thornton,Thornton School,16,Johnston,Thornton - Johnston,Elementary,N,N,N,N,1 to 5,Johnston,Y,N,N,N,N,,440054000131,44007012500,44007012500,
+2011-2012,16106,Brown Ave,Brown Avenue School,16,Johnston,Brown Ave - Johnston,Elementary,N,N,N,N,1 to 5,Johnston,Y,N,N,N,N,,440054000125,44007012200,44007012200,
+2011-2012,16108,Barnes,Sarah Dyer Barnes School,16,Johnston,Barnes - Johnston,Elementary,N,N,N,N,1 to 5,Johnston,Y,N,N,N,N,,440054000130,44007012300,44007012300,
+2011-2012,16109,Winsor Hill,Winsor Hill School,16,Johnston,Winsor Hill - Johnston,Elementary,N,N,N,N,1 to 5,Johnston,Y,N,N,N,N,,440054000132,44007012402,44007012402,
+2011-2012,16110,Graniteville (PreK),Graniteville School,16,Johnston,Graniteville (PreK) - Johnston,Elementary,N,N,N,N,PK to PK,Johnston,Y,N,N,N,N,,440054000127,,,
+2011-2012,16111,Ferri MS,Nicholas A. Ferri Middle School,16,Johnston,Ferri MS - Johnston,Middle,N,N,N,N,6 to 8,Johnston,N,Y,N,N,N,,440054000129,44007012200,44007012200,
+2011-2012,16112,Johnston SHS,Johnston Senior High School,16,Johnston,Johnston SHS - Johnston,High,N,N,N,N,9 to 12,Johnston,N,N,Y,N,N,400058,440054000128,44007012300,44007012300,
+2011-2012,16114,Early Childhood Ctr,Early Childhood Center,16,Johnston,Early Childhood Ctr - Johnston,Elementary,N,N,N,N,PK to K,Johnston,Y,N,N,N,N,,440054000452,,,
+2011-2012,17106,Lonsdale,Lonsdale Elementary School,17,Lincoln,Lonsdale - Lincoln,Elementary,N,N,N,N,PK to 5,Lincoln,Y,N,N,N,N,,440057000137,44007011701,44007011701,
+2011-2012,17109,Lincoln Central,Lincoln Central Elementary School,17,Lincoln,Lincoln Central - Lincoln,Elementary,N,N,N,N,K to 5,Lincoln,Y,N,N,N,N,,440057000134,44007011600,44007011600,
+2011-2012,17110,Lincoln SHS,Lincoln Senior High School,17,Lincoln,Lincoln SHS - Lincoln,High,N,N,N,N,9 to 12,Lincoln,N,N,Y,N,N,400059,440057000135,44007011600,44007011600,
+2011-2012,17112,Saylesville,Saylesville Elementary School,17,Lincoln,Saylesville - Lincoln,Elementary,N,N,N,N,K to 5,Lincoln,Y,N,N,N,N,,440057000139,44007011702,44007011702,
+2011-2012,17113,Northern Lincoln,Northern Lincoln Elementary School,17,Lincoln,Northern Lincoln - Lincoln,Elementary,N,N,N,N,PK to 5,Manville,Y,N,N,N,N,,440057000138,44007011500,44007011500,
+2011-2012,17117,Lincoln MS,Lincoln Middle School,17,Lincoln,Lincoln MS - Lincoln,Middle,N,N,N,N,6 to 8,Lincoln,N,Y,N,N,N,,440057000062,44007011600,44007011600,
+2011-2012,17701,Davies Career-Tech HS,William M. Davies Career & Technical Center,40,Davies Career & Tech,Davies Career-Tech HS - Davies CTECH,High,N,N,N,N,9 to 12,Lincoln,N,N,Y,N,N,400057,440000400379,44007011600,44007011600,
+2011-2012,18101,Wilbur & McMahon,Wilbur & McMahon Schools,18,Little Compton,Wilbur & McMahon - Little Compton,"Elem,Middle",N,N,N,N,K to 8,Little Compton,Y,Y,N,N,N,,440060000140,44005041400,44005041400,
+2011-2012,19106,Aquidneck,Aquidneck School,19,Middletown,Aquidneck - Middletown,Elementary,N,N,N,N,PK to 3,Middletown,Y,N,N,N,N,,440063000141,44005040400,44005040400,
+2011-2012,19107,Forest Ave,Forest Avenue School,19,Middletown,Forest Ave - Middletown,Elementary,N,N,N,N,K to 3,Middletown,Y,N,N,N,N,,440063000405,44005040304,44005040304,
+2011-2012,19111,Middletown HS,Middletown High School,19,Middletown,Middletown HS - Middletown,High,N,N,N,N,9 to 12,Middletown,N,N,Y,N,N,400063,440063000147,44005040400,44005040400,
+2011-2012,19114,Gaudet,Joseph H. Gaudet School,19,Middletown,Gaudet - Middletown,Middle,N,N,N,N,5 to 8,Middletown,N,Y,N,N,N,,440063000144,44005040400,44005040400,
+2011-2012,19117,Gaudet LA,Joseph H. Gaudet Learning Academy,19,Middletown,Gaudet LA - Middletown,Elementary,N,N,N,N,4 to 4,Middletown,Y,N,N,N,N,,440063000471,44005040400,44005040400,
+2011-2012,20102,Narragansett,Narragansett Elementary School,20,Narragansett,Narragansett - Narragansett,Elementary,N,N,N,N,PK to 4,Narragansett,Y,N,N,N,N,,440066000150,44009051503,44009051503,
+2011-2012,20103,Narragansett Pier,Narragansett Pier School,20,Narragansett,Narragansett Pier - Narragansett,Middle,N,N,N,N,5 to 8,Narragansett,N,Y,N,N,N,,440066000396,44009051503,44009051503,
+2011-2012,20104,Narragansett HS,Narragansett High School,20,Narragansett,Narragansett HS - Narragansett,High,N,N,N,N,9 to 12,Narragansett,N,N,Y,N,N,400064,440066000151,44009051503,44009051503,
+2011-2012,21102,Cranston-Calvert,Cranston - Calvert School,21,Newport,Cranston-Calvert - Newport,Elementary,N,N,Y,Y,K to 4,Newport,Y,N,N,N,N,,440072000154,44005040600,44005040600,
+2011-2012,21106,Thompson MS,Frank E. Thompson Middle School,21,Newport,Thompson MS - Newport,Middle,N,N,Y,Y,5 to 8,Newport,N,Y,N,N,N,,440072000155,44005040700,44005040700,
+2011-2012,21110,Sullivan,Dr. M. H. Sullivan School,21,Newport,Sullivan - Newport,Elementary,N,N,Y,Y,K to 4,Newport,Y,N,N,N,N,,440072000161,44005040600,44005040600,
+2011-2012,21111,Rogers HS,Rogers High School,21,Newport,Rogers HS - Newport,High,N,N,Y,Y,9 to 12,Newport,N,N,Y,N,N,400075,440072000159,44005040900,44005040900,
+2011-2012,21112,Coggeshall,Coggeshall School,21,Newport,Coggeshall - Newport,Elementary,N,N,Y,Y,K to 4,Newport,Y,N,N,N,N,,440072000153,44005040500,44005040500,
+2011-2012,21114,Underwood,William J. Underwood School,21,Newport,Underwood - Newport,Elementary,N,N,Y,Y,PK to 4,Newport,Y,N,N,N,N,,440072000163,44005040900,44005040900,
+2011-2012,22101,Block Island,Block Island School,22,New Shoreham,Block Island - New Shoreham,"Elem,Middle,High",N,N,N,N,K to 12,Block Island,Y,Y,Y,N,N,400005,440069000149,44009041500,44009041500,
+2011-2012,23105,Wickford MS,Wickford Middle School,23,North Kingstown,Wickford MS - N. Kingstown,Middle,N,N,N,N,6 to 8,North Kingstown,N,Y,N,N,N,,440075000172,44009050302,44009050302,
+2011-2012,23108,North Kingstown SHS,North Kingstown Senior High School,23,North Kingstown,North Kingstown SHS - N. Kingstown,High,N,N,N,N,9 to 12,North Kingstown,N,N,Y,N,N,400088,440075000168,44009050302,44009050302,
+2011-2012,23109,Fishing Cove,Fishing Cove Elementary School,23,North Kingstown,Fishing Cove - N. Kingstown,Elementary,N,N,N,N,PK to 5,North Kingstown,Y,N,N,N,N,,440075000398,44009050102,44009050102,
+2011-2012,23110,Forest Park,Forest Park Elementary School,23,North Kingstown,Forest Park - N. Kingstown,Elementary,N,N,N,N,K to 5,North Kingstown,Y,N,N,N,N,,440075000166,44009050104,44009050104,
+2011-2012,23111,Hamilton,Hamilton Elementary School,23,North Kingstown,Hamilton - N. Kingstown,Elementary,N,N,N,N,K to 5,North Kingstown,Y,N,N,N,N,,440075000167,44009050402,44009050402,
+2011-2012,23112,Davisville MS,Davisville Middle School,23,North Kingstown,Davisville MS - N. Kingstown,Middle,N,N,N,N,6 to 8,North Kingstown,N,Y,N,N,N,,440075000165,44009050103,44009050103,
+2011-2012,23113,Henseler Quidnesset,Suzanne M. Henseler Quidnessett Elementary School,23,North Kingstown,Henseler Quidnesset - N. Kingstown,Elementary,N,N,N,N,K to 5,North Kingstown,Y,N,N,N,N,,440075000169,44009050103,44009050103,
+2011-2012,23114,Stony Lane,Stony Lane Elementary School,23,North Kingstown,Stony Lane - N. Kingstown,Elementary,N,N,N,N,K to 5,North Kingstown,Y,N,N,N,N,,440075000170,44009050102,44009050102,
+2011-2012,23601,Compass,The Compass School,55,Compass Charter School,Compass - Compass Charter,"Elem,Middle",Y,N,N,N,K to 8,Kingston,Y,Y,N,N,N,,440003500245,44009051305,44009051303,
+2011-2012,24103,Marieville,Marieville Elementary School,24,North Providence,Marieville - N. Providence,Elementary,N,N,N,N,PK to 5,North Providence,Y,N,N,N,N,,440078000179,44007011800,44007011800,
+2011-2012,24105,North Providence HS,North Providence High School,24,North Providence,North Providence HS - N. Providence,High,N,N,N,N,9 to 12,North Providence,N,N,Y,N,N,400090,440078000180,44007012000,44007012000,
+2011-2012,24106,Stephen Olney,Stephen Olney School,24,North Providence,Stephen Olney - N. Providence,Elementary,N,N,N,N,K to 5,North Providence,Y,N,N,N,N,,440078000181,44007011901,44007011900,
+2011-2012,24107,McGuire,James L. McGuire School,24,North Providence,McGuire - N. Providence,Elementary,N,N,N,N,K to 5,North Providence,Y,N,N,N,N,,440078000177,44007012000,44007012000,
+2011-2012,24108,Whelan,Dr. Joseph A Whelan Elementary School,24,North Providence,Whelan - N. Providence,Elementary,N,N,N,N,K to 5,North Providence,Y,N,N,N,N,,440078000182,44007011902,44007011900,
+2011-2012,24109,Centredale,Centredale School,24,North Providence,Centredale - N. Providence,Elementary,N,N,N,N,PK to 5,North Providence,Y,N,N,N,N,,440078000174,44007012104,44007012101,
+2011-2012,24110,Greystone,Greystone School,24,North Providence,Greystone - N. Providence,Elementary,N,N,N,N,PK to 5,North Providence,Y,N,N,N,N,,440078000176,44007012104,44007012101,
+2011-2012,24111,Ricci MS,Dr. Edward A. Ricci Middle School,24,North Providence,Ricci MS - N. Providence,Middle,N,N,N,N,6 to 8,North Providence,N,Y,N,N,N,,440078000178,44007012102,44007012102,
+2011-2012,24112,Birchwood MS,Birchwood Middle School,24,North Providence,Birchwood MS - N. Providence,Middle,N,N,N,N,6 to 8,North Providence,N,Y,N,N,N,,440078000173,44007011902,44007011900,
+2011-2012,25106,Halliwell Mem.,Dr. Harry L. Halliwell Memorial School,25,North Smithfield,Halliwell Mem. - N. Smithfield,Elementary,N,N,N,N,3 to 5,Slatersville,Y,N,N,N,N,,440081000184,44007012801,44007012801,
+2011-2012,25108,North Smithfield HS,North Smithfield High School,25,North Smithfield,North Smithfield HS - N. Smithfield,High,N,N,N,N,9 to 12,North Smithfield,N,N,Y,N,N,400287,440081000186,44007012803,44007012803,
+2011-2012,25109,North Smithfield MS,North Smithfield Middle School,25,North Smithfield,North Smithfield MS - N. Smithfield,Middle,N,N,N,N,6 to 8,North Smithfield,N,Y,N,N,N,,440081000469,44007012803,44007012803,
+2011-2012,25110,North Smithfield Elem.,North Smithfield Elementary School,25,North Smithfield,North Smithfield Elem. - N. Smithfield,Elementary,N,N,N,N,PK to 3,North Smithfield,Y,N,N,N,N,,440081000399,44007012803,44007012803,
+2011-2012,26103,Jenks JHS,Joseph Jenks Junior High School,26,Pawtucket,Jenks JHS - Pawtucket,Middle,N,Y,Y,Y,7 to 8,Pawtucket,N,Y,N,N,N,,440084000197,44007017100,44007017100,
+2011-2012,26105,Tolman SHS,William E. Tolman Senior High School,26,Pawtucket,Tolman SHS - Pawtucket,High,N,Y,Y,Y,9 to 12,Pawtucket,N,N,Y,N,N,400115,440084000202,44007016000,44007016000,
+2011-2012,26106,Slater JHS,Samuel Slater Junior High School,26,Pawtucket,Slater JHS - Pawtucket,Middle,N,Y,Y,Y,7 to 8,Pawtucket,N,Y,N,N,N,,440084000200,44007015100,44007015100,
+2011-2012,26107,Goff JHS,Goff Junior High School,26,Pawtucket,Goff JHS - Pawtucket,Middle,N,Y,Y,Y,7 to 8,Pawtucket,N,Y,N,N,N,,440084000198,44007015900,44007015900,
+2011-2012,26109,J. Walsh HS for Arts,JM Walsh School for the Performing & Visual Arts,26,Pawtucket,J. Walsh HS for Arts - Pawtucket,High,N,Y,Y,Y,9 to 12,Pawtucket,N,N,Y,N,N,400969,440084000466,44007017100,44007017100,
+2011-2012,26110,Potter-Burns,Potter-Burns School,26,Pawtucket,Potter-Burns - Pawtucket,Elementary,N,Y,Y,Y,K to 6,Pawtucket,Y,N,N,N,N,,440084000196,44007015800,44007015800,
+2011-2012,26111,Greene,Nathanael Greene School,26,Pawtucket,Greene - Pawtucket,Elementary,N,Y,Y,Y,K to 6,Pawtucket,Y,N,N,N,N,,440084000199,44007016300,44007016300,
+2011-2012,26113,Fallon Mem.,Fallon Memorial School,26,Pawtucket,Fallon Mem. - Pawtucket,Elementary,N,Y,Y,Y,PK to 6,Pawtucket,Y,N,N,N,N,,440084000192,44007017000,44007017000,
+2011-2012,26115,Curtis Mem.,Flora S. Curtis Memorial School,26,Pawtucket,Curtis Mem. - Pawtucket,Elementary,N,Y,Y,Y,PK to 6,Pawtucket,Y,N,N,N,N,,440084000193,44007015700,44007015700,
+2011-2012,26116,Curvin-McCabe,Curvin-McCabe School,26,Pawtucket,Curvin-McCabe - Pawtucket,Elementary,N,Y,Y,Y,K to 6,Pawtucket,Y,N,N,N,N,,440084000189,44007015500,44007015500,
+2011-2012,26118,Shea SHS,Shea Senior High School,26,Pawtucket,Shea SHS - Pawtucket,High,N,Y,Y,Y,9 to 12,Pawtucket,N,N,Y,N,N,400125,440084000201,44007016500,44007016500,
+2011-2012,26119,Winters,Henry J. Winters School,26,Pawtucket,Winters - Pawtucket,Elementary,N,Y,Y,Y,K to 6,Pawtucket,Y,N,N,N,N,,440084000195,44007015400,44007015400,
+2011-2012,26120,Baldwin,Elizabeth Baldwin School,26,Pawtucket,Baldwin - Pawtucket,Elementary,N,Y,Y,Y,K to 6,Pawtucket,Y,N,N,N,N,,440084000191,44007016400,44007016400,
+2011-2012,26121,Cunningham,M. Virginia Cunningham School,26,Pawtucket,Cunningham - Pawtucket,Elementary,N,Y,Y,Y,K to 6,Pawtucket,Y,N,N,N,N,,440084000190,44007015100,44007015100,
+2011-2012,26122,Little,Agnes E. Little School,26,Pawtucket,Little - Pawtucket,Elementary,N,Y,Y,Y,K to 6,Pawtucket,Y,N,N,N,N,,440084000187,44007017100,44007017100,
+2011-2012,26125,Varieur,Francis J. Varieur School,26,Pawtucket,Varieur - Pawtucket,Elementary,N,Y,Y,Y,PK to 6,Pawtucket,Y,N,N,N,N,,440084000194,44007016600,44007016600,
+2011-2012,26601,Int'l Charter,International Charter School,53,International Charter,Int'l Charter - Int'l Charter,Elementary,Y,Y,Y,Y,K to 5,Pawtucket,Y,N,N,N,N,,440003400226,44007016600,44007016600,
+2011-2012,26602,Blackstone Academy,Blackstone Academy Charter School,54,Blackstone Academy,Blackstone Academy - Blackstone Acad. Charter,High,Y,Y,Y,Y,9 to 12,Pawtucket,N,N,Y,N,N,400100,440003600246,44007016600,44007016600,
+2011-2012,27104,Hathaway,Howard Hathaway School,27,Portsmouth,Hathaway - Portsmouth,Elementary,N,N,N,N,K to 3,Portsmouth,Y,N,N,N,N,,440087000204,44005040102,44005040102,
+2011-2012,27106,Portsmouth HS,Portsmouth High School,27,Portsmouth,Portsmouth HS - Portsmouth,High,N,N,N,N,9 to 12,Portsmouth,N,N,Y,N,N,400128,440087000207,44005040102,44005040102,
+2011-2012,27111,Melville,Melville Elementary School,27,Portsmouth,Melville - Portsmouth,Elementary,N,N,N,N,PK to 3,Portsmouth,Y,N,N,N,N,,440087000206,44005040103,44005040103,
+2011-2012,27112,Portsmouth MS,Portsmouth Middle School,27,Portsmouth,Portsmouth MS - Portsmouth,Middle,N,N,N,N,4 to 8,Portsmouth,N,Y,N,N,N,,440087000208,44005040103,44005040103,
+2011-2012,28103,Lima Anx,Alfred Lima Annex,28,Providence,Lima Anx - Providence,Elementary,N,Y,Y,Y,PK to 5,Providence,Y,N,N,Y,Y,,440090000237,44007000300,44007000300,West End
+2011-2012,28106,Spaziano Anx,Frank Spaziano Annex,28,Providence,Spaziano Anx - Providence,Elementary,N,Y,Y,Y,K to 2,Providence,Y,N,N,N,N,,440090000093,44007001800,44007001800,Hartford
+2011-2012,28113,Alvarez HS,Dr. Jorge Alvarez High School,28,Providence,Alvarez HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,400001,440090000344,44007001500,44007001500,Reservoir
+2011-2012,28115,Messer,Asa Messer Elementary School,28,Providence,Messer - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,Y,Y,,440090000213,44007001000,44007001000,Federal Hill
+2011-2012,28116,ASF @ Broad,Alan Shawn Feinstein Elementary at Broad Street,28,Providence,ASF @ Broad - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000215,44007000102,44007000102,Washington Park
+2011-2012,28121,Lima,Alfred Lima Sr. Elementary School,28,Providence,Lima - Providence,Elementary,N,Y,Y,Y,2 to 5,Providence,Y,N,N,Y,Y,,440090000124,44007000300,44007000300,West End
+2011-2012,28122,Fortes,Charles Fortes Elementary School,28,Providence,Fortes - Providence,Elementary,N,Y,Y,Y,PK to 1,Providence,Y,N,N,Y,Y,,440090000133,44007000300,44007000300,West End
+2011-2012,28127,Webster Ave,Webster Avenue School,28,Providence,Webster Ave - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000247,44007001600,44007001600,Silver Lake
+2011-2012,28130,Veazie St,Veazie Street School,28,Providence,Veazie St - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000013,44007002800,44007002800,Wanskuck
+2011-2012,28131,Birch Voc. HS,Birch Vocational Center,28,Providence,Birch Voc. HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,,440090000214,44007002400,44007002400,Mount Pleasant
+2011-2012,28134,Spaziano,Frank Spaziano Avenue Elementary School,28,Providence,Spaziano - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000228,44007001800,44007001800,Hartford
+2011-2012,28135,West,George J. West Elementary School,28,Providence,West - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000222,44007002102,44007002100,Mount Pleasant
+2011-2012,28137,Hopkins MS,Esek Hopkins Middle School,28,Providence,Hopkins MS - Providence,Middle,N,Y,Y,Y,6 to 8,Providence,N,Y,N,N,N,,440090000401,44007002900,44007002900,Charles
+2011-2012,28138,Kennedy,Robert F. Kennedy Elementary School,28,Providence,Kennedy - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000241,44007002400,44007002400,Elmhurst
+2011-2012,28139,Central HS,Central High School,28,Providence,Central HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,Y,N,400145,440090000217,44007000700,44007000700,Upper South Providence
+2011-2012,28140,Lauro,Carl G. Lauro Elementary School,28,Providence,Lauro - Providence,Elementary,N,Y,Y,Y,PK to 5,Providence,Y,N,N,N,N,,440090000227,44007001100,44007001100,Federal Hill
+2011-2012,28142,Reservoir Ave,Reservoir Avenue School,28,Providence,Reservoir Ave - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000240,44007001500,44007001500,Reservoir
+2011-2012,28143,Bishop MS,Nathan Bishop Middle School,28,Providence,Bishop MS - Providence,Middle,N,Y,Y,Y,6 to 8,Providence,N,Y,N,N,N,,440090000474,44007003400,44007003400,Blackstone
+2011-2012,28144,Stuart MS,Gilbert Stuart Middle School,28,Providence,Stuart MS - Providence,Middle,N,Y,Y,Y,6 to 8,Providence,N,Y,N,Y,N,,440090000223,44007000300,44007000300,West End
+2011-2012,28145,Greene MS,Nathanael Greene Middle School,28,Providence,Greene MS - Providence,Middle,N,Y,Y,Y,6 to 8,Providence,N,Y,N,N,N,,440090000234,44007002300,44007002300,Elmhurst
+2011-2012,28147,Roger Williams MS,Roger Williams Middle School,28,Providence,Roger Williams MS - Providence,Middle,N,Y,Y,Y,6 to 8,Providence,N,Y,N,Y,N,,440090000242,44007000500,44007000500,Lower South Providence
+2011-2012,28150,Mt. Pleasant HS,Mount Pleasant High School,28,Providence,Mt. Pleasant HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,400185,440090000232,44007002400,44007002400,Mount Pleasant
+2011-2012,28151,Gregorian,Vartan Gregorian Elementary School,28,Providence,Gregorian - Providence,Elementary,N,Y,Y,Y,PK to 5,Providence,Y,N,N,N,N,,440090000221,44007003700,44007003700,Fox Point
+2011-2012,28153,D'Abate,William D'Abate Elementary School,28,Providence,D'Abate - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000248,44007001900,44007001900,Olneyville
+2011-2012,28156,Bailey,Robert L. Bailey IV Elementary School,28,Providence,Bailey - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,Y,Y,,440090000071,44007000400,44007000400,Lower South Providence
+2011-2012,28157,Feinstein @ Sackett St,Lillian Feinstein Elementary at Sackett Street,28,Providence,Feinstein @ Sackett St - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,Y,Y,,440090000243,44007000200,44007000200,Elmwood
+2011-2012,28160,Fogarty,Mary E. Fogarty Elementary School,28,Providence,Fogarty - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,Y,Y,,440090000231,44007000400,44007000400,Lower South Providence
+2011-2012,28161,Kizirian,Harry Kizirian Elementary School,28,Providence,Kizirian - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000216,44007002600,44007002600,Smith Hill
+2011-2012,28162,Woods & Young,The Sgt. Cornel Young Jr. & Charlotte Woods Elementary School @ The B. Joe Clanton Complex,28,Providence,Woods & Young - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,Y,Y,,440090000156,44007000500,44007000500,Lower South Providence
+2011-2012,28163,King,Dr. Martin Luther King Jr. Elementary School,28,Providence,King - Providence,Elementary,N,Y,Y,Y,K to 5,Providence,Y,N,N,N,N,,440090000230,44007003100,44007003100,Mount Hope
+2011-2012,28164,Classical HS,Classical High School,28,Providence,Classical HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,Y,N,400150,440090000218,44007000700,44007000700,Upper South Providence
+2011-2012,28165,Pleasant View,Pleasant View School,28,Providence,Pleasant View - Providence,Elementary,N,Y,Y,Y,PK to 5,Providence,Y,N,N,N,N,,440090000236,44007002400,44007002400,Mount Pleasant
+2011-2012,28167,UCAP,Urban Collaborative Accelerated Program,49,Urban Collaborative,UCAP - UCAP,Middle,N,Y,Y,Y,7 to 8,Providence,N,Y,N,N,N,,440000500271,44007001100,44007001100,Federal Hill
+2011-2012,28170,Times2,Times2 Academy,28,Providence,Times2 - Providence,"Elem,Middle,High",Y,Y,Y,Y,K to 12,Providence,Y,Y,Y,N,N,400144,440090000157,44007002600,44007002600,Smith Hill
+2011-2012,28178,ACES (HS),Academy for Career Exploration,28,Providence,ACES (HS) - Providence,High,Y,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,400146,440090000055,44007001100,44007001100,Federal Hill
+2011-2012,28181,Carnevale,Anthony Carnevale Elementary School,28,Providence,Carnevale - Providence,Elementary,N,Y,Y,Y,PK to 5,Providence,Y,N,N,N,N,,440090000162,44007001800,44007001800,Hartford
+2011-2012,28182,DelSesto MS,Governor Christopher DelSesto Middle School,28,Providence,DelSesto MS - Providence,Middle,N,Y,Y,Y,6 to 8,Providence,N,Y,N,N,N,,440090000175,44007001800,44007001800,Hartford
+2011-2012,28187,E-Cubed Academy (HS),E-Cubed Academy,28,Providence,E-Cubed Academy (HS) - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,400157,440090000323,44007002800,44007002800,Wanskuck
+2011-2012,28189,Cooley/PAIS HS @ Juanita Sanchez,William B. Cooley Senior High School & Providence Academy of International Studies @ The Juanita San,28,Providence,Cooley/PAIS HS @ Juanita Sanchez - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,Y,N,400183,440090000209,44007000500,44007000500,Lower South Providence
+2011-2012,28193,Prov Career & Tech HS,Providence Career & Technical Academy,28,Providence,Prov Career & Tech HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,Y,N,400142,440090000467,44007001200,44007001200,West End
+2011-2012,28601,Highlander,Highlander Charter School,48,Highlander,Highlander - Highlander Charter,"Elem,Middle",Y,Y,Y,Y,K to 8,Providence,Y,Y,N,N,N,,440003100455,44007000200,44007000200,Elmwood
+2011-2012,28602,Cuffee,Paul Cuffee Charter School,51,Paul Cuffee Charter Sch,Cuffee - Cuffee Charter,"Elem,Middle,High",Y,Y,Y,Y,K to 10,Providence,Y,Y,Y,N,N,400142,440003200220,44007002500,44007002500,Valley
+2011-2012,28603,Hope Info Tech HS,Hope Information Technology School,28,Providence,Hope Info Tech HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,400161,440090000314,44007003602,44007003602,College Hill
+2011-2012,28605,Hope Arts HS,Hope Arts School,28,Providence,Hope Arts HS - Providence,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,400163,440090000322,44007003602,44007003602,College Hill
+2011-2012,28606,TAPA,Trinity Academy for the Performing Arts,61,Trinity Academy for the Performing Arts,TAPA - TAPA Charter,Middle,Y,Y,Y,Y,7 to 8,Providence,N,Y,N,N,N,,440001800478,44007001300,44007001300,West End
+2011-2012,28607,RI Nurses Inst. Mid. College HS,RI Nurses Institute Middle College Charter High School,63,Rhode Island Nurses Institute Middle College,RI Nurses Inst. Mid. College HS - RI Nurses Inst. Mid. College Charter,High,Y,Y,Y,Y,10 to 12,Providence,N,N,Y,N,N,400189,,44007000800,44007000800,Downtown
+2011-2012,28703,The MET,Metropolitan Regional Career & Technical Center,60,MET Career & Tech,The MET - State Operated,High,N,Y,Y,Y,9 to 12,Providence,N,N,Y,N,N,400166,440000300121,44007000600,44007000600,Upper South Providence
+2011-2012,30102,Hope,Hope Elementary School,30,Scituate,Hope - Scituate,Elementary,N,N,N,N,K to 5,Hope,Y,N,N,N,N,,440096000253,44007013201,44007013201,
+2011-2012,30103,Clayville,Clayville Elementary School,30,Scituate,Clayville - Scituate,Elementary,N,N,N,N,K to 5,Clayville,Y,N,N,N,N,,440096000252,44007013202,44007013202,
+2011-2012,30104,Scituate HS,Scituate High School,30,Scituate,Scituate HS - Scituate,High,N,N,N,N,9 to 12,North Scituate,N,N,Y,N,N,400095,440096000255,44007013202,44007013202,
+2011-2012,30105,Scituate MS,Scituate Middle School,30,Scituate,Scituate MS - Scituate,Middle,N,N,N,N,6 to 8,North Scituate,N,Y,N,N,N,,440096000036,44007013202,44007013202,
+2011-2012,30106,North Scituate Elem.,North Scituate Elementary School,30,Scituate,North Scituate Elem. - Scituate,Elementary,N,N,N,N,PK to 5,North Scituate,Y,N,N,N,N,,440096000254,44007013201,44007013201,
+2011-2012,31103,Winsor,William Winsor School,31,Smithfield,Winsor - Smithfield,Elementary,N,N,N,N,K to 5,Smithfield,Y,N,N,N,N,,440099000261,44007012702,44007012702,
+2011-2012,31104,Old County Rd,Old County Road School,31,Smithfield,Old County Rd - Smithfield,Elementary,N,N,N,N,K to 5,Smithfield,Y,N,N,N,N,,440099000258,44007012602,44007012602,
+2011-2012,31105,McCabe,Anna M. McCabe School,31,Smithfield,McCabe - Smithfield,Elementary,N,N,N,N,PK to 5,Smithfield,Y,N,N,N,N,,440099000256,44007012701,44007012701,
+2011-2012,31107,Smithfield SHS,Smithfield Senior High School,31,Smithfield,Smithfield SHS - Smithfield,High,N,N,N,N,9 to 12,Smithfield,N,N,Y,N,N,400053,440099000259,44007012701,44007012701,
+2011-2012,31108,LaPerche,Raymond C. LaPerche School,31,Smithfield,LaPerche - Smithfield,Elementary,N,N,N,N,K to 5,Smithfield,Y,N,N,N,N,,440099000257,44007012602,44007012602,
+2011-2012,31109,Gallagher MS,Vincent J. Gallagher Middle School,31,Smithfield,Gallagher MS - Smithfield,Middle,N,N,N,N,6 to 8,Smithfield,N,Y,N,N,N,,440099000260,44007012701,44007012701,
+2011-2012,32103,Wakefield,Wakefield Elementary School,32,South Kingstown,Wakefield - S. Kingstown,Elementary,N,N,N,N,K to 4,Wakefield,Y,N,N,N,N,,440102000269,44009051202,44009051200,
+2011-2012,32104,Hazard (PreK),Hazard School,32,South Kingstown,Hazard (PreK) - S. Kingstown,Elementary,N,N,N,N,PK to PK,Wakefield,Y,N,N,N,N,,440102000102,44009051202,44009051200,
+2011-2012,32107,Peace Dale,Peace Dale Elementary School,32,South Kingstown,Peace Dale - S. Kingstown,Elementary,N,N,N,N,K to 4,Peace Dale,Y,N,N,N,N,,440102000264,44009051201,44009051200,
+2011-2012,32108,South Kingstown HS,South Kingstown High School,32,South Kingstown,South Kingstown HS - S. Kingstown,High,N,N,N,N,9 to 12,Wakefield,N,N,Y,N,N,400230,440102000265,44009051202,44009051200,
+2011-2012,32110,Curtis Corner MS,Curtis Corner Middle School,32,South Kingstown,Curtis Corner MS - S. Kingstown,Middle,N,N,N,N,7 to 8,Wakefield,N,Y,N,N,N,,440102000266,44009051306,44009051303,
+2011-2012,32112,West Kingston,West Kingston Elementary School,32,South Kingstown,West Kingston - S. Kingstown,Elementary,N,N,N,N,K to 4,West Kingston,Y,N,N,N,N,,440102000270,44009051306,44009051303,
+2011-2012,32113,Matunuck,Matunuck School,32,South Kingstown,Matunuck - S. Kingstown,Elementary,N,N,N,N,K to 4,Wakefield,Y,N,N,N,N,,440102000263,44009051302,44009051302,
+2011-2012,32114,Broad Rock MS,Broad Rock Middle School,32,South Kingstown,Broad Rock MS - S. Kingstown,"Elem,Middle",N,N,N,N,5 to 6,Wakefield,Y,Y,N,N,N,,440102000210,44009051202,44009051200,
+2011-2012,32601,Kingston Hill,Kingston Hill Academy,52,Kingston Hill Academy,Kingston Hill - Kingston Hill Charter,Elementary,Y,N,N,N,K to 5,Saunderstown,Y,N,N,N,N,,440003300225,44009051305,44009051303,
+2011-2012,33105,Ranger,Walter E. Ranger School,33,Tiverton,Ranger - Tiverton,Elementary,N,N,N,N,K to 4,Tiverton,Y,N,N,N,N,,440105000276,44005041702,44005041700,
+2011-2012,33106,Fort Barton,Fort Barton School,33,Tiverton,Fort Barton - Tiverton,Elementary,N,N,N,N,K to 4,Tiverton,Y,N,N,N,N,,440105000357,44005041702,44005041700,
+2011-2012,33107,Pocasset,Pocasset School,33,Tiverton,Pocasset - Tiverton,Elementary,N,N,N,N,PK to 4,Tiverton,Y,N,N,N,N,,440105000273,44005041701,44005041700,
+2011-2012,33108,Tiverton HS,Tiverton High School,33,Tiverton,Tiverton HS - Tiverton,High,N,N,N,N,9 to 12,Tiverton,N,N,Y,N,N,400224,440105000274,44005041701,44005041700,
+2011-2012,33110,Tiverton MS,Tiverton Middle School,33,Tiverton,Tiverton MS - Tiverton,Middle,N,N,N,N,5 to 8,Tiverton,N,Y,N,N,N,,440105000275,44005041701,44005041700,
+2011-2012,35101,Norwood,Norwood School,35,Warwick,Norwood - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000298,44003021100,44003021100,
+2011-2012,35104,Oakland Beach,Oakland Beach Elementary School,35,Warwick,Oakland Beach - Warwick,Elementary,N,N,N,N,PK to 6,Warwick,Y,N,N,N,N,,440111000299,44003021700,44003021700,
+2011-2012,35114,Greenwood,Greenwood School,35,Warwick,Greenwood - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000291,44003022100,44003022100,
+2011-2012,35118,Aldrich JHS,Aldrich Junior High School,35,Warwick,Aldrich JHS - Warwick,Middle,N,N,N,N,7 to 8,Warwick,N,Y,N,N,N,,440111000283,44003021001,44003021000,
+2011-2012,35119,Wyman,Wyman School,35,Warwick,Wyman - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000312,44003021002,44003021000,
+2011-2012,35120,Gorton JHS,Gorton Junior High School,35,Warwick,Gorton JHS - Warwick,Middle,N,N,N,N,7 to 8,Warwick,N,Y,N,N,N,,440111000289,44003021502,44003021502,
+2011-2012,35121,Robertson,E. G. Robertson School,35,Warwick,Robertson - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000304,44003021903,44003021903,
+2011-2012,35123,Lippitt,Lippitt School,35,Warwick,Lippitt - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000296,44003021902,44003021902,
+2011-2012,35124,Holden,Randall Holden School,35,Warwick,Holden - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000292,44003021401,44003021401,
+2011-2012,35125,Francis,Francis School,35,Warwick,Francis - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000288,44003021300,44003021300,
+2011-2012,35127,Sherman,Sherman School,35,Warwick,Sherman - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000306,44003021800,44003021800,
+2011-2012,35128,Holliman,Holliman School,35,Warwick,Holliman - Warwick,Elementary,N,N,N,N,PK to 6,Warwick,Y,N,N,N,N,,440111000293,44003021200,44003021200,
+2011-2012,35129,Wickes,John Wickes School,35,Warwick,Wickes - Warwick,Elementary,N,N,N,N,PK to 6,Warwick,Y,N,N,N,N,,440111000310,44003021901,44003021901,
+2011-2012,35130,Warwick Vet. Mem. HS,Warwick Veterans Memorial High School,35,Warwick,Warwick Vet. Mem. HS - Warwick,High,N,N,N,N,9 to 12,Warwick,N,N,Y,N,N,400240,440111000309,44003021800,44003021800,
+2011-2012,35131,Cedar Hill,Cedar Hill School,35,Warwick,Cedar Hill - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000285,44003022201,44003022201,
+2011-2012,35132,Park,Park School,35,Warwick,Park - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000300,44003021903,44003021903,
+2011-2012,35133,Warwick Neck,Warwick Neck School,35,Warwick,Warwick Neck - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000308,44003021502,44003021502,
+2011-2012,35134,Pilgrim HS,Pilgrim High School,35,Warwick,Pilgrim HS - Warwick,High,N,N,N,N,9 to 12,Warwick,N,N,Y,N,N,400239,440111000301,44003021200,44003021200,
+2011-2012,35135,Scott,Harold F. Scott School,35,Warwick,Scott - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000305,44003022202,44003022202,
+2011-2012,35136,Hoxsie,Cottrell F. Hoxsie School,35,Warwick,Hoxsie - Warwick,Elementary,N,N,N,N,K to 6,Warwick,Y,N,N,N,N,,440111000294,44003021402,44003021402,
+2011-2012,35137,Drum Rock,Drum Rock Early Childhood Center,35,Warwick,Drum Rock - Warwick,Elementary,N,N,N,N,PK to K,Warwick,Y,N,N,N,N,,440111000287,44003022202,44003022202,
+2011-2012,35138,Toll Gate HS,Toll Gate High School,35,Warwick,Toll Gate HS - Warwick,High,N,N,N,N,9 to 12,Warwick,N,N,Y,N,N,400237,440111000307,44003022202,44003022202,
+2011-2012,35139,Winman JHS,Winman Junior High School,35,Warwick,Winman JHS - Warwick,Middle,N,N,N,N,7 to 8,Warwick,N,Y,N,N,N,,440111000311,44003022202,44003022202,
+2011-2012,36101,Bradford,Bradford Elementary School,36,Westerly,Bradford - Westerly,Elementary,N,N,N,N,PK to 4,Bradford,Y,N,N,N,N,,440117000375,44009050902,44009050902,
+2011-2012,36103,Westerly MS,Westerly Middle School,36,Westerly,Westerly MS - Westerly,Middle,N,N,N,N,5 to 8,Westerly,N,Y,N,N,N,,440117000319,44009050902,44009050902,
+2011-2012,36104,Westerly HS,Westerly High School,36,Westerly,Westerly HS - Westerly,High,N,N,N,N,9 to 12,Westerly,N,N,Y,N,N,400255,440117000325,44009050801,44009050801,
+2011-2012,36106,State St,State Street School,36,Westerly,State St - Westerly,Elementary,N,N,N,N,K to 4,Westerly,Y,N,N,N,N,,440117000362,44009050802,44009050802,
+2011-2012,36109,Dunn's Corners,Dunn's Corners School,36,Westerly,Dunn's Corners - Westerly,Elementary,N,N,N,N,K to 4,Westerly,Y,N,N,N,N,,440117000321,44009050902,44009050902,
+2011-2012,36111,Springbrook,Springbrook Elementary School,36,Westerly,Springbrook - Westerly,Elementary,N,N,N,N,K to 4,Westerly,Y,N,N,N,N,,440117000120,44009050901,44009050901,
+2011-2012,38104,Horgan,John F. Horgan Elementary School,38,West Warwick,Horgan - W. Warwick,Elementary,N,N,N,Y,PK to 4,West Warwick,Y,N,N,N,N,,440114000315,44003020200,44003020200,
+2011-2012,38105,Quinn (PreK),Maisie E. Quinn Elementary School,38,West Warwick,Quinn (PreK) - W. Warwick,Elementary,N,N,N,Y,PK to PK,West Warwick,Y,N,N,N,N,,440114000316,,,
+2011-2012,38106,West Warwick SHS,West Warwick Senior High School,38,West Warwick,West Warwick SHS - W. Warwick,High,N,N,N,Y,9 to 12,West Warwick,N,N,Y,N,N,400265,440114000318,44003020200,44003020200,
+2011-2012,38107,Deering MS,John F. Deering Middle School,38,West Warwick,Deering MS - W. Warwick,Middle,N,N,N,Y,5 to 8,West Warwick,N,Y,N,N,N,,440114000313,44003020200,44003020200,
+2011-2012,38109,Greenbush,Greenbush Elementary School,38,West Warwick,Greenbush - W. Warwick,Elementary,N,N,N,Y,PK to 4,West Warwick,Y,N,N,N,N,,440114000402,44003020101,44003020101,
+2011-2012,38111,Wakefield Hills,Wakefield Hills Elementary School,38,West Warwick,Wakefield Hills - W. Warwick,Elementary,N,N,N,Y,PK to 4,West Warwick,Y,N,N,N,N,,440114000238,44003020500,44003020500,
+2011-2012,39101,Harris,Harris School,39,Woonsocket,Harris - Woonsocket,Elementary,N,Y,Y,Y,K to 5,Woonsocket,Y,N,N,N,N,,440120000336,44007018000,44007018000,
+2011-2012,39110,Pothier,Governor Aram J. Pothier School,39,Woonsocket,Pothier - Woonsocket,Elementary,N,Y,Y,Y,PK to 2,Woonsocket,Y,N,N,N,N,,440120000340,44007018200,44007018200,
+2011-2012,39112,Fifth Ave,Fifth Avenue School,39,Woonsocket,Fifth Ave - Woonsocket,Elementary,N,Y,Y,Y,K to 2,Woonsocket,Y,N,N,N,N,,440120000332,44007017400,44007017400,
+2011-2012,39115,Woonsocket MS,Woonsocket Middle School,39,Woonsocket,Woonsocket MS - Woonsocket,Middle,N,Y,Y,Y,6 to 8,Woonsocket,N,Y,N,N,N,,440120000346,44007017900,44007017900,
+2011-2012,39117,Citizens Mem.,Citizens Memorial School,39,Woonsocket,Citizens Mem. - Woonsocket,Elementary,N,Y,Y,Y,2 to 5,Woonsocket,Y,N,N,N,N,,440120000329,44007018200,44007018200,
+2011-2012,39118,Bernon Heights,Bernon Heights School,39,Woonsocket,Bernon Heights - Woonsocket,Elementary,N,Y,Y,Y,K to 5,Woonsocket,Y,N,N,N,N,,440120000327,44007017700,44007017700,
+2011-2012,39119,Globe Park,Globe Park School,39,Woonsocket,Globe Park - Woonsocket,Elementary,N,Y,Y,Y,PK to 5,Woonsocket,Y,N,N,N,N,,440120000334,44007017500,44007017500,
+2011-2012,39120,Savoie,Leo A. Savoie School,39,Woonsocket,Savoie - Woonsocket,Elementary,N,Y,Y,Y,K to 5,Woonsocket,Y,N,N,N,N,,440120000330,44007018400,44007018400,
+2011-2012,39123,Woonsocket HS,Woonsocket High School,39,Woonsocket,Woonsocket HS - Woonsocket,High,N,Y,Y,Y,9 to 12,Woonsocket,N,N,Y,N,N,400295,440120000345,44007018500,44007018500,
+2011-2012,39128,Coleman,Kevin K. Coleman Elementary School,39,Woonsocket,Coleman - Woonsocket,Elementary,N,Y,Y,Y,3 to 5,Woonsocket,Y,N,N,N,N,,440120000331,44007017400,44007017400,
+2011-2012,39601,Beacon Arts HS,Beacon Charter High School for the Arts,58,Beacon Charter School,Beacon Arts HS - Beacon Charter,High,Y,Y,Y,Y,9 to 12,Woonsocket,N,N,Y,N,N,400282,440000800297,44007018000,44007018000,
+2011-2012,96104,Guiteras,Guiteras School,96,Bristol Warren,Guiteras - Bristol-Warren,Elementary,N,N,N,N,K to 5,Bristol,Y,N,N,N,N,,440006500012,44001030902,44001030902,
+2011-2012,96105,Colt-Andrews,Colt Andrews School,96,Bristol Warren,Colt-Andrews - Bristol-Warren,Elementary,N,N,N,N,K to 5,Bristol,Y,N,N,N,N,,440006500468,44001030700,44001030700,
+2011-2012,96106,Rockwell,Rockwell School,96,Bristol Warren,Rockwell - Bristol-Warren,Elementary,N,N,N,N,K to 5,Bristol,Y,N,N,N,N,,440006500016,44001030902,44001030902,
+2011-2012,96107,Mt. Hope HS,Mt. Hope High School,96,Bristol Warren,Mt. Hope HS - Bristol-Warren,High,N,N,N,N,9 to 12,Bristol,N,N,Y,N,N,400010,440006500009,44001030902,44001030902,
+2011-2012,96112,Kickemuit MS,Kickemuit Middle School,96,Bristol Warren,Kickemuit MS - Bristol-Warren,Middle,N,N,N,N,6 to 8,Warren,N,Y,N,N,N,,440006500282,44001030601,44001030601,
+2011-2012,96113,Cole,Hugh Cole School,96,Bristol Warren,Cole - Bristol-Warren,Elementary,N,N,N,N,PK to 5,Warren,Y,N,N,N,N,,440006500278,44001030601,44001030601,
+2011-2012,97101,Wawaloam,Wawaloam School,97,Exeter-West Greenwich,Wawaloam - Exeter-W.Greenwich,Elementary,N,N,N,N,K to 2,Exeter,Y,N,N,N,N,,440036000038,44009050500,44009050500,
+2011-2012,97102,Lineham (PreK),Mildred E. Lineham School,97,Exeter-West Greenwich,Lineham (PreK) - Exeter-W.Greenwich,Elementary,N,N,N,N,PK to PK,West Greenwich,Y,N,N,N,N,,440036000112,44003020800,44003020800,
+2011-2012,97103,Metcalf,Metcalf School,97,Exeter-West Greenwich,Metcalf - Exeter-W.Greenwich,Elementary,N,N,N,N,3 to 6,Exeter,Y,N,N,N,N,,440036000111,44009050500,44009050500,
+2011-2012,97105,Exeter-WG JHS,Exeter-West Greenwich Regional Junior High,97,Exeter-West Greenwich,Exeter-WG JHS - Exeter-W.Greenwich,Middle,N,N,N,N,7 to 8,West Greenwich,N,Y,N,N,N,,440036000390,44003020800,44003020800,
+2011-2012,97106,Exeter-WG HS,Exeter-West Greenwich Regional High School,97,Exeter-West Greenwich,Exeter-WG HS - Exeter-W.Greenwich,High,N,N,N,N,9 to 12,West Greenwich,N,N,Y,N,N,400252,440036000391,44003020800,44003020800,
+2011-2012,97601,Greene,The Greene School,62,The Greene School,Greene - Greene School,High,Y,N,N,N,9 to 11,West Greenwich,N,N,Y,N,N,400254,440001700477,44003020800,44003020800,
+2011-2012,98101,Chariho HS,Chariho Regional High School,98,Chariho,Chariho HS - Chariho,High,N,N,N,N,9 to 12,Wood River Junction,N,N,Y,N,N,400270,440015000029,44009050600,44009050600,
+2011-2012,98103,Chariho MS,Chariho Regional Middle School,98,Chariho,Chariho MS - Chariho,Middle,N,N,N,N,5 to 8,Wood River Junction,N,Y,N,N,N,,440015000386,44009050600,44009050600,
+2011-2012,98104,Charlestown Elem.,Charlestown Elementary School,98,Chariho,Charlestown Elem. - Chariho,Elementary,N,N,N,N,K to 4,Charlestown,Y,N,N,N,N,,440015000030,44009051101,44009051101,
+2011-2012,98105,Richmond Elem.,Richmond Elementary School,98,Chariho,Richmond Elem. - Chariho,Elementary,N,N,N,N,PK to 4,Wyoming,Y,N,N,N,N,,440015000251,44009050600,44009050600,
+2011-2012,98106,Ashaway Elem.,Ashaway Elementary School,98,Chariho,Ashaway Elem. - Chariho,Elementary,N,N,N,N,K to 4,Ashaway,Y,N,N,N,N,,440015000122,44009050700,44009050700,
+2011-2012,98107,Hope Valley Elem.,Hope Valley Elementary School,98,Chariho,Hope Valley Elem. - Chariho,Elementary,N,N,N,N,PK to 4,Hope Valley,Y,N,N,N,N,,440015000349,44009050700,44009050700,
+2011-2012,98108,R.Y.S.E.,The R.Y.S.E. School,98,Chariho,R.Y.S.E. - Chariho,"Elem,Middle,High",N,N,N,N,PK to 12,Wood River Junction,Y,Y,Y,N,N,,440015000286,44009050600,44009050600,
+2011-2012,99101,Ponaganset MS,Ponaganset Middle School,99,Foster-Glocester,Ponaganset MS - Foster-Glocester,Middle,N,N,N,N,6 to 8,North Scituate,N,Y,N,N,N,,440042000117,44007013101,44007013101,
+2011-2012,99102,Ponaganset HS,Ponaganset High School,99,Foster-Glocester,Ponaganset HS - Foster-Glocester,High,N,N,N,N,9 to 12,North Scituate,N,N,Y,N,N,400093,440042000116,44007013101,44007013101,
+2011-2012,Statewide,Statewide,Statewide,00,Statewide,Statewide,"Elem,Middle,High",S,S,S,S,PK to 12,,S,S,S,S,N,,,,,

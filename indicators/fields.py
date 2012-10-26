@@ -1,6 +1,7 @@
 import decimal
 
 from django.db import models
+from south.modelsinspector import add_introspection_rules
 
 class RoundingDecimalField(models.DecimalField):
 	""" Accepts a float as a value, and rounds to a decimal with the proper
@@ -17,7 +18,6 @@ class RoundingDecimalField(models.DecimalField):
 			msg = self.error_messages['invalid'] % str(value)
 			raise exceptions.ValidationError(msg)
 
-from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["^indicators\.fields\.RoundingDecimalField"])
 
 class FileNameField(models.CharField):

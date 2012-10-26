@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.decorators import staff_member_required
 
-from indicators.models import IndicatorList, Indicator
+from indicators.models import IndicatorList, Indicator, TypeIndicatorLookup
 from accounts.models import IndicatorListShare
 
 def default(request):
@@ -82,21 +82,33 @@ def indicator_list(request, indicator_list_slug):
         },
         context_instance=RequestContext(request))
 
-@staff_member_required
+#@staff_member_required
 def indicator_csv(request, indicator_slug):
     import csv
+    from time import strftime
+    
     indicator = get_object_or_404(Indicator, slug=indicator_slug)
 
-    columns = ['']
+    columns = ['Key Value', 'Name']
     rows = []
     data = {}
     for indicator_data in indicator.indicatordata_set.all().order_by('time_key'):
         col = ' '.join([indicator_data.time_type, indicator_data.time_key])
+
+        common_name_id = TypeIndicatorLookup.objects.get(key_unit_type=indicator_data.key_unit_type).indicator_id
+        common_name = Indicator.objects.get(id=common_name_id).indicatordata_set.get(key_value=indicator_data.key_value, time_key=indicator_data.time_key).string
+
         row = ' '.join([indicator_data.key_unit_type, indicator_data.key_value])
+
         if not col in columns:
             columns.append(col)
-        if not row in rows:
-            rows.append(row)
+
+        exists = False
+        for r in rows:
+            if r[0] == row:
+                exists = True
+        if not exists:
+           rows.append([row, common_name])
         
         if not col in data.keys():
             data[col] = {}
@@ -111,12 +123,24 @@ def indicator_csv(request, indicator_slug):
 
     # Write data to CSV file
     for row in rows:
-        row_data = [str(row),]
-        
-        for column in columns[1:]:
-            row_data.append(str(data[column][row]))
+        row_data = [str(row[0]), str(row[1])]
+        for column in columns[2:]:
+            row_data.append(str(data[column][row[0]]))
         
         writer.writerow(row_data)
-    
+    writer.writerow('')
+    datasources = ''
+    first = True
+    for datasource in indicator.datasources.all():
+        if first:
+            datasources = datasource
+            first = False
+        else:
+            datasources = "%s; %s" % (datasources, datasource)
+    writer.writerow(["Name: %s" % indicator.display_name])
+    writer.writerow(["Datasource(s): %s" % datasources])
+    writer.writerow(["Downloaded: %s" % strftime("%a %d %b %Y %H:%M:%S %Z")])
+    writer.writerow(["Location: %s" % request.build_absolute_uri()])
+      
     return response
 
