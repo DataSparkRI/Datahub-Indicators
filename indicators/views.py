@@ -86,7 +86,7 @@ def indicator_list(request, indicator_list_slug):
 def indicator_csv(request, indicator_slug):
     import csv
     from time import strftime
-    
+
     indicator = get_object_or_404(Indicator, slug=indicator_slug)
 
     columns = ['Key Value', 'Name']
@@ -116,7 +116,7 @@ def indicator_csv(request, indicator_slug):
     
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=%s.csv' % indicator.slug
-    writer = csv.writer(response)
+    writer = csv.writer(response, delimiter='|')
     
     # Write headers to CSV file
     writer.writerow(columns)
@@ -139,7 +139,7 @@ def indicator_csv(request, indicator_slug):
             datasources = "%s; %s" % (datasources, datasource)
     writer.writerow(["Name: %s" % indicator.display_name])
     writer.writerow(["Datasource(s): %s" % datasources])
-    writer.writerow(["Downloaded: %s" % strftime("%a %d %b %Y %H:%M:%S %Z")])
+    writer.writerow(["Downloaded: %s" % strftime("%a, %d %b %Y %H:%M:%S %Z")])
     writer.writerow(["Location: %s" % request.build_absolute_uri()])
       
     return response
