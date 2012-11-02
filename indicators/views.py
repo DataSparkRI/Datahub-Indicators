@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.decorators import staff_member_required
-
+import re
 from indicators.models import IndicatorList, Indicator, TypeIndicatorLookup
 from accounts.models import IndicatorListShare
 
@@ -87,6 +87,13 @@ def indicator_csv(request, indicator_slug):
     import csv
     from time import strftime
 
+    def single_line(string):
+        lines = []
+        for line in re.findall(r'.*', string):
+            if line != '' and line != '\r':
+                lines.append(line.strip('\r'))
+        return ' '.join(lines)
+
     indicator = get_object_or_404(Indicator, slug=indicator_slug)
 
     columns = ['Key Value', 'Name']
@@ -116,7 +123,7 @@ def indicator_csv(request, indicator_slug):
     
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=%s.csv' % indicator.slug
-    writer = csv.writer(response, delimiter='|')
+    writer = csv.writer(response, delimiter="\t")
     
     # Write headers to CSV file
     writer.writerow(columns)
@@ -138,9 +145,12 @@ def indicator_csv(request, indicator_slug):
         else:
             datasources = "%s; %s" % (datasources, datasource)
     writer.writerow(["Name: %s" % indicator.display_name])
+    writer.writerow(["Long Definition: %s" % single_line(indicator.long_definition)])
+    writer.writerow(["Universe: %s" % single_line(indicator.universe)])
+    writer.writerow(["Limitations: %s" % single_line(indicator.limitations)])
     writer.writerow(["Datasource(s): %s" % datasources])
     writer.writerow(["Downloaded: %s" % strftime("%a, %d %b %Y %H:%M:%S %Z")])
     writer.writerow(["Location: %s" % request.build_absolute_uri()])
-      
+
     return response
 
