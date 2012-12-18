@@ -5,8 +5,8 @@ import uuid
 
 from django.conf import settings
 from django.contrib import admin, messages
-from indicators.models import DataSource, IndicatorList, Indicator,IndicatorPregenPart, IndicatorData, TypeIndicatorLookup
-from django.utils.translation import ugettext_lazy as _ 
+from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, Indicator,IndicatorPregenPart, IndicatorData, TypeIndicatorLookup
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin.filterspecs import FilterSpec
 from indicators.fields import RoundingDecimalField, FileNameField
 
@@ -22,23 +22,23 @@ class IndicatorSourceListFilter(FilterSpec):
     PreGenCSV=true if the indicator's FileName attribute is populated;
     else HUB-Core=true.
     """
-        
+
     def test(cls, field):
         return field.null and isinstance(field, cls.fields) and not field._choices
-    
+
     test = classmethod(test)
-    
+
     def title(self):
         return "Indicator Source"
 
     def __init__(self, f, request, params, model, model_admin):
         super(IndicatorSourceListFilter, self).__init__(f, request, params, model, model_admin)
- 
+
         self.file_exists_lookup_kwarg     = 'file_name__gt'
         self.file_not_exists_lookup_kwarg = 'file_name'
         self.file_exists_lookup_val       = request.GET.get(self.file_exists_lookup_kwarg, None)
         self.file_not_exists_lookup_val   = request.GET.get(self.file_not_exists_lookup_kwarg, None)
-                
+
     def choices(self, cl):
         yield {
                 'selected'     : self.file_exists_lookup_val is None and self.file_not_exists_lookup_val is None,
@@ -65,14 +65,14 @@ FilterSpec.register_front(lambda f: isinstance(f, FileNameField), IndicatorSourc
 # Actions available in Core
 def batch_debug_indicators(modeladmin, request, queryset):
     """ Run selected indicators, and store output and a "debug" csv
-    
+
     Each call to this view generates a view batch folder. The contents of the
     folder:
 
     - [indicator name].csv for each indicator selected
     - [indicator name]_debug.csv for each indicator selected
     - batch.log
-    
+
     The indicator generation is scheduled in celery, and output is directed to
     batch.log.
     """
@@ -81,7 +81,7 @@ def batch_debug_indicators(modeladmin, request, queryset):
     except ImportError:
         return
     from indicators.tasks import indicator_debug_batch
-    
+
     # create a directory to store the results of this debug batch
     batch_id = unicode(uuid.uuid1())
     batch_folder = os.path.join(settings.MEDIA_ROOT, 'batches', batch_id)
@@ -119,8 +119,8 @@ class IndicatorPregenPartInline(admin.TabularInline):
 
 class IndicatorAdmin(admin.ModelAdmin):
     class Media:
-        css = { 
-            "all": ("stylesheets/extend_tag_textbox.css", 
+        css = {
+            "all": ("stylesheets/extend_tag_textbox.css",
                     "stylesheets/extend_universe_textbox.css",)
         }
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published','retired', 'load_pending', 'last_load_completed', 'last_audited',)
@@ -129,13 +129,13 @@ class IndicatorAdmin(admin.ModelAdmin):
 
     search_fields = ('name', 'datasources__short_name', 'short_definition',
                      'long_definition', 'notes', 'file_name')
-    exclude = ('raw_tags', 'raw_datasources', 'years_available_display', 
+    exclude = ('raw_tags', 'raw_datasources', 'years_available_display',
                'years_available', )
     prepopulated_fields = {"slug": ("name",)}
     inlines = [
         IndicatorPregenPartInline,
     ]
-    
+
 
     try:
         from indicators.load import DataImporter
@@ -156,7 +156,7 @@ class IndicatorAdmin(admin.ModelAdmin):
             'routine_use',
             'last_audited',
         )}),
-    
+
         ('Numerical/Addtional Information', { 'fields':(
             'min',
             'max',
@@ -164,15 +164,15 @@ class IndicatorAdmin(admin.ModelAdmin):
             'data_type',
             'notes',
         )}),
-        
+
         ('Metadata', { 'fields':(
             'data_levels_available',
             'query_level',
             'suppression_numerator',
             'suppression_denominator',
             'datasources',
-        )}),    
-            
+        )}),
+
         ('Django Internals', { 'fields':(
             'published',
             'retired',
@@ -202,7 +202,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                     csv_file = open(filename, 'rb')
                 except IOError:
                     messages.add_message(
-                        request, messages.ERROR, 
+                        request, messages.ERROR,
                         'Unable to open the file "'
                         + filename + '" for the pregen data. '
                         'Meta-data saved.  Indicator Data unchanged.'
@@ -224,7 +224,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                                 val = None
                             else:
                                 float(val)
-                            
+
                             data_type = 'numeric'
                             numeric = val
                             string = None
@@ -233,7 +233,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                             data_type = 'string'
                             string = val
                             numeric = None
-                        
+
                         new_data.append({
                             'time_type': pregenpart.time_type,
                             'time_key': pregenpart.time_value,
@@ -257,7 +257,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                         string=d['string']
                     )
                 messages.add_message(
-                    request, messages.INFO, 
+                    request, messages.INFO,
                     'Cleared the Indicator Data and added '
                     + str(len(new_data)) +
                     ' Indicator Data records from the pregen csv file.'
@@ -265,6 +265,8 @@ class IndicatorAdmin(admin.ModelAdmin):
         return obj
 
 admin.site.register(DataSource)
+admin.site.register(SubDataSource)
+admin.site.register(SubDataSourceDisclaimer)
 admin.site.register(IndicatorList)
 admin.site.register(Indicator, IndicatorAdmin)
 admin.site.register(TypeIndicatorLookup)

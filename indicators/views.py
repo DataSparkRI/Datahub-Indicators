@@ -28,19 +28,19 @@ def default(request):
             'name': 'All Indicators',
             'attr_col_Q': Q()
         })
-    
-    return render_to_response('indicators/default.xml', 
+
+    return render_to_response('indicators/default.xml',
         {
             'lists': lists
-        }, 
+        },
         context_instance=RequestContext(request))
 
 def list_hierarchy(request, indicator_list_slug):
     list = get_object_or_404(IndicatorList, slug=indicator_list_slug)
     indicator_ctype = ContentType.objects.get_for_model(Indicator)
-    
-    return render_to_response('indicators/indicator_list_hierarchy.xml', 
-        {'attribute_column_Q': list.attribute_column_Q, 'name': list.name}, 
+
+    return render_to_response('indicators/indicator_list_hierarchy.xml',
+        {'attribute_column_Q': list.attribute_column_Q, 'name': list.name},
         context_instance=RequestContext(request))
 
 @staff_member_required
@@ -71,7 +71,7 @@ def indicator_list(request, indicator_list_slug):
     else:
         default_list = None
         ilists = None
-    
+
     return render_to_response('indicators/indicator_list.html',
         {
             'indicator_list': indicator_list,
@@ -116,15 +116,15 @@ def indicator_csv(request, indicator_slug):
                 exists = True
         if not exists:
            rows.append([row, common_name])
-        
+
         if not col in data.keys():
             data[col] = {}
         data[col][row] = indicator_data.value
-    
+
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=%s.csv' % indicator.slug
-    writer = csv.writer(response, delimiter="\t")
-    
+    writer = csv.writer(response)
+
     # Write headers to CSV file
     writer.writerow(columns)
 
@@ -133,7 +133,7 @@ def indicator_csv(request, indicator_slug):
         row_data = [str(row[0]), str(row[1])]
         for column in columns[2:]:
             row_data.append(str(data[column][row[0]]))
-        
+
         writer.writerow(row_data)
     writer.writerow('')
     datasources = ''
@@ -151,6 +151,10 @@ def indicator_csv(request, indicator_slug):
     writer.writerow(["Datasource(s): %s" % datasources])
     writer.writerow(["Downloaded: %s" % strftime("%a, %d %b %Y %H:%M:%S %Z")])
     writer.writerow(["Location: %s" % request.build_absolute_uri()])
+    for datasource in indicator.datasources.all():
+        for sub_datasource in datasource.sub_datasources.all():
+            if sub_datasource.disclaimer:
+                writer.writerow(["%s: %s" % (sub_datasource.disclaimer.title, single_line(sub_datasource.disclaimer.content))])
 
     return response
 

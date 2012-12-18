@@ -37,12 +37,43 @@ UNIT_CHOICES = (
 )
 
 class TypeIndicatorLookup(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     key_unit_type = models.CharField(max_length=100)
     indicator_id = models.CharField(max_length=10)
 
     def __unicode__(self):
         return self.name
+
+class SubDataSourceDisclaimer(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
+    content = models.TextField(help_text="This field is Markdown enabled.")
+
+    def __unicode__(self):
+        return self.name
+
+class SubDataSourceDisclaimer(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
+    content = models.TextField(help_text="This field is Markdown enabled.")
+
+    def __unicode__(self):
+        return self.name
+
+class SubDataSource(models.Model):
+    short = models.CharField(max_length=11)
+    short_name = models.CharField(max_length=12) # to display in lists, etc
+    name = models.CharField(max_length=100)
+    url = models.URLField(verify_exists=False, blank=True)
+    icon_file = models.ImageField(upload_to='datasource_icons', blank=True, null=True)
+    description = models.TextField(blank=True)
+    disclaimer = models.OneToOneField(SubDataSourceDisclaimer, primary_key=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def icon_path(self):
+        return self.icon_file.url
 
 class DataSource(models.Model):
     short = models.CharField(max_length=11)
@@ -51,6 +82,7 @@ class DataSource(models.Model):
     url = models.URLField(verify_exists=False)
     icon_file = models.ImageField(upload_to='datasource_icons', blank=True, null=True)
     description = models.TextField(blank=True)
+    sub_datasources = models.ManyToManyField('SubDataSource', blank=True, null=True)
 
     def __unicode__(self):
         return self.name
