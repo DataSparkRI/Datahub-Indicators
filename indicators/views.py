@@ -5,8 +5,12 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.decorators import staff_member_required
 import re
-from indicators.models import IndicatorList, Indicator, TypeIndicatorLookup
+from indicators.models import IndicatorList, Indicator, TypeIndicatorLookup, DataSource, IndicatorData
 from accounts.models import IndicatorListShare
+from bs4 import BeautifulSoup
+import cStringIO as StringIO
+from time import strftime
+import csv
 
 def default(request):
     lists = []
@@ -82,59 +86,71 @@ def indicator_list(request, indicator_list_slug):
         },
         context_instance=RequestContext(request))
 
-#@staff_member_required
+def gen_indicator_data(indicator):
+    last_common_name_kut = ''
+    last_common_name_indicator = Indicator
+
+    for indicator_data in indicator.indicatordata_set.filter(Q(numeric__isnull=False) | Q(string__isnull=False)):
+        if last_common_name_kut == indicator_data.key_unit_type:
+            common_name_indicator = last_common_name_indicator
+        else:
+            common_name_id = TypeIndicatorLookup.objects.filter(name=indicator_data.key_unit_type).values_list('indicator_id')[0][0]
+            common_name_indicator = Indicator.objects.get(id=common_name_id)
+            last_common_name_indicator = common_name_indicator
+            last_common_name_kut = indicator_data.key_unit_type
+
+        common_names = IndicatorData.objects.filter(indicator=common_name_indicator).filter(key_value=indicator_data.key_value, time_key=indicator_data.time_key)
+        for common_name in common_names:
+            time_period = ' '.join([indicator_data.time_type, indicator_data.time_key])
+            key_value = ' '.join([indicator_data.key_unit_type, indicator_data.key_value])
+            source = [key_value, common_name.value]
+
+            yield {
+                'time_period': time_period,
+                'key_value': key_value,
+                'source': source,
+                'value': indicator_data.value,
+            }
+
+def single_line(string):
+    string = string.encode('ascii', 'ignore')
+    string = ''.join(BeautifulSoup(string).findAll(text=True))
+    string = re.sub('[\r\n]', '', string)
+    return string
+
 def indicator_csv(request, indicator_slug):
-    import csv
-    from time import strftime
-
-    def single_line(string):
-        lines = []
-        for line in re.findall(r'.*', string):
-            if line != '' and line != '\r':
-                lines.append(line.strip('\r'))
-        return ' '.join(lines)
-
     indicator = get_object_or_404(Indicator, slug=indicator_slug)
-
-    columns = ['Key Value', 'Name']
+    csv_file = StringIO.StringIO()
+    writer = csv.writer(csv_file)
+    columns = ['Key Value', 'Name'] #time period(s) are appended to this
     rows = []
     data = {}
-    for indicator_data in indicator.indicatordata_set.all().order_by('time_key'):
-        col = ' '.join([indicator_data.time_type, indicator_data.time_key])
 
-        common_name_id = TypeIndicatorLookup.objects.get(key_unit_type=indicator_data.key_unit_type).indicator_id
-        common_name = Indicator.objects.get(id=common_name_id).indicatordata_set.get(key_value=indicator_data.key_value, time_key=indicator_data.time_key).string
+    for indicator_data in gen_indicator_data(indicator):
+        if not indicator_data['time_period'] in columns:
+            columns.append(indicator_data['time_period'])
+            data[indicator_data['time_period']] = {}
 
-        row = ' '.join([indicator_data.key_unit_type, indicator_data.key_value])
+        if not indicator_data['source'] in rows: #this prevents source being written once per time period
+            rows.append(indicator_data['source'])
 
-        if not col in columns:
-            columns.append(col)
-
-        exists = False
-        for r in rows:
-            if r[0] == row:
-                exists = True
-        if not exists:
-           rows.append([row, common_name])
-
-        if not col in data.keys():
-            data[col] = {}
-        data[col][row] = indicator_data.value
-
-    response = HttpResponse(mimetype='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=%s.csv' % indicator.slug
-    writer = csv.writer(response)
+        data[indicator_data['time_period']][indicator_data['key_value']] = indicator_data['value']
 
     # Write headers to CSV file
     writer.writerow(columns)
 
     # Write data to CSV file
     for row in rows:
+        #note: row[n] = [key_value, common_name.string]
         row_data = [str(row[0]), str(row[1])]
-        for column in columns[2:]:
-            row_data.append(str(data[column][row[0]]))
+        for time_period in columns[2:]:
+            try:
+                row_data.append(str(data[time_period][row[0]]))
+            except KeyError:
+                row_data.append('')
 
         writer.writerow(row_data)
+
     writer.writerow('')
     datasources = ''
     first = True
@@ -156,5 +172,15 @@ def indicator_csv(request, indicator_slug):
             if sub_datasource.disclaimer:
                 writer.writerow(["%s: %s" % (sub_datasource.disclaimer.title, single_line(sub_datasource.disclaimer.content))])
 
+    response = HttpResponse(csv_file.getvalue(), mimetype="text/csv")
+    response["Content-Disposition"] = "attachment; filename=%s.csv" % indicator.slug
     return response
 
+def get_datasource_name(request):
+    if request.is_ajax():
+        if request.method == 'POST' and request.POST:
+            short = request.POST.get('short')
+            datasource = get_object_or_404(DataSource, short=short)
+            return HttpResponse(datasource.name, content_type="text/plain")
+    else:
+        return HttpResponse(status=400)
