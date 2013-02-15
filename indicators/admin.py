@@ -111,6 +111,15 @@ def unpublish(modeladmin, request, queryset):
     queryset.update(published=False)
 unpublish.short_description = "Unpublish selected indicators"
 
+def switch_load_pending(modeladmin, request, queryset):
+    """ Flips load_pending on Indicators that are selected in queryset"""
+    for obj in queryset:
+        if obj.load_pending is False:
+            obj.load_pending = True
+        elif obj.load_pending is True:
+            obj.load_pending = False
+        obj.save()
+switch_load_pending.short_description = "Toggle selected indicator's Load Pending status"
 
 class IndicatorPregenPartInline(admin.TabularInline):
     extra = 10
@@ -141,7 +150,7 @@ class IndicatorAdmin(admin.ModelAdmin):
         from indicators.load import DataImporter
         actions = [batch_debug_indicators, load_indicators, publish, unpublish]
     except ImportError:
-        actions = [publish, unpublish]
+        actions = [publish, unpublish, switch_load_pending]
 
     fieldsets = (
         ('Basic Information', { 'fields':(
