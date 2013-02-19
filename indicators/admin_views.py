@@ -3,7 +3,8 @@ import os
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.http import HttpResponseRedirect, HttpResponse
+from indicators.models import Indicator
 
 def _collect_batch_info(uuid):
     path = './media/batches/%s/' % uuid
@@ -24,8 +25,8 @@ def indicator_batch_list(request):
 
     If the batch is complete, provide a tar/gzip of the files.
     """
-    return render_to_response('admin/indicator_batch_list.html', 
-        {'batches': map(lambda b: _collect_batch_info(b), os.listdir('./media/batches/'))}, 
+    return render_to_response('admin/indicator_batch_list.html',
+        {'batches': map(lambda b: _collect_batch_info(b), os.listdir('./media/batches/'))},
         context_instance=RequestContext(request))
 
 @staff_member_required
@@ -60,10 +61,66 @@ def regenerate_weave(request):
     else:
         form = RegenerateWeaveForm()
     return render_to_response(
-        'admin/regenerate_weave.html', 
+        'admin/regenerate_weave.html',
         {'form': form,
          'made_attempt': made_attempt,
-         'process_id': process_id,}, 
+         'process_id': process_id,},
         context_instance=RequestContext(request)
     )
 
+@staff_member_required
+def batch_create(request):
+    import csv
+    from django.contrib import messages
+    if request.method == 'POST':
+        count = 0
+        next_url = request.POST.get('next')
+        if 'indicator-data' in request.FILES:
+            ind_file = request.FILES['indicator-data']
+            if ind_file.name.endswith("csv"):
+                reader = csv.DictReader(ind_file)
+                for row in reader:
+                    count += 1
+                    args = dict(row)
+
+                    # we need to clean up some of the fields
+                    del args['last_audited'] # this should be set manually
+
+                    # tags in csv is actuall raw_tags so we need to set that up in
+                    # args and clear out ['tags']
+                    args['raw_tags'] = ','.join(args['tags'].split('|'))
+                    del args['tags']
+
+                    if args['min'] == '':
+                        args['min'] = None
+                    else:
+                        args['min'] = int(args['min'])
+
+                    if args['max'] == '':
+                        args['max'] = None
+                    else:
+                        args['max'] = int(args['max'])
+
+                    if args['suppression_numerator'] == '':
+                        args['suppression_numerator'] = None
+                    else:
+                        args['suppression_numerator'] = int(args['suppression_numerator'])
+
+                    if args['suppression_denominator'] == '':
+                        args['suppression_denominator'] = None
+                    else:
+                        args['suppression_denominator'] = int(args['suppression_denominator'])
+                    try:
+                        ind = Indicator(**args)
+                        ind.save()
+                        ind.parse_tags()
+                    except TypeError as err:
+                        # error in header, end request
+                        messages.error(request, "Could not import from csv. Please check csv header. Error:%s" % err)
+                        return HttpResponseRedirect(next_url)
+
+            messages.success(request, 'Imported %s Indicators.' % str(count))
+        else:
+            messages.error(request, "Please select a .csv file")
+
+        return HttpResponseRedirect(next_url)

@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^admin/', views.admin, name="indicators-admin"),
     url(r'^download/(?P<indicator_slug>[\w-]+).csv$', views.indicator_csv, name="indicators-indicator_csv"),
     url(r'^get_datasource_name/$', views.get_datasource_name, name="indicators-get_datasource_name"),
+    url(r'^actions/batch_create/$', 'indicators.admin_views.batch_create', name="indicators_batch_create"),
 )

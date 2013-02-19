@@ -140,8 +140,6 @@ class Indicator(models.Model):
     raw_datasources = models.TextField() # will be parsed into datasource relations
     notes = models.TextField(blank=True) # internal use misc notes
 
-
-
     # calculated meta-data and fields
     data_levels_available = models.CharField(max_length=200, blank=True)
     query_level = models.CharField(max_length=100, blank=True)
