@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.decorators import staff_member_required
 import re
-from indicators.models import IndicatorList, Indicator, TypeIndicatorLookup, DataSource, IndicatorData
+from indicators.models import IndicatorList, Indicator, TypeIndicatorLookup, DataSource, IndicatorData, DefaultListSubscription
 from accounts.models import IndicatorListShare
 from bs4 import BeautifulSoup
 import cStringIO as StringIO
@@ -15,16 +15,16 @@ import csv
 def default(request):
     lists = []
     if request.user.is_authenticated():
-        for list in request.user.indicatorlist_set.filter(visible_in_weave=True):
-            if (list.name == 'Default - List of All Available Indicators'):
-                user_i_count = list.indicators.all().count()
-                i_count = Indicator.objects.filter(published=True).count()
-                if (user_i_count != i_count):
-                    list.indicators = Indicator.objects.filter(published=True)
-
+        for i_list in request.user.indicatorlist_set.filter(visible_in_weave=True):
             lists.append({
-                'name': list.name,
-                'attr_col_Q': list.attribute_column_Q
+                'name': i_list.name,
+                'attr_col_Q': i_list.attribute_column_Q
+            })
+        # get the default ones
+        for subscription in DefaultListSubscription.objects.filter(user=request.user,visible_in_weave=True):
+            lists.append({
+                'name': subscription.ilist.name,
+                'attr_col_Q': subscription.ilist.attribute_column_Q
             })
 
     else:

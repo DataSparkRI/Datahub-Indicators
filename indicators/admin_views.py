@@ -70,7 +70,7 @@ def regenerate_weave(request):
 
 @staff_member_required
 def batch_create(request):
-    import csv
+    import ucsv as csv
     from django.contrib import messages
     if request.method == 'POST':
         count = 0
@@ -84,12 +84,30 @@ def batch_create(request):
                     args = dict(row)
 
                     # we need to clean up some of the fields
-                    del args['last_audited'] # this should be set manually
+                    try:
+                        del args['last_audited'] # this should be set manually
+                    except KeyError:
+                        pass
+                    try:
+                        del args['Column name']
+                    except KeyError:
+                        pass
+                    try:
+                        del args['id']
+                    except KeyError:
+                        pass
+                    try:
+                        del args['last_load_completed']
+                    except KeyError:
+                        pass
 
                     # tags in csv is actuall raw_tags so we need to set that up in
                     # args and clear out ['tags']
-                    args['raw_tags'] = ','.join(args['tags'].split('|'))
-                    del args['tags']
+                    try:
+                        args['raw_tags'] = ','.join(args['tags'].split('|'))
+                        del args['tags']
+                    except KeyError:
+                        args['raw_tags'] = ','.join(args['raw_tags'].split('|'))
 
                     if args['min'] == '':
                         args['min'] = None
@@ -110,6 +128,7 @@ def batch_create(request):
                         args['suppression_denominator'] = None
                     else:
                         args['suppression_denominator'] = int(args['suppression_denominator'])
+
                     try:
                         ind = Indicator(**args)
                         ind.save()
@@ -118,6 +137,7 @@ def batch_create(request):
                         # error in header, end request
                         messages.error(request, "Could not import from csv. Please check csv header. Error:%s" % err)
                         return HttpResponseRedirect(next_url)
+
 
             messages.success(request, 'Imported %s Indicators.' % str(count))
         else:

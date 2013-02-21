@@ -5,7 +5,8 @@ import uuid
 
 from django.conf import settings
 from django.contrib import admin, messages
-from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, Indicator,IndicatorPregenPart, IndicatorData, TypeIndicatorLookup
+from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, DefaultIndicatorList, DefaultListSubscription, \
+        Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin.filterspecs import FilterSpec
 from indicators.fields import RoundingDecimalField, FileNameField
@@ -273,9 +274,17 @@ class IndicatorAdmin(admin.ModelAdmin):
                 )
         return obj
 
+
+class DefaultListSubscriptionInline(admin.TabularInline):
+    model = DefaultListSubscription
+
+class DefaultIndicatorListAdmin(admin.ModelAdmin):
+    inlines = (DefaultListSubscriptionInline,)
+
 admin.site.register(DataSource)
 admin.site.register(SubDataSource)
 admin.site.register(SubDataSourceDisclaimer)
 admin.site.register(IndicatorList)
+admin.site.register(DefaultIndicatorList, DefaultIndicatorListAdmin)
 admin.site.register(Indicator, IndicatorAdmin)
 admin.site.register(TypeIndicatorLookup)
