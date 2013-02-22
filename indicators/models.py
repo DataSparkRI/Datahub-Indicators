@@ -416,7 +416,7 @@ class IndicatorListManager(models.Manager):
 
 class DefaultIndicatorList(models.Model):
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200,unique=True)
+    slug = models.SlugField(max_length=200,unique=True, blank=True)
     public = models.BooleanField(default=False)
     visible_in_default = models.BooleanField(default=False)
     created = models.DateField(auto_now_add=True)

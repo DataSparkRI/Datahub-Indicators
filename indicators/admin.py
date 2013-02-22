@@ -279,7 +279,8 @@ class DefaultListSubscriptionInline(admin.TabularInline):
     model = DefaultListSubscription
 
 class DefaultIndicatorListAdmin(admin.ModelAdmin):
-    inlines = (DefaultListSubscriptionInline,)
+    #inlines = (DefaultListSubscriptionInline,)
+    prepopulated_fields = {"slug": ("name",)}
 
 admin.site.register(DataSource)
 admin.site.register(SubDataSource)
