@@ -2,7 +2,6 @@
 from huey.djhuey.decorators import queue_command
 import ucsv as csv
 from models import Indicator
-from django.db import transaction
 
 @queue_command
 def import_indicator_csv_task(file_name):

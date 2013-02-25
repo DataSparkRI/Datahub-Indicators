@@ -70,7 +70,7 @@ def regenerate_weave(request):
 
 @staff_member_required
 def batch_create(request):
-    from tasks import import_indicator_csv_task
+    from commands import import_indicator_csv_task
     from django.contrib import messages
     import ucsv as csv
     if request.method == 'POST':
