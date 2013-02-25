@@ -70,76 +70,23 @@ def regenerate_weave(request):
 
 @staff_member_required
 def batch_create(request):
-    import ucsv as csv
+    from tasks import import_indicator_csv_task
     from django.contrib import messages
+    import ucsv as csv
     if request.method == 'POST':
-        count = 0
         next_url = request.POST.get('next')
+        count = 0
         if 'indicator-data' in request.FILES:
             ind_file = request.FILES['indicator-data']
             if ind_file.name.endswith("csv"):
-                reader = csv.DictReader(ind_file)
-                for row in reader:
-                    count += 1
-                    args = dict(row)
-
-                    # we need to clean up some of the fields
-                    try:
-                        del args['last_audited'] # this should be set manually
-                    except KeyError:
-                        pass
-                    try:
-                        del args['Column name']
-                    except KeyError:
-                        pass
-                    try:
-                        del args['id']
-                    except KeyError:
-                        pass
-                    try:
-                        del args['last_load_completed']
-                    except KeyError:
-                        pass
-
-                    # tags in csv is actuall raw_tags so we need to set that up in
-                    # args and clear out ['tags']
-                    try:
-                        args['raw_tags'] = ','.join(args['tags'].split('|'))
-                        del args['tags']
-                    except KeyError:
-                        args['raw_tags'] = ','.join(args['raw_tags'].split('|'))
-
-                    if args['min'] == '':
-                        args['min'] = None
-                    else:
-                        args['min'] = int(args['min'])
-
-                    if args['max'] == '':
-                        args['max'] = None
-                    else:
-                        args['max'] = int(args['max'])
-
-                    if args['suppression_numerator'] == '':
-                        args['suppression_numerator'] = None
-                    else:
-                        args['suppression_numerator'] = int(args['suppression_numerator'])
-
-                    if args['suppression_denominator'] == '':
-                        args['suppression_denominator'] = None
-                    else:
-                        args['suppression_denominator'] = int(args['suppression_denominator'])
-
-                    try:
-                        ind = Indicator(**args)
-                        ind.save()
-                        ind.parse_tags()
-                    except TypeError as err:
-                        # error in header, end request
-                        messages.error(request, "Could not import from csv. Please check csv header. Error:%s" % err)
-                        return HttpResponseRedirect(next_url)
-
-
-            messages.success(request, 'Imported %s Indicators.' % str(count))
+                # we need to write this file to the disk for moment
+                # /tmp/filename works for now.
+                fout = open('/tmp/%s' % ind_file.name, 'wb+')
+                for chunk in ind_file.chunks():
+                    fout.write(chunk)
+                fout.close()
+                t = import_indicator_csv_task(fout.name)
+                messages.info(request, "Import task has started. Task ID: %s" % t.command.task_id)
         else:
             messages.error(request, "Please select a .csv file")
 

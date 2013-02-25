@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from taggit.managers import TaggableManager
+from taggit.utils import parse_tags
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
@@ -305,7 +306,6 @@ class Indicator(models.Model):
             self.years_available_display = ''
 
     def parse_tags(self):
-        from taggit.utils import parse_tags
         self.tags.set(*parse_tags(self.raw_tags))
 
     def update_metadata(self):
