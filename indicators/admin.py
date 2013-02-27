@@ -203,75 +203,76 @@ class IndicatorAdmin(admin.ModelAdmin):
         return super(IndicatorAdmin, self).response_add(request, obj)
 
     def handle_pregen_data(self, obj, request):
-        if obj.pregenparts.count():
-            new_data = []
-            for pregenpart in obj.pregenparts.all():
-                filename = settings.DATAHUB_PREGEN_CSV_FILE \
-                    + pregenpart.file_name
-                try:
-                    csv_file = open(filename, 'rb')
-                except IOError:
+        if request.POST.get('updatePregenCSV') == 'on':
+            if obj.pregenparts.count():
+                new_data = []
+                for pregenpart in obj.pregenparts.all():
+                    filename = settings.DATAHUB_PREGEN_CSV_FILE \
+                        + pregenpart.file_name
+                    try:
+                        csv_file = open(filename, 'rb')
+                    except IOError:
+                        messages.add_message(
+                            request, messages.ERROR,
+                            'Unable to open the file "'
+                            + filename + '" for the pregen data. '
+                            'Meta-data saved.  Indicator Data unchanged.'
+                        )
+                        return obj
+                    reader = csv.reader(csv_file)
+                    cols = reader.next()
+                    if pregenpart.column_name in cols \
+                            and pregenpart.key_column in cols:
+                        name_col = cols.index(pregenpart.column_name)
+                        key_col = cols.index(pregenpart.key_column)
+                        for row in reader:
+                            val = row[name_col]
+                            key_value = row[key_col]
+
+                            if obj.data_type == 'numeric':
+                                #check for blank values
+                                if val =="" or val==None or val==" ":
+                                    val = None
+                                else:
+                                    float(val)
+
+                                data_type = 'numeric'
+                                numeric = val
+                                string = None
+
+                            elif obj.data_type =='string':
+                                data_type = 'string'
+                                string = val
+                                numeric = None
+
+                            new_data.append({
+                                'time_type': pregenpart.time_type,
+                                'time_key': pregenpart.time_value,
+                                'key_unit_type': pregenpart.key_type,
+                                'key_value': key_value,
+                                'data_type': data_type,
+                                'numeric': numeric,
+                                'string': string
+                            })
+                if len(new_data):
+                    IndicatorData.objects.filter(indicator=obj).delete()
+                    for d in new_data:
+                        IndicatorData.objects.create(
+                            indicator=obj,
+                            time_type=d['time_type'],
+                            time_key=d['time_key'],
+                            key_unit_type=d['key_unit_type'],
+                            key_value=d['key_value'],
+                            data_type=d['data_type'],
+                            numeric=d['numeric'],
+                            string=d['string']
+                        )
                     messages.add_message(
-                        request, messages.ERROR,
-                        'Unable to open the file "'
-                        + filename + '" for the pregen data. '
-                        'Meta-data saved.  Indicator Data unchanged.'
+                        request, messages.INFO,
+                        'Cleared the Indicator Data and added '
+                        + str(len(new_data)) +
+                        ' Indicator Data records from the pregen csv file.'
                     )
-                    return obj
-                reader = csv.reader(csv_file)
-                cols = reader.next()
-                if pregenpart.column_name in cols \
-                        and pregenpart.key_column in cols:
-                    name_col = cols.index(pregenpart.column_name)
-                    key_col = cols.index(pregenpart.key_column)
-                    for row in reader:
-                        val = row[name_col]
-                        key_value = row[key_col]
-
-                        if obj.data_type == 'numeric':
-                            #check for blank values
-                            if val =="" or val==None or val==" ":
-                                val = None
-                            else:
-                                float(val)
-
-                            data_type = 'numeric'
-                            numeric = val
-                            string = None
-
-                        elif obj.data_type =='string':
-                            data_type = 'string'
-                            string = val
-                            numeric = None
-
-                        new_data.append({
-                            'time_type': pregenpart.time_type,
-                            'time_key': pregenpart.time_value,
-                            'key_unit_type': pregenpart.key_type,
-                            'key_value': key_value,
-                            'data_type': data_type,
-                            'numeric': numeric,
-                            'string': string
-                        })
-            if len(new_data):
-                IndicatorData.objects.filter(indicator=obj).delete()
-                for d in new_data:
-                    IndicatorData.objects.create(
-                        indicator=obj,
-                        time_type=d['time_type'],
-                        time_key=d['time_key'],
-                        key_unit_type=d['key_unit_type'],
-                        key_value=d['key_value'],
-                        data_type=d['data_type'],
-                        numeric=d['numeric'],
-                        string=d['string']
-                    )
-                messages.add_message(
-                    request, messages.INFO,
-                    'Cleared the Indicator Data and added '
-                    + str(len(new_data)) +
-                    ' Indicator Data records from the pregen csv file.'
-                )
         return obj
 
 
