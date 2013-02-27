@@ -2,7 +2,7 @@ import csv
 import logging
 import os
 import uuid
-
+import datetime
 from django.conf import settings
 from django.contrib import admin, messages
 from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, DefaultIndicatorList, DefaultListSubscription, \
@@ -273,6 +273,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                         + str(len(new_data)) +
                         ' Indicator Data records from the pregen csv file.'
                     )
+                obj.last_load_completed = datetime.datetime.now()
         return obj
 
 
