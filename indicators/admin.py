@@ -205,6 +205,8 @@ class IndicatorAdmin(admin.ModelAdmin):
     def handle_pregen_data(self, obj, request):
         if request.POST.get('updatePregenCSV') == 'on':
             if obj.pregenparts.count():
+                obj.last_load_completed = datetime.datetime.now()
+                obj.save()
                 new_data = []
                 for pregenpart in obj.pregenparts.all():
                     filename = settings.DATAHUB_PREGEN_CSV_FILE \
