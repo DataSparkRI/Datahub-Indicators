@@ -157,8 +157,8 @@ class Indicator(models.Model):
     slug = models.SlugField(unique=True,db_index=True,null=False)
     tags = TaggableManager(blank=True)
 
-    load_pending = models.BooleanField(default=False)
-    last_load_completed = models.DateTimeField(null=True,blank=True)
+    load_pending = models.BooleanField(default=False, help_text="Weave attribute column regen pending")
+    last_load_completed = models.DateTimeField(null=True,blank=True, help_text="Date/Time data last loaded into database")
 
     objects = IndicatorManager()
 
