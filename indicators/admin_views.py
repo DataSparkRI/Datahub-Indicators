@@ -75,7 +75,6 @@ def batch_create(request):
     import ucsv as csv
     if request.method == 'POST':
         next_url = request.POST.get('next')
-        count = 0
         if 'indicator-data' in request.FILES:
             ind_file = request.FILES['indicator-data']
             if ind_file.name.endswith("csv"):

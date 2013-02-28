@@ -8,6 +8,7 @@ def import_indicator_csv_task(file_name):
     count = 0
     f = open(file_name)
     reader = csv.DictReader(f)
+    bool_fields = ['published', 'retired', 'visible_in_all_lists', 'load_pending']
     inds = []
     for row in reader:
         count += 1
@@ -59,6 +60,13 @@ def import_indicator_csv_task(file_name):
         else:
             args['suppression_denominator'] = int(args['suppression_denominator'])
 
+        # Translate bools fields. If some form of True is not specified, we
+        # default to False
+        for f in bool_fields:
+            if args[f] in ['t', 'true', 'True', 'TRUE', '1']:
+                args[f] = True
+            else:
+                args[f] = False
         try:
             ind = Indicator(**args)
             ind.save()
