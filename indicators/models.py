@@ -1,13 +1,14 @@
 import datetime
 import random
 from cStringIO import StringIO
-
+from itertools import chain
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from taggit.managers import TaggableManager
+from taggit.utils import parse_tags
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
@@ -140,8 +141,6 @@ class Indicator(models.Model):
     raw_datasources = models.TextField() # will be parsed into datasource relations
     notes = models.TextField(blank=True) # internal use misc notes
 
-
-
     # calculated meta-data and fields
     data_levels_available = models.CharField(max_length=200, blank=True)
     query_level = models.CharField(max_length=100, blank=True)
@@ -158,8 +157,8 @@ class Indicator(models.Model):
     slug = models.SlugField(unique=True,db_index=True,null=False)
     tags = TaggableManager(blank=True)
 
-    load_pending = models.BooleanField(default=False)
-    last_load_completed = models.DateTimeField(null=True,blank=True)
+    load_pending = models.BooleanField(default=False, help_text="Weave attribute column regen pending")
+    last_load_completed = models.DateTimeField(null=True,blank=True, help_text="Date/Time data last loaded into database")
 
     objects = IndicatorManager()
 
@@ -307,7 +306,6 @@ class Indicator(models.Model):
             self.years_available_display = ''
 
     def parse_tags(self):
-        from taggit.utils import parse_tags
         self.tags.set(*parse_tags(self.raw_tags))
 
     def update_metadata(self):
@@ -398,11 +396,12 @@ class IndicatorData(models.Model):
 def _default_ilist_name(user):
     return "%s's Indicators" % user.email
 
+
 class IndicatorListManager(models.Manager):
     def get_or_create_default_for_user(self, user):
         # default ilist of all available indicators
-        ilist_all, created = self.get_or_create(owner=user, name='Default - List of All Available Indicators')
-        ilist_all.indicators = Indicator.objects.filter(published=True)
+        #ilist_all, created = self.get_or_create(owner=user, name='Default - List of All Available Indicators')
+        #ilist_all.indicators = Indicator.objects.filter(published=True)
 
         # empty user-specific ilist
         default_list_name = _default_ilist_name(user)
@@ -414,6 +413,38 @@ class IndicatorListManager(models.Manager):
             owner=user,
             name=name
         )
+
+class DefaultIndicatorList(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200,unique=True, blank=True)
+    public = models.BooleanField(default=False)
+    visible_in_default = models.BooleanField(default=False)
+    created = models.DateField(auto_now_add=True)
+    visible_in_weave = models.BooleanField(default=True)
+    indicators = models.ManyToManyField(Indicator)
+    users = models.ManyToManyField(User, through='DefaultListSubscription')
+
+    @property
+    def attribute_column_Q(self):
+        return Q(content_type=ContentType.objects.get_for_model(Indicator)) & \
+            (
+                Q(object_id__in=self.indicators.values_list('id',flat=True)) | \
+                Q(object_id__in=Indicator.objects.filter(visible_in_all_lists=True))
+            )
+
+    def save(self, *args, **kwargs):
+        from webportal.unique_slugify import unique_slugify
+        unique_slugify(self, "%s %s" % ('default-indicator-name', self.name, ))
+        super(DefaultIndicatorList, self).save(*args, **kwargs)
+        # add this default list to all users
+        s_users = self.users.all()
+        for user in User.objects.all():
+            if user not in s_users:
+                subscription = DefaultListSubscription(user=user, ilist=self, visible_in_weave=False)
+                subscription.save()
+
+    def __unicode__(self):
+        return self.name
 
 
 class IndicatorList(models.Model):
@@ -456,6 +487,15 @@ class IndicatorList(models.Model):
         unique_together = (
             ('name', 'owner', ),
         )
+
+
+class DefaultListSubscription(models.Model):
+    """ This is a through model for Default Inidcator Lists.
+    Technically it could be used for IndicatorList. It allows Users to subscribe and unsubscribe from it"""
+    user = models.ForeignKey(User)
+    ilist = models.ForeignKey(DefaultIndicatorList)
+    visible_in_weave = models.BooleanField(default=True)
+
 
 class AnonymizedEnrollmentManager(models.Manager):
     def _insert_batch(self, cursor, columns, rows):

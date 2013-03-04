@@ -3,7 +3,8 @@ import os
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.http import HttpResponseRedirect, HttpResponse
+from indicators.models import Indicator
 
 def _collect_batch_info(uuid):
     path = './media/batches/%s/' % uuid
@@ -24,8 +25,8 @@ def indicator_batch_list(request):
 
     If the batch is complete, provide a tar/gzip of the files.
     """
-    return render_to_response('admin/indicator_batch_list.html', 
-        {'batches': map(lambda b: _collect_batch_info(b), os.listdir('./media/batches/'))}, 
+    return render_to_response('admin/indicator_batch_list.html',
+        {'batches': map(lambda b: _collect_batch_info(b), os.listdir('./media/batches/'))},
         context_instance=RequestContext(request))
 
 @staff_member_required
@@ -60,10 +61,32 @@ def regenerate_weave(request):
     else:
         form = RegenerateWeaveForm()
     return render_to_response(
-        'admin/regenerate_weave.html', 
+        'admin/regenerate_weave.html',
         {'form': form,
          'made_attempt': made_attempt,
-         'process_id': process_id,}, 
+         'process_id': process_id,},
         context_instance=RequestContext(request)
     )
 
+@staff_member_required
+def batch_create(request):
+    from commands import import_indicator_csv_task
+    from django.contrib import messages
+    import ucsv as csv
+    if request.method == 'POST':
+        next_url = request.POST.get('next')
+        if 'indicator-data' in request.FILES:
+            ind_file = request.FILES['indicator-data']
+            if ind_file.name.endswith("csv"):
+                # we need to write this file to the disk for moment
+                # /tmp/filename works for now.
+                fout = open('/tmp/%s' % ind_file.name, 'wb+')
+                for chunk in ind_file.chunks():
+                    fout.write(chunk)
+                fout.close()
+                t = import_indicator_csv_task(fout.name)
+                messages.info(request, "Import task has started. Task ID: %s" % t.command.task_id)
+        else:
+            messages.error(request, "Please select a .csv file")
+
+        return HttpResponseRedirect(next_url)
