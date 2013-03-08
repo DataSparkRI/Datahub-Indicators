@@ -228,6 +228,9 @@ class Indicator(models.Model):
     def get_key_values_available(self, key_unit_type):
         return self.indicatordata_set.values_list('key_value',flat=True).distinct()
 
+    def count_datasources(self):
+        return self.datasources.count()
+
     def sorted_datasources(self):
         if not hasattr(self, '_sorted_datasources'):
             self._sorted_datasources = self.datasources.all().order_by('short')
