@@ -5,6 +5,8 @@ from haystack import site
 
 class IndicatorIndex(SearchIndex):
     text = CharField(document=True, use_template=True)
+    display_name = CharField(model_attr='display_name', boost=1.8)
+    short_definition = CharField(model_attr='short_definition', boost=0.9)
     datalevels = MultiValueField()
     datasources = MultiValueField()
 
