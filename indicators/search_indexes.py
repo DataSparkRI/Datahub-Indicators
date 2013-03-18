@@ -9,6 +9,7 @@ class IndicatorIndex(SearchIndex):
     short_definition = CharField(model_attr='short_definition', boost=0.9)
     datalevels = MultiValueField()
     datasources = MultiValueField()
+    content_auto = EdgeNgramField(model_attr='display_name')
 
     def prepare_datasources(self, obj):
         return [ds.short for ds in obj.sorted_datasources()]
