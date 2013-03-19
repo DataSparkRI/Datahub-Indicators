@@ -1,8 +1,5 @@
 {{object.name}}
 {{object.display_name}}
-{{object.short_definition}}
-{{object.long_definition}}
 {% for tag in object.tags.all %} 
 	{{ tag.name }} 
 {% endfor %}
-{{object.purpose}}
