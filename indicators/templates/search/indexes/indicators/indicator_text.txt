@@ -3,3 +3,6 @@
 {% for tag in object.tags.all %} 
 	{{ tag.name }} 
 {% endfor %}
+{%if object.count_datasources|length != 1 %}
+cross
+{%endif%}

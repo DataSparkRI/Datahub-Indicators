@@ -12,7 +12,10 @@ class IndicatorIndex(SearchIndex):
     content_auto = EdgeNgramField(model_attr='display_name')
 
     def prepare_datasources(self, obj):
-        return [ds.short for ds in obj.sorted_datasources()]
+        sources = [ds.short for ds in obj.sorted_datasources()]
+        if len(sources) > 1:
+            sources.append('cross')
+        return sources
 
     def prepare_datalevels(self, obj):
         return [dl['key_unit_type'] for dl in IndicatorData.objects.filter(indicator=obj).values('key_unit_type').distinct('key_unit_type')]
