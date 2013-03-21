@@ -113,7 +113,7 @@ def gen_indicator_data(indicator):
             }
 
 def single_line(string):
-    string = string.encode('ascii', 'ignore')
+    #string = string.encode('ascii', 'ignore')
     string = ''.join(BeautifulSoup(string).findAll(text=True))
     string = re.sub('[\r\n]', '', string)
     return string
@@ -171,7 +171,7 @@ def indicator_csv(request, indicator_slug):
         for sub_datasource in datasource.sub_datasources.all():
             if sub_datasource.disclaimer:
                 pass
-                #writer.writerow(["%s: %s" % (sub_datasource.disclaimer.title, single_line(sub_datasource.disclaimer.content))])
+                writer.writerow(["%s: %s" % (sub_datasource.disclaimer.title, single_line(sub_datasource.disclaimer.content))])
 
     response = HttpResponse(csv_file.getvalue(), mimetype="text/csv")
     response["Content-Disposition"] = "attachment; filename=%s.csv" % indicator.slug
