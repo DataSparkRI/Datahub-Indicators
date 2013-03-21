@@ -10,7 +10,7 @@ from accounts.models import IndicatorListShare
 from bs4 import BeautifulSoup
 import cStringIO as StringIO
 from time import strftime
-import csv
+from indicators import ucsv as csv
 
 def default(request):
     lists = []
@@ -170,7 +170,8 @@ def indicator_csv(request, indicator_slug):
     for datasource in indicator.datasources.all():
         for sub_datasource in datasource.sub_datasources.all():
             if sub_datasource.disclaimer:
-                writer.writerow(["%s: %s" % (sub_datasource.disclaimer.title, single_line(sub_datasource.disclaimer.content))])
+                pass
+                #writer.writerow(["%s: %s" % (sub_datasource.disclaimer.title, single_line(sub_datasource.disclaimer.content))])
 
     response = HttpResponse(csv_file.getvalue(), mimetype="text/csv")
     response["Content-Disposition"] = "attachment; filename=%s.csv" % indicator.slug
