@@ -87,30 +87,22 @@ def indicator_list(request, indicator_list_slug):
         context_instance=RequestContext(request))
 
 def gen_indicator_data(indicator):
-    last_common_name_kut = ''
-    last_common_name_indicator = Indicator
 
     for indicator_data in indicator.indicatordata_set.filter(Q(numeric__isnull=False) | Q(string__isnull=False)):
-        if last_common_name_kut == indicator_data.key_unit_type:
-            common_name_indicator = last_common_name_indicator
-        else:
-            common_name_id = TypeIndicatorLookup.objects.filter(name=indicator_data.key_unit_type).values_list('indicator_id')[0][0]
-            common_name_indicator = Indicator.objects.get(id=common_name_id)
-            last_common_name_indicator = common_name_indicator
-            last_common_name_kut = indicator_data.key_unit_type
+        t_i_lookup_id = TypeIndicatorLookup.objects.get(name=indicator_data.key_unit_type).indicator_id
+        t_i_lookup_ind = Indicator.objects.get(id=t_i_lookup_id)
+        try:
+            common_name = IndicatorData.objects.get(indicator=t_i_lookup_ind, key_value=indicator_data.key_value, time_key=indicator_data.time_key).value
+        except IndicatorData.DoesNotExist:
+            common_name = indicator_data.key_value
 
-        common_names = IndicatorData.objects.filter(indicator=common_name_indicator).filter(key_value=indicator_data.key_value, time_key=indicator_data.time_key)
-        for common_name in common_names:
-            time_period = ' '.join([indicator_data.time_type, indicator_data.time_key])
-            key_value = ' '.join([indicator_data.key_unit_type, indicator_data.key_value])
-            source = [key_value, common_name.value]
+        yield {
+            'time_period': indicator_data.time_type + " " + indicator_data.time_key,
+            'key_value': indicator_data.key_unit_type + " " + indicator_data.key_value,
+            'source': [indicator_data.key_unit_type + " "+ indicator_data.key_value , common_name],
+            'value': indicator_data.value,
+        }
 
-            yield {
-                'time_period': time_period,
-                'key_value': key_value,
-                'source': source,
-                'value': indicator_data.value,
-            }
 
 def single_line(string):
     #string = string.encode('ascii', 'ignore')
@@ -167,6 +159,7 @@ def indicator_csv(request, indicator_slug):
     writer.writerow(["Datasource(s): %s" % datasources])
     writer.writerow(["Downloaded: %s" % strftime("%a, %d %b %Y %H:%M:%S %Z")])
     writer.writerow(["Location: %s" % request.build_absolute_uri()])
+
     for datasource in indicator.datasources.all():
         for sub_datasource in datasource.sub_datasources.all():
             if sub_datasource.disclaimer:
