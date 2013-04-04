@@ -91,8 +91,9 @@ def gen_indicator_data(indicator):
     for indicator_data in indicator.indicatordata_set.filter(Q(numeric__isnull=False) | Q(string__isnull=False)):
         t_i_lookup_id = TypeIndicatorLookup.objects.get(name=indicator_data.key_unit_type).indicator_id
         t_i_lookup_ind = Indicator.objects.get(id=t_i_lookup_id)
+
         try:
-            common_name = IndicatorData.objects.get(indicator=t_i_lookup_ind, key_value=indicator_data.key_value, time_key=indicator_data.time_key).value
+            common_name = IndicatorData.objects.get(indicator=t_i_lookup_ind, key_unit_type=indicator_data.key_unit_type, key_value=indicator_data.key_value, time_key=indicator_data.time_key).value
         except IndicatorData.DoesNotExist:
             common_name = indicator_data.key_value
 
