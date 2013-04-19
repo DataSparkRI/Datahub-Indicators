@@ -1,4 +1,4 @@
-{% load weave_tags %}<Weave encoding="dynamic">
+<Weave encoding="dynamic">
   <CustomTool name="CustomTool">
     <buttonRadius>3</buttonRadius>
     <children encoding="dynamic">
@@ -163,7 +163,7 @@
     <eventListeners encoding="dynamic"/>
     <geometryMetadataRequestMode>xyz</geometryMetadataRequestMode>
     <geometryMinimumScreenArea>1</geometryMinimumScreenArea>
-    <jriServiceURL>/WeaveServices/JRIService</jriServiceURL>
+    <jriServiceURL>{{weave_root}}/WeaveServices/JRIService</jriServiceURL>
     <macroLibraries>weave.api::WeaveAPI</macroLibraries>
     <macros encoding="dynamic"/>
     <maxComputationTimePerFrame>100</maxComputationTimePerFrame>
@@ -177,7 +177,7 @@
       <size>10</size>
       <underline>false</underline>
     </panelTitleTextFormat>
-    <pdbServiceURL>/WeavePDBService/PDBService</pdbServiceURL>
+    <pdbServiceURL>{{weave_root}}/WeavePDBService/PDBService</pdbServiceURL>
     <probeInnerGlowAlpha>1</probeInnerGlowAlpha>
     <probeInnerGlowBlur>5</probeInnerGlowBlur>
     <probeInnerGlowColor>16777215</probeInnerGlowColor>
@@ -192,7 +192,7 @@ str + " (" + title + ")"</probeLineFormatter>
     <probeToolTipBackgroundColor>15198183</probeToolTipBackgroundColor>
     <probeToolTipFontColor>0</probeToolTipFontColor>
     <probeToolTipMaxWidth>400</probeToolTipMaxWidth>
-    <rServiceURL>/WeaveServices/RService</rServiceURL>
+    <rServiceURL>{{weave_root}}/WeaveServices/RService</rServiceURL>
     <searchServiceURLs>Wikipedia|http://en.wikipedia.org/wiki/Special:Search?search=
 Google|http://www.google.com/search?q=
 Google Images|http://images.google.com/images?q=
@@ -278,10 +278,14 @@ wheel</zoom>
   <LinkableHashMap name="savedSubsets" encoding="dynamic"/>
   <WeaveDataSource name="WeaveDataSource">
     <attributeHierarchy encoding="xml">
-      <hierarchy name="DataHub">
+	<hierarchy name="DataHub">
+	{% comment %}
         {% for list in lists %}
         {% attributecolumn_list_hierarchy list.name list.attr_col_Q %}
-        {% endfor %}
+	{% endfor %}
+	{%endcomment%}
+	<category title="Test" name="Test">
+	</category>
          <category title="Geometry Collections" name="Geometry Collections">
           <attribute title="PVD Neighborhoods" dataType="geometry" keyType="pvdnhoods" name="PVD Neighborhoods"/>
           <attribute title="RI Municipalities" dataType="geometry" keyType="RI Municipalities" name="RI Municipalities"/>
@@ -297,7 +301,7 @@ wheel</zoom>
       </hierarchy>
     </attributeHierarchy>
     <hierarchyURL/>
-    <url>/WeaveServices/DataService</url>
+    <url>{{weave_root}}/WeaveServices/DataService</url>
   </WeaveDataSource>
   <LinkableHashMap name="Probe Header Columns" encoding="dynamic">
     <ReferencedColumn name="ReferencedColumn">

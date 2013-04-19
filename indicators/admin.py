@@ -8,60 +8,64 @@ from django.contrib import admin, messages
 from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, DefaultIndicatorList, DefaultListSubscription, \
         Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.admin.filterspecs import FilterSpec
 from indicators.fields import RoundingDecimalField, FileNameField
+try:
+    from django.contrib.admin.filterspecs import FilterSpec
 
-class IndicatorSourceListFilter(FilterSpec):
 
-    """
-    Add "By Indicator Source" filter option on the admin/indicators/indicators page.
+    class IndicatorSourceListFilter(FilterSpec):
 
-    Ideally, there would be two filter values listed:
-    1) PreGenCSV
-    2) HUB-Core
+        """
+        Add "By Indicator Source" filter option on the admin/indicators/indicators page.
 
-    PreGenCSV=true if the indicator's FileName attribute is populated;
-    else HUB-Core=true.
-    """
+        Ideally, there would be two filter values listed:
+        1) PreGenCSV
+        2) HUB-Core
 
-    def test(cls, field):
-        return field.null and isinstance(field, cls.fields) and not field._choices
+        PreGenCSV=true if the indicator's FileName attribute is populated;
+        else HUB-Core=true.
+        """
 
-    test = classmethod(test)
+        def test(cls, field):
+            return field.null and isinstance(field, cls.fields) and not field._choices
 
-    def title(self):
-        return "Indicator Source"
+        test = classmethod(test)
 
-    def __init__(self, f, request, params, model, model_admin):
-        super(IndicatorSourceListFilter, self).__init__(f, request, params, model, model_admin)
+        def title(self):
+            return "Indicator Source"
 
-        self.file_exists_lookup_kwarg     = 'file_name__gt'
-        self.file_not_exists_lookup_kwarg = 'file_name'
-        self.file_exists_lookup_val       = request.GET.get(self.file_exists_lookup_kwarg, None)
-        self.file_not_exists_lookup_val   = request.GET.get(self.file_not_exists_lookup_kwarg, None)
+        def __init__(self, f, request, params, model, model_admin):
+            super(IndicatorSourceListFilter, self).__init__(f, request, params, model, model_admin)
 
-    def choices(self, cl):
-        yield {
-                'selected'     : self.file_exists_lookup_val is None and self.file_not_exists_lookup_val is None,
-                'query_string' : cl.get_query_string({}, [self.file_exists_lookup_kwarg, self.file_not_exists_lookup_kwarg]),
-                'display'      : 'All',
-        }
-        yield {
-                'selected'     : self.file_exists_lookup_val is not None,
-                'query_string' : cl.get_query_string({self.file_exists_lookup_kwarg : ""}, [self.file_not_exists_lookup_kwarg]),
-                'display'      : 'PreGenCSV',
-        }
-        yield {
-                'selected'     : self.file_not_exists_lookup_val is not None,
-                'query_string' : cl.get_query_string({self.file_not_exists_lookup_kwarg : ""}, [self.file_exists_lookup_kwarg]),
-                'display'      : 'HUB-Core',
-        }
+            self.file_exists_lookup_kwarg     = 'file_name__gt'
+            self.file_not_exists_lookup_kwarg = 'file_name'
+            self.file_exists_lookup_val       = request.GET.get(self.file_exists_lookup_kwarg, None)
+            self.file_not_exists_lookup_val   = request.GET.get(self.file_not_exists_lookup_kwarg, None)
 
-def _register_front(cls, test, factory):
-    cls.filter_specs.insert(0, (test, factory))
+        def choices(self, cl):
+            yield {
+                    'selected'     : self.file_exists_lookup_val is None and self.file_not_exists_lookup_val is None,
+                    'query_string' : cl.get_query_string({}, [self.file_exists_lookup_kwarg, self.file_not_exists_lookup_kwarg]),
+                    'display'      : 'All',
+            }
+            yield {
+                    'selected'     : self.file_exists_lookup_val is not None,
+                    'query_string' : cl.get_query_string({self.file_exists_lookup_kwarg : ""}, [self.file_not_exists_lookup_kwarg]),
+                    'display'      : 'PreGenCSV',
+            }
+            yield {
+                    'selected'     : self.file_not_exists_lookup_val is not None,
+                    'query_string' : cl.get_query_string({self.file_not_exists_lookup_kwarg : ""}, [self.file_exists_lookup_kwarg]),
+                    'display'      : 'HUB-Core',
+            }
 
-FilterSpec.register_front = classmethod(_register_front)
-FilterSpec.register_front(lambda f: isinstance(f, FileNameField), IndicatorSourceListFilter)
+    def _register_front(cls, test, factory):
+        cls.filter_specs.insert(0, (test, factory))
+
+    FilterSpec.register_front = classmethod(_register_front)
+    FilterSpec.register_front(lambda f: isinstance(f, FileNameField), IndicatorSourceListFilter)
+except ImportError:
+    pass
 
 # Actions available in Core
 def batch_debug_indicators(modeladmin, request, queryset):

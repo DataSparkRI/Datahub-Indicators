@@ -11,8 +11,10 @@ from bs4 import BeautifulSoup
 import cStringIO as StringIO
 from time import strftime
 from indicators import ucsv as csv
+from django.conf import settings
 
 def default(request):
+    weave_root = getattr(settings,'WEAVE_ROOT', "http://127.0.0.1:8080/") # SETTING
     lists = []
     if request.user.is_authenticated():
         for i_list in request.user.indicatorlist_set.filter(visible_in_weave=True):
@@ -35,6 +37,7 @@ def default(request):
 
     return render_to_response('indicators/default.xml',
         {
+            'weave_root':weave_root,
             'lists': lists
         },
         context_instance=RequestContext(request))

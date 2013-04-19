@@ -65,7 +65,7 @@ class SubDataSource(models.Model):
     short = models.CharField(max_length=11)
     short_name = models.CharField(max_length=12) # to display in lists, etc
     name = models.CharField(max_length=100)
-    url = models.URLField(verify_exists=False, blank=True)
+    url = models.URLField(blank=True)
     icon_file = models.ImageField(upload_to='datasource_icons', blank=True, null=True)
     description = models.TextField(blank=True)
     disclaimer = models.OneToOneField(SubDataSourceDisclaimer, primary_key=True)
@@ -80,7 +80,7 @@ class DataSource(models.Model):
     short = models.CharField(max_length=11)
     short_name = models.CharField(max_length=12) # to display in lists, etc
     name = models.CharField(max_length=100)
-    url = models.URLField(verify_exists=False)
+    url = models.URLField()
     icon_file = models.ImageField(upload_to='datasource_icons', blank=True, null=True)
     description = models.TextField(blank=True)
     sub_datasources = models.ManyToManyField('SubDataSource', blank=True, null=True)
