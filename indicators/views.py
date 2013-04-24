@@ -12,29 +12,46 @@ import cStringIO as StringIO
 from time import strftime
 from indicators import ucsv as csv
 from django.conf import settings
+from weave.models import WeaveMetaPublic
+
 
 def default(request):
     weave_root = getattr(settings,'WEAVE_ROOT', "http://127.0.0.1:8080/") # SETTING
     lists = []
     if request.user.is_authenticated():
         for i_list in request.user.indicatorlist_set.filter(visible_in_weave=True):
-            lists.append({
-                'name': i_list.name,
-                'attr_col_Q': i_list.attribute_column_Q
-            })
+            user_list = {'title':i_list.name, 'items':[]}
+            for ind in i_list.indicators.all():
+                w_objs = WeaveMetaPublic.objects.filter(meta_name="title", meta_value__startswith=ind.display_name) # hrm....
+                for w_obj in w_objs:
+                    user_list['items'].append({'title':w_obj.meta_value,
+                                               'datatype':ind.data_type,
+                                               'weave_entity_id':w_obj.entity_id
+                                               })
+            lists.append(user_list)
+
         # get the default ones
         for subscription in DefaultListSubscription.objects.filter(user=request.user,visible_in_weave=True):
-            lists.append({
-                'name': subscription.ilist.name,
-                'attr_col_Q': subscription.ilist.attribute_column_Q
-            })
+            subscribe_list = {'title':subscription.ilist.name, 'items':[]}
+            for ind in subscription.ilist.indicators.all():
+                w_objs = WeaveMetaPublic.objects.filter(meta_name="title", meta_value__startswith=ind.display_name) # hrm....
+                for w_obj in w_objs:
+                    subscribe_list['items'].append({'title':w_obj.meta_value,
+                                               'datatype':ind.data_type,
+                                               'weave_entity_id':w_obj.entity_id
+                                               })
+            lists.append(subscribe_list)
 
     else:
-        lists.append({
-            'name': 'All Indicators',
-            'attr_col_Q': Q()
-        })
-
+        complete_list = {'title':"All Indicators", 'items':[]}
+        for ind in Indicator.objects.filter(published=True):
+            w_objs = WeaveMetaPublic.objects.filter(meta_name="title", meta_value__startswith=ind.display_name) # hrm....
+            for w_obj in w_objs:
+                complete_list['items'].append({'title':w_obj.meta_value,
+                                            'datatype':ind.data_type,
+                                            'weave_entity_id':w_obj.entity_id
+                                            })
+        lists.append(complete_list)
     return render_to_response('indicators/default.xml',
         {
             'weave_root':weave_root,

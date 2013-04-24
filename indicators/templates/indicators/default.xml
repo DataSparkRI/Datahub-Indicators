@@ -1,4 +1,4 @@
-<Weave encoding="dynamic">
+{%load weave_extras%}<Weave encoding="dynamic">
   <CustomTool name="CustomTool">
     <buttonRadius>3</buttonRadius>
     <children encoding="dynamic">
@@ -279,13 +279,13 @@ wheel</zoom>
   <WeaveDataSource name="WeaveDataSource">
     <attributeHierarchy encoding="xml">
 	<hierarchy name="DataHub">
-	{% comment %}
-        {% for list in lists %}
-        {% attributecolumn_list_hierarchy list.name list.attr_col_Q %}
-	{% endfor %}
-	{%endcomment%}
-	<category title="Test" name="Test">
-	</category>
+		{%weave_data_hierarchy%}
+		{%if lists%}
+		{%for l in lists%}
+		{%weave_custom_data_hierarchy l.title l.items %}
+		{%endfor%}
+		{%endif%}
+	{%comment%}
          <category title="Geometry Collections" name="Geometry Collections">
           <attribute title="PVD Neighborhoods" dataType="geometry" keyType="pvdnhoods" name="PVD Neighborhoods"/>
           <attribute title="RI Municipalities" dataType="geometry" keyType="RI Municipalities" name="RI Municipalities"/>
@@ -297,8 +297,13 @@ wheel</zoom>
           <attribute name="RI Tracts -- Census 2010" keyType="RI Tracts - Census 2010" dataType="geometry" title="RI Tracts -- Census 2010"/>
           <attribute name="RI Zip Codes" keyType="RI Zip Codes" dataType="geometry" title="RI Zip Codes"/>
           <attribute title="U.S. States &amp; DC" dataType="geometry" keyType="U.S. States" name="U.S. States &amp; DC"/>
-        </category>
-      </hierarchy>
+  	</category>
+	{%endcomment%}
+	</hierarchy>
+	<hierarchy name="Your Ilists">
+		
+	</hierarchy>
+
     </attributeHierarchy>
     <hierarchyURL/>
     <url>{{weave_root}}/WeaveServices/DataService</url>
