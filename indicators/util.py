@@ -1,10 +1,14 @@
 import decimal
+import logging
 from indicators.models import Indicator, IndicatorData
 
 try:
     from core.indicators import indicator_list
 except ImportError:
     pass
+
+# Get an instance of a logger
+weave_logger = logging.getLogger('datahub.indicator')
 
 def clean_value(val):
     if hasattr(val, 'strip') and callable(val.strip):
@@ -89,13 +93,19 @@ def generate_weave(verbose=False):
     for f in DataFilter.objects.all():
         if f.key_unit_type not in filter_keys:
             filter_keys[f.key_unit_type] = []
-        filter_keys[f.key_unit_type].append({'kut':f.key_unit_type,'name':f.name, 'filter_id':f.id, 'table_id':get_or_create_data_table("%s - %s" % (f.key_unit_type, f.name))})
-
+        filter_keys[f.key_unit_type].append({'kut':f.key_unit_type,
+                                             'name':f.name,
+                                             'filter_id':f.id,
+                                             'table_id':get_or_create_data_table("%s - %s" % (f.key_unit_type, f.name))
+                                             })
     # generate data
     print_v(verbose, "Creating Data...")
     for ind in Indicator.objects.filter(published=True):
-        for ind_data in IndicatorData.objects.filter(indicator=ind).distinct('time_key'):
-            if ind_data.key_unit_type == 'School':
+        min = ind.min
+        max = ind.max
+        for ind_data in IndicatorData.objects.filter(indicator=ind).distinct('time_key', 'key_unit_type'):
+            print ind.display_name, ind_data.key_unit_type
+            if ind_data.key_unit_type == 'School' or ind_data.key_unit_type == 'District' :
                 time = format_school_year(ind_data.time_key)
             else:
                 time = ind_data.time_key
@@ -106,27 +116,27 @@ def generate_weave(verbose=False):
             sql = """SELECT "key_value", "{0}" FROM "public"."indicators_indicatordata" WHERE "indicator_id"='{1}' AND "key_unit_type"='{2}' AND "time_key"='{3}'""".\
                     format(ind.data_type, ind.id, ind_data.key_unit_type, ind_data.time_key)
 
-            insert_data_row(parent_id, title, ind.display_name,  ind.data_type, sql, ind.id, time, ind_data.key_unit_type)
+            insert_data_row(parent_id, title, ind.display_name,  ind.data_type, sql, ind.id, time, ind_data.key_unit_type, min, max)
 
             # apply filters
             if ind_data.key_unit_type in filter_keys:
                 # apply the filters available for this Key Unit Type
                 for kut in filter_keys[ind_data.key_unit_type]:
-
+                    #print_v(verbose, "Applying filter: %s... to %s %s" % (kut['name'], ind.display_name, ind_data.time_key))
                     parent_id = kut['table_id']
-                    title = "%s %s" % (ind.display_name, time)
+                    title = "%s, %s" % (ind.display_name, time)
 
                     sql = """SELECT "key_value", "{0}" FROM "public"."indicators_indicatordata" WHERE "indicator_id"='{1}' AND "key_unit_type"='{2}' AND "time_key"='{3}' AND key_value in (SELECT key_value FROM weave_datafilterkey WHERE data_filter_id={4}) """.\
                         format(ind.data_type, ind.id, ind_data.key_unit_type, ind_data.time_key, kut['filter_id'])
 
-                    data_table = "%s - %s" % (ind_data.key_unit_type, kut['name'])
+                    data_table_name = "%s - %s" % (ind_data.key_unit_type, kut['name'])
 
-                    insert_data_row(parent_id, title, ind.display_name, ind.data_type, sql, ind.id, time, data_table)
+                    insert_data_row(parent_id, title, ind.display_name, ind.data_type, sql, ind.id, time, data_table_name, min, max)
 
 
 def print_v(verbose, text):
     if verbose:
-        print text
+        weave_logger.debug(text)
 
 
 def format_school_year(time_key):
