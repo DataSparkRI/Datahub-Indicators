@@ -199,3 +199,8 @@ def get_datasource_name(request):
             return HttpResponse(datasource.name, content_type="text/plain")
     else:
         return HttpResponse(status=400)
+
+def gen_weave():
+    from indicators.tasks import generate_weave_task
+    t = generate_weave_task()
+    return "Started Weave Regenerate Task"

@@ -2,6 +2,11 @@
 from huey.djhuey.decorators import queue_command
 import ucsv as csv
 from models import Indicator
+from util import generate_weave
+
+@queue_command
+def generate_weave_task():
+    generate_weave()
 
 @queue_command
 def import_indicator_csv_task(file_name):

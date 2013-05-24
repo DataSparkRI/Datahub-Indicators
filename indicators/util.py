@@ -105,8 +105,10 @@ def generate_weave(verbose=False):
         max = ind.max
         for ind_data in IndicatorData.objects.filter(indicator=ind).distinct('time_key', 'key_unit_type'):
             #print ind.display_name, ind_data.key_unit_type
-            if ind_data.key_unit_type == 'School' or ind_data.key_unit_type == 'District' :
+            if ind_data.time_type == 'School Year':
                 time = format_school_year(ind_data.time_key)
+            elif ind_data.time_type == 'Term':
+                time = "Term " + ind_data.time_key
             else:
                 time = ind_data.time_key
 
