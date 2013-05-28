@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 from indicators.fields import RoundingDecimalField, FileNameField
 
 from radmin import console
-
 console.register_to_all('Generate Weave','indicators.views.gen_weave', True)
 
 try:

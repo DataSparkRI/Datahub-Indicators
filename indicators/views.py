@@ -202,5 +202,5 @@ def get_datasource_name(request):
 
 def gen_weave():
     from indicators.tasks import generate_weave_task
-    t = generate_weave_task()
+    generate_weave_task()
     return "Started Weave Regenerate Task"

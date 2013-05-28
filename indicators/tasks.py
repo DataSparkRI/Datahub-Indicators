@@ -143,8 +143,8 @@ try:
 
     @task()
     def generate_weave_task():
-        print "Generating Weave From Task"
-        call_command('generate_weave', interactive=False)
+        from indicators.util import generate_weave
+        generate_weave()
         return "Generated Weave"
 
     @task()
@@ -224,7 +224,7 @@ try:
             i.parse_tags()
 
         f.close()
-
         return str(count) + "---" + file_name
+
 except ImportError:
     pass
