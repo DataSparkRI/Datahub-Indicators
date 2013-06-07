@@ -204,8 +204,5 @@ def gen_weave():
     from indicators.tasks import generate_weave_task
     from huey.api import AsyncData
     t = generate_weave_task()
-    if t is AsyncData:
-        return "Started Weave Regenerate Task"
-    else:
-        return "Task Failed to start."
+    return "Started Weave Regenerate Task"
 
