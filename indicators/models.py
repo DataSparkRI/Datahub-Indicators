@@ -229,7 +229,11 @@ class Indicator(models.Model):
         return self.indicatordata_set.values_list('key_value',flat=True).distinct()
 
     def count_datasources(self):
-        return self.datasources.count()
+        ds = self.datasources.count()
+        if ds:
+            return ds
+        else:
+            return 0
 
     def sorted_datasources(self):
         if not hasattr(self, '_sorted_datasources'):
