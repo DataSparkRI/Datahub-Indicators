@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 import re
 from indicators.models import IndicatorList, Indicator, TypeIndicatorLookup, DataSource, IndicatorData, DefaultListSubscription
 from accounts.models import IndicatorListShare
@@ -131,6 +132,7 @@ def single_line(string):
     string = re.sub('[\r\n]', '', string)
     return string
 
+@login_required
 def indicator_csv(request, indicator_slug):
     indicator = get_object_or_404(Indicator, slug=indicator_slug)
     csv_file = StringIO.StringIO()
