@@ -293,6 +293,8 @@ class DefaultListSubscriptionInline(admin.TabularInline):
 class DefaultIndicatorListAdmin(admin.ModelAdmin):
     #inlines = (DefaultListSubscriptionInline,)
     prepopulated_fields = {"slug": ("name",)}
+    filter_horizontal = ['indicators']
+
 
 admin.site.register(DataSource)
 admin.site.register(SubDataSource)
