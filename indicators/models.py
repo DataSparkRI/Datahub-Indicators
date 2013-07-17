@@ -4,7 +4,7 @@ from cStringIO import StringIO
 from itertools import chain
 from django.db import models
 from django.db.models import Q
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from taggit.managers import TaggableManager
@@ -36,6 +36,13 @@ UNIT_CHOICES = (
     ('rate', 'rate'),       # two decimal places
     ('other', 'other') ,    # two decimal places
 )
+
+
+class Permission(models.Model):
+    """ A Generic User Permission tied to a model """
+    user = models.ForeignKey(User) # the user this permision is for
+    indicator = models.ForeignKey('Indicator')
+
 
 class TypeIndicatorLookup(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -104,6 +111,23 @@ class IndicatorPregenPart(models.Model):
         return u"%s in %s" % (self.column_name, self.file_name)
 
 class IndicatorManager(models.Manager):
+
+    def get_for_user(self, user=None):
+        """Return Queryset of Indicators available for user or just public"""
+        if user is None:
+            return self.filter(published=True)
+        else:
+            published = self.filter(published=True)
+            perms = Permission.objects.filter(user=user).values('indicator')
+            user_allowed_indicators = self.filter(pk__in=perms)
+
+            return published | user_allowed_indicators
+
+    def user_allowed_unpublished(self, user):
+        perms = Permission.objects.filter(user=user).values('indicator')
+        user_allowed_indicators = self.filter(pk__in=perms)
+        return user_allowed_indicators
+
     def get_for_def(self, indicator_def, using='portal'):
         import re
         name = indicator_def.__name__
@@ -159,6 +183,7 @@ class Indicator(models.Model):
 
     load_pending = models.BooleanField(default=False, help_text="Weave attribute column regen pending")
     last_load_completed = models.DateTimeField(null=True,blank=True, help_text="Date/Time data last loaded into database")
+    permissions = models.ManyToManyField(Permission, blank=True, null=True, related_name="indicator_permission")
 
     objects = IndicatorManager()
 
@@ -186,6 +211,24 @@ class Indicator(models.Model):
 
     #def get_time_keys_available(self, time_type):
     #    return self.indicatordata_set.values_list('time_key',flat=True).distinct()
+
+    def user_can_view(self, user=None):
+        """ True if user has permision to this indicator or if indicator is public"""
+        if self.published == True:
+            return True
+        else:
+            if user is None:
+                return False
+            else:
+                if type(user) != AnonymousUser:
+                    try:
+                        p = Permission.objects.get(user=user, indicator=self)
+                        return True
+                    except Permission.DoesNotExist:
+                        return False
+                else:
+                    # Anon users will never have permissions :P
+                    return False
 
     def get_types_and_times(self):
 

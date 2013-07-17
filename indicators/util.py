@@ -100,7 +100,7 @@ def generate_weave(verbose=False):
                                              })
     # generate data
     print_v(verbose, "Creating Data...")
-    for ind in Indicator.objects.filter(published=True):
+    for ind in Indicator.objects.filter():
         min = ind.min
         max = ind.max
         for ind_data in IndicatorData.objects.filter(indicator=ind).distinct('time_key', 'key_unit_type'):

@@ -21,6 +21,6 @@ class IndicatorIndex(SearchIndex):
         return [dl['key_unit_type'] for dl in IndicatorData.objects.filter(indicator=obj).values('key_unit_type').distinct('key_unit_type')]
 
     def index_queryset(self, using=None):
-        return Indicator.objects.filter(published=True)
+        return Indicator.objects.filter()
 
 site.register(Indicator, IndicatorIndex)
