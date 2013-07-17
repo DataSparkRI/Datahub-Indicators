@@ -6,7 +6,7 @@ import datetime
 from django.conf import settings
 from django.contrib import admin, messages
 from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, DefaultIndicatorList, DefaultListSubscription, \
-        Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup
+        Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup, Permission
 from django.utils.translation import ugettext_lazy as _
 from indicators.fields import RoundingDecimalField, FileNameField
 
@@ -134,6 +134,9 @@ class IndicatorPregenPartInline(admin.TabularInline):
     extra = 10
     model = IndicatorPregenPart
 
+#class PermissionInLine(admin.TabularInline):
+
+
 
 class IndicatorAdmin(admin.ModelAdmin):
     class Media:
@@ -189,6 +192,7 @@ class IndicatorAdmin(admin.ModelAdmin):
             'suppression_numerator',
             'suppression_denominator',
             'datasources',
+            'permissions'
         )}),
 
         ('Django Internals', { 'fields':(
@@ -303,3 +307,4 @@ admin.site.register(IndicatorList)
 admin.site.register(DefaultIndicatorList, DefaultIndicatorListAdmin)
 admin.site.register(Indicator, IndicatorAdmin)
 admin.site.register(TypeIndicatorLookup)
+admin.site.register(Permission)
