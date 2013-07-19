@@ -134,8 +134,9 @@ class IndicatorPregenPartInline(admin.TabularInline):
     extra = 10
     model = IndicatorPregenPart
 
-#class PermissionInLine(admin.TabularInline):
-
+class PermissionInline(admin.TabularInline):
+    extra = 3
+    model = Permission
 
 
 class IndicatorAdmin(admin.ModelAdmin):
@@ -155,6 +156,7 @@ class IndicatorAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     inlines = [
         IndicatorPregenPartInline,
+        PermissionInline,
     ]
 
 
@@ -192,7 +194,6 @@ class IndicatorAdmin(admin.ModelAdmin):
             'suppression_numerator',
             'suppression_denominator',
             'datasources',
-            'permissions'
         )}),
 
         ('Django Internals', { 'fields':(

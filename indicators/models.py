@@ -43,6 +43,9 @@ class Permission(models.Model):
     user = models.ForeignKey(User) # the user this permision is for
     indicator = models.ForeignKey('Indicator')
 
+    def __unicode__(self):
+        return self.user.username + " can view Indicator: " + self.indicator.display_name
+
 
 class TypeIndicatorLookup(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -183,7 +186,7 @@ class Indicator(models.Model):
 
     load_pending = models.BooleanField(default=False, help_text="Weave attribute column regen pending")
     last_load_completed = models.DateTimeField(null=True,blank=True, help_text="Date/Time data last loaded into database")
-    permissions = models.ManyToManyField(Permission, blank=True, null=True, related_name="indicator_permission")
+    permissions = models.ForeignKey(Permission, blank=True, null=True, related_name="indicator_permission")
 
     objects = IndicatorManager()
 
