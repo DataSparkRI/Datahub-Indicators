@@ -228,10 +228,11 @@ class Indicator(models.Model):
                         p = Permission.objects.get(user=user, indicator=self)
                         return True
                     except Permission.DoesNotExist:
-                        return False
+                        pass
                 else:
                     # Anon users will never have permissions :P
                     return False
+        return False
 
     def get_types_and_times(self):
 
