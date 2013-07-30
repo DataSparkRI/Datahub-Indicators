@@ -89,7 +89,8 @@ def generate_weave(verbose=False):
         table_keys[kut.key_unit_type] = get_or_create_data_table(kut.key_unit_type)
 
     print_v(verbose, "Creating filters...")
-
+    # Create Weave Hierarchies filters based and DataFilter created by user.
+    # Each filter gets its on data_table
     for f in DataFilter.objects.all():
         if f.key_unit_type not in filter_keys:
             filter_keys[f.key_unit_type] = []
@@ -97,14 +98,16 @@ def generate_weave(verbose=False):
                                              'name':f.name,
                                              'filter_id':f.id,
                                              'table_id':get_or_create_data_table("%s - %s" % (f.key_unit_type, f.name))
+
                                              })
+
     # generate data
     print_v(verbose, "Creating Data...")
-    for ind in Indicator.objects.filter():
+    for ind in Indicator.objects.all():
         min = ind.min
         max = ind.max
+
         for ind_data in IndicatorData.objects.filter(indicator=ind).distinct('time_key', 'key_unit_type'):
-            #print ind.display_name, ind_data.key_unit_type
             if ind_data.time_type == 'School Year':
                 time = format_school_year(ind_data.time_key)
             elif ind_data.time_type == 'Term':
@@ -118,13 +121,18 @@ def generate_weave(verbose=False):
             sql = """SELECT "key_value", "{0}" FROM "public"."indicators_indicatordata" WHERE "indicator_id"='{1}' AND "key_unit_type"='{2}' AND "time_key"='{3}'""".\
                     format(ind.data_type, ind.id, ind_data.key_unit_type, ind_data.time_key)
 
-            insert_data_row(parent_id, title, ind.display_name,  ind.data_type, sql, ind.id, time, ind_data.key_unit_type, min, max)
+            # write into weave tables
+            insert_data_row(parent_id, title, ind.display_name,  ind.data_type, sql, ind.id, time, ind_data.key_unit_type, ind_data.key_unit_type, min, max)
+
 
             # apply filters
             if ind_data.key_unit_type in filter_keys:
-                # apply the filters available for this Key Unit Type
+
+                # Create an instance of this indicator for each of the
+                # filter associated with the basic key type. Tables have
+                # already been generated
+
                 for kut in filter_keys[ind_data.key_unit_type]:
-                    #print_v(verbose, "Applying filter: %s... to %s %s" % (kut['name'], ind.display_name, ind_data.time_key))
                     parent_id = kut['table_id']
                     title = "%s, %s" % (ind.display_name, time)
 
@@ -132,8 +140,7 @@ def generate_weave(verbose=False):
                         format(ind.data_type, ind.id, ind_data.key_unit_type, ind_data.time_key, kut['filter_id'])
 
                     data_table_name = "%s - %s" % (ind_data.key_unit_type, kut['name'])
-
-                    insert_data_row(parent_id, title, ind.display_name, ind.data_type, sql, ind.id, time, data_table_name, min, max)
+                    insert_data_row(parent_id, title, ind.display_name, ind.data_type, sql, ind.id, time, data_table_name, data_table_name, min, max)
 
 
 def print_v(verbose, text):
