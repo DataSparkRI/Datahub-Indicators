@@ -124,7 +124,6 @@ def generate_weave(verbose=False):
             # write into weave tables
             insert_data_row(parent_id, title, ind.display_name,  ind.data_type, sql, ind.id, time, ind_data.key_unit_type, ind_data.key_unit_type, min, max)
 
-
             # apply filters
             if ind_data.key_unit_type in filter_keys:
 
