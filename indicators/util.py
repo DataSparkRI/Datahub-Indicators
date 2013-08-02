@@ -139,7 +139,7 @@ def generate_weave(verbose=False):
                         format(ind.data_type, ind.id, ind_data.key_unit_type, ind_data.time_key, kut['filter_id'])
 
                     data_table_name = "%s - %s" % (ind_data.key_unit_type, kut['name'])
-                    insert_data_row(parent_id, title, ind.display_name, ind.data_type, sql, ind.id, time, data_table_name, data_table_name, min, max)
+                    insert_data_row(parent_id, title, ind.display_name, ind.data_type, sql, ind.id, time, ind_data.key_unit_type, data_table_name, min, max)
 
 
 def print_v(verbose, text):
