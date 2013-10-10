@@ -12,6 +12,26 @@ from indicators.fields import RoundingDecimalField, FileNameField
 
 from radmin import console
 console.register_to_all('Generate Weave','indicators.views.gen_weave', True)
+from django.contrib.admin import SimpleListFilter
+
+class subAgencyDataSourcesField(SimpleListFilter):
+    title = _('Sub-Agency Data Sources')
+    parameter_name = 'subDataSource'
+    def lookups(self, request, model_admin):
+        subDataSourceDisclaimer = SubDataSourceDisclaimer.objects.all();
+        result = []
+        for i in subDataSourceDisclaimer:
+            result.append((i.id,_(i.name)))
+
+        return tuple(result)
+    def queryset(self, request, queryset):
+
+        if self.value():
+            v = self.value().split(" ")
+            return queryset.filter(datasources__sub_datasources__disclaimer__id__in=v)
+        else:
+            return queryset
+
 
 try:
     from django.contrib.admin.filterspecs import FilterSpec
@@ -147,7 +167,7 @@ class IndicatorAdmin(admin.ModelAdmin):
         }
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published','retired', 'load_pending', 'last_load_completed', 'last_audited',)
     list_editable = ('visible_in_all_lists', 'published','retired',)
-    list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published','retired',  'last_audited')
+    list_filter = (subAgencyDataSourcesField,'data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published','retired',  'last_audited')
 
     search_fields = ('name', 'datasources__short_name', 'short_definition',
                      'long_definition', 'notes', 'file_name')
