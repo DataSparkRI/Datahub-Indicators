@@ -477,6 +477,7 @@ class DefaultIndicatorList(models.Model):
     created = models.DateField(auto_now_add=True)
     visible_in_weave = models.BooleanField(default=True)
     indicators = models.ManyToManyField(Indicator)
+    description = models.TextField(blank=True)
     users = models.ManyToManyField(User, through='DefaultListSubscription')
 
     @property
@@ -497,6 +498,9 @@ class DefaultIndicatorList(models.Model):
             if user not in s_users:
                 subscription = DefaultListSubscription(user=user, ilist=self, visible_in_weave=False)
                 subscription.save()
+
+    class Meta:
+        verbose_name = "Recommended Indicator List"
 
     def __unicode__(self):
         return self.name

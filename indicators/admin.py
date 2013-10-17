@@ -168,7 +168,7 @@ class IndicatorAdmin(admin.ModelAdmin):
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published','retired', 'load_pending', 'last_load_completed', 'last_audited',)
     list_editable = ('visible_in_all_lists', 'published','retired',)
     list_filter = (subAgencyDataSourcesField,'data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published','retired',  'last_audited')
-
+    
     search_fields = ('name', 'datasources__short_name', 'short_definition',
                      'long_definition', 'notes', 'file_name')
     exclude = ('raw_tags', 'raw_datasources', 'years_available_display',
@@ -319,6 +319,8 @@ class DefaultIndicatorListAdmin(admin.ModelAdmin):
     #inlines = (DefaultListSubscriptionInline,)
     prepopulated_fields = {"slug": ("name",)}
     filter_horizontal = ['indicators']
+    
+
 
 
 admin.site.register(DataSource)
