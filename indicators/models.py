@@ -304,7 +304,7 @@ class Indicator(models.Model):
             if t_type in ['School Year', 'Calendar Year', 'Multi-Year']:
                 if "-" in t_key: # we are gonna catch silly admin mistakes like trying to add a multi year where it shouldnt be
                     year_split = t_key.split("-")
-                    if t_type != "Multi-Year":
+                    if t_type not in ["Multi-Year", "School Year"]:
                         # even though the admin has specified time1-time2 we
                         # are just gonna take the first year
                         if t_type == 'School Year':
