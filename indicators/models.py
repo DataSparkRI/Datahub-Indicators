@@ -175,7 +175,7 @@ class Indicator(models.Model):
     suppression_denominator = models.IntegerField(null=True, blank=True, help_text="Cells < value are suppressed. Cells >= value appear in output.")
     years_available_display = models.CharField(max_length=200)
     years_available = models.CommaSeparatedIntegerField(max_length=200)
-    datasources = models.ManyToManyField(DataSource)
+    datasources = models.ManyToManyField(DataSource,verbose_name= "Data Sources")
 
     published = models.BooleanField(default=True)
     retired =models.BooleanField(default=False)
