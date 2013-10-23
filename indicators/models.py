@@ -175,7 +175,7 @@ class Indicator(models.Model):
     suppression_denominator = models.IntegerField(null=True, blank=True, help_text="Cells < value are suppressed. Cells >= value appear in output.")
     years_available_display = models.CharField(max_length=200)
     years_available = models.CommaSeparatedIntegerField(max_length=200)
-    datasources = models.ManyToManyField(DataSource)
+    datasources = models.ManyToManyField(DataSource,verbose_name= "Data Sources")
 
     published = models.BooleanField(default=True)
     retired =models.BooleanField(default=False)
@@ -304,7 +304,7 @@ class Indicator(models.Model):
             if t_type in ['School Year', 'Calendar Year', 'Multi-Year']:
                 if "-" in t_key: # we are gonna catch silly admin mistakes like trying to add a multi year where it shouldnt be
                     year_split = t_key.split("-")
-                    if t_type != "Multi-Year":
+                    if t_type not in ["Multi-Year", "School Year"]:
                         # even though the admin has specified time1-time2 we
                         # are just gonna take the first year
                         if t_type == 'School Year':
@@ -455,6 +455,7 @@ class DefaultIndicatorList(models.Model):
     created = models.DateField(auto_now_add=True)
     visible_in_weave = models.BooleanField(default=True)
     indicators = models.ManyToManyField(Indicator)
+    description = models.TextField(blank=True)
     users = models.ManyToManyField(User, through='DefaultListSubscription')
 
     @property
@@ -475,6 +476,9 @@ class DefaultIndicatorList(models.Model):
             if user not in s_users:
                 subscription = DefaultListSubscription(user=user, ilist=self, visible_in_weave=False)
                 subscription.save()
+
+    class Meta:
+        verbose_name = "Recommended Indicator List"
 
     def __unicode__(self):
         return self.name
