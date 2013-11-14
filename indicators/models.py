@@ -7,8 +7,10 @@ from django.db.models import Q
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from taggit.managers import TaggableManager
+from taggit_autosuggest.managers import TaggableManager
 from taggit.utils import parse_tags
+#from taggit.managers import TaggableManager
+#from taggit.utils import parse_tags
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
