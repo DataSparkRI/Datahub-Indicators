@@ -15,7 +15,6 @@ from taggit.utils import parse_tags
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
 from indicators.fields import RoundingDecimalField, FileNameField
-
 INDICATOR_TYPES = (
     ('csv', 'csv'),
     ('generated', 'generated'),
@@ -42,6 +41,7 @@ UNIT_CHOICES = (
 
 class Permission(models.Model):
     """ A Generic User Permission tied to a model """
+    User._meta.ordering=["username"]
     user = models.ForeignKey(User) # the user this permision is for
     indicator = models.ForeignKey('Indicator')
 
