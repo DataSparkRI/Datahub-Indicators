@@ -85,7 +85,7 @@ def batch_create(request):
                     fout.write(chunk)
                 fout.close()
                 t = import_indicator_csv_task(fout.name)
-                messages.info(request, "Import task has started. Task ID: %s" % t.command.task_id)
+                messages.info(request, "Import task has started. Task ID: %s" % t.task.task_id)
         else:
             messages.error(request, "Please select a .csv file")
 
