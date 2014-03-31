@@ -1,14 +1,15 @@
 # huey tasks! not celery tasks! http://huey.readthedocs.org/en/latest/getting-started.html#getting-started-django
-from huey.djhuey.decorators import queue_command
+#from huey.djhuey.decorators import queue_command
+from huey.djhuey import task
 import ucsv as csv
 from models import Indicator
 from util import generate_weave
 
-@queue_command
+@task()
 def generate_weave_task():
     generate_weave()
 
-@queue_command
+@task()
 def import_indicator_csv_task(file_name):
     count = 0
     f = open(file_name)
