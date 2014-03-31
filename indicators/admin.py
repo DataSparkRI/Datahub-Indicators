@@ -6,12 +6,58 @@ import datetime
 from django.conf import settings
 from django.contrib import admin, messages
 from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, DefaultIndicatorList, DefaultListSubscription, \
-        Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup, Permission
+        Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup, Permission,AnonymizedEnrollment
 from django.utils.translation import ugettext_lazy as _
 from indicators.fields import RoundingDecimalField, FileNameField
 
 from radmin import console
 console.register_to_all('Generate Weave','indicators.views.gen_weave', True)
+from django.contrib.admin import SimpleListFilter
+
+class upLoadType(SimpleListFilter):
+    title = _('Data collected from')
+    parameter_name = "collected"
+    def lookups(self, request, model_admin):
+        return (
+            ('Hub', _('Hub generated')),
+            ('Usr', _('CSV user uploaded')),
+        )
+    def queryset(self, request, queryset):
+        from indicators.models import Indicator
+        AI = Indicator.objects.all()
+        Hub = []
+        Usr = []
+        for i in AI:
+            list = IndicatorPregenPart.objects.filter(indicator__name=i)
+            if len(list) == 0:
+                Hub.append(i.id)
+            else:
+                Usr.append(i.id)
+        if self.value() == 'Hub':
+            return queryset.filter(id__in=Hub)
+        else:
+            return queryset.filter(id__in=Usr)
+
+
+
+class subAgencyDataSourcesField(SimpleListFilter):
+    title = _('Sub-Agency Data Sources')
+    parameter_name = 'subDataSource'
+    def lookups(self, request, model_admin):
+        subDataSourceDisclaimer = SubDataSourceDisclaimer.objects.all();
+        result = []
+        for i in subDataSourceDisclaimer:
+            result.append((i.id,_(i.name)))
+
+        return tuple(result)
+    def queryset(self, request, queryset):
+
+        if self.value():
+            v = self.value().split(" ")
+            return queryset.filter(datasources__sub_datasources__disclaimer__id__in=v)
+        else:
+            return queryset
+
 
 try:
     from django.contrib.admin.filterspecs import FilterSpec
@@ -147,8 +193,8 @@ class IndicatorAdmin(admin.ModelAdmin):
         }
     list_display = ('name', 'data_type', 'visible_in_all_lists', 'published','retired', 'load_pending', 'last_load_completed', 'last_audited',)
     list_editable = ('visible_in_all_lists', 'published','retired',)
-    list_filter = ('data_type', 'visible_in_all_lists', 'datasources', 'load_pending', 'published','retired',  'last_audited')
-
+    list_filter = (upLoadType,'data_type', 'visible_in_all_lists', 'datasources', subAgencyDataSourcesField, 'load_pending', 'published','retired',  'last_audited')
+    
     search_fields = ('name', 'datasources__short_name', 'short_definition',
                      'long_definition', 'notes', 'file_name')
     exclude = ('raw_tags', 'raw_datasources', 'years_available_display',
@@ -299,6 +345,11 @@ class DefaultIndicatorListAdmin(admin.ModelAdmin):
     #inlines = (DefaultListSubscriptionInline,)
     prepopulated_fields = {"slug": ("name",)}
     filter_horizontal = ['indicators']
+    
+class AnonymizedEnrollmentAdmin(admin.ModelAdmin):
+    list_display = ('school_year', 'SASID', 'distCode', 'grade','enroll_date', 'exit_date', 'exit_type')
+    list_filter = ('school_year','exit_type')
+   
 
 
 admin.site.register(DataSource)
@@ -307,5 +358,6 @@ admin.site.register(SubDataSourceDisclaimer)
 admin.site.register(IndicatorList)
 admin.site.register(DefaultIndicatorList, DefaultIndicatorListAdmin)
 admin.site.register(Indicator, IndicatorAdmin)
+admin.site.register(AnonymizedEnrollment, AnonymizedEnrollmentAdmin)
 admin.site.register(TypeIndicatorLookup)
 admin.site.register(Permission)

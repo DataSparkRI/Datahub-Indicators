@@ -7,13 +7,14 @@ from django.db.models import Q
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from taggit.managers import TaggableManager
+from taggit_autosuggest.managers import TaggableManager
 from taggit.utils import parse_tags
+#from taggit.managers import TaggableManager
+#from taggit.utils import parse_tags
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
 from indicators.fields import RoundingDecimalField, FileNameField
-
 INDICATOR_TYPES = (
     ('csv', 'csv'),
     ('generated', 'generated'),
@@ -40,6 +41,7 @@ UNIT_CHOICES = (
 
 class Permission(models.Model):
     """ A Generic User Permission tied to a model """
+    User._meta.ordering=["username"]
     user = models.ForeignKey(User) # the user this permision is for
     indicator = models.ForeignKey('Indicator')
 
@@ -175,7 +177,7 @@ class Indicator(models.Model):
     suppression_denominator = models.IntegerField(null=True, blank=True, help_text="Cells < value are suppressed. Cells >= value appear in output.")
     years_available_display = models.CharField(max_length=200)
     years_available = models.CommaSeparatedIntegerField(max_length=200)
-    datasources = models.ManyToManyField(DataSource)
+    datasources = models.ManyToManyField(DataSource,verbose_name= "Data Sources")
 
     published = models.BooleanField(default=True)
     retired =models.BooleanField(default=False)
@@ -293,72 +295,50 @@ class Indicator(models.Model):
 
         2000,2001,2002,2004 --> 2000-02,2004
         """
-        def convert_multi_years_range_to_years(range):
-            parts = range.split("-")
-            res = set()
-            for year in xrange(int(parts[0]), int(parts[1])+1):
-                res.add(year)
-            return res
 
-        years = set()
-        multi_years = set()
-        multi_years_available = set()
-        for time_type, time_key in self.indicatordata_set.filter(time_key__isnull=False).exclude(numeric__isnull=True,string__isnull=True).values_list('time_type', 'time_key').distinct():
-            if time_type == 'School Year':
-                years.add(school_year_to_year(time_key))
-            if time_type == 'Calendar Year':
-                years.add(int(time_key.split('.')[0]))
-            if time_type == 'Multi-Year':
-                multi_years.add(time_key)
-                multi_years_available.update(convert_multi_years_range_to_years(time_key))
-        years_av = years.copy()
-        years_av.update(multi_years_available)
-        self.years_available = list(years_av)
-        # FIXME: done in a rush, could be better
-        years = sorted(years)
-        ranged_sets = []
-        last_year = None
-        start = None
+        times = self.indicatordata_set.all().distinct('time_key').values_list('time_type', 'time_key')
+        years_raw = set() # the overall years avaliable
+        years_formated = set()
 
-        for year in years:
-            if not last_year:
-                start = year
-                last_year = year
-            else:
-                if year == last_year + 1:
-                    last_year = year
-                else:
-                    if last_year == start:
-                        if start:
-                            ranged_sets.append(str(start))
+        for time in times:
+            t_type = time[0]
+            t_key = time[1].strip()
+            if t_type in ['School Year', 'Calendar Year', 'Multi-Year']:
+                if "-" in t_key: # we are gonna catch silly admin mistakes like trying to add a multi year where it shouldnt be
+                    year_split = t_key.split("-")
+                    if t_type not in ["Multi-Year", "School Year"]:
+                        # even though the admin has specified time1-time2 we
+                        # are just gonna take the first year
+                        if t_type == 'School Year':
+                            yr = school_year_to_year(year_split[0])
+                            years_raw.add(yr)
+                            years_formated = str(yr)
+                        if t_type == 'Calendar Year':
+                            yr = int(float(year_split[0]))
+                            years_raw.add(yr)
+                            years_formated.add(str(yr))
                     else:
-                        ranged_sets.append("%s-%s" % (start, str(last_year)[2:4]))
-                    start = year
-                    last_year = year
-
-        if last_year == start:
-            if start:
-                ranged_sets.append(str(start))
-        else:
-            ranged_sets.append("%s-%s" % (start, str(last_year)[2:4]))
-
-        if len(ranged_sets) > 0:
-            self.years_available_display = ','.join(ranged_sets)
-        if len(multi_years) > 0:
-            myears = []
-            for m in multi_years:
-                p = m.split('-')
-                myears.append([int(p[0]), int(p[1])])
-            myears = sorted(myears, key=lambda first_year:first_year[0] )
-            res = []
-            for p in myears:
-                res.append("%s-%s" % ( p[0], str(p[1])[2:4] ) )
-            if self.years_available_display == '':
-                self.years_available_display = ','.join(res)
+                        # legit multiyear
+                        years_formated.add(t_key)
+                        # we need to create a range to save for this multi year
+                        for r in range(int(float(year_split[0])), int(float(year_split[1]))+1):
+                            years_raw.add(r)
+                else:
+                    #not any form of multi year
+                    if t_type == 'School Year':
+                        yr = school_year_to_year(t_key)
+                        years_raw.add(yr)
+                        years_formated = str(yr)
+                    if t_type == 'Calendar Year':
+                        yr = int(float(t_key))
+                        years_raw.add(yr)
+                        years_formated.add(str(yr))
             else:
-                self.years_available_display += ',' + ','.join(res)
-        else:
-            self.years_available_display = ''
+                pass
+
+        # finally set the properties for the instance
+        self.years_available_display = ', '.join(list(years_formated))
+        self.years_available = list(years_raw)
 
     def parse_tags(self):
         self.tags.set(*parse_tags(self.raw_tags))
@@ -477,6 +457,7 @@ class DefaultIndicatorList(models.Model):
     created = models.DateField(auto_now_add=True)
     visible_in_weave = models.BooleanField(default=True)
     indicators = models.ManyToManyField(Indicator)
+    description = models.TextField(blank=True)
     users = models.ManyToManyField(User, through='DefaultListSubscription')
 
     @property
@@ -497,6 +478,9 @@ class DefaultIndicatorList(models.Model):
             if user not in s_users:
                 subscription = DefaultListSubscription(user=user, ilist=self, visible_in_weave=False)
                 subscription.save()
+
+    class Meta:
+        verbose_name = "Recommended Indicator List"
 
     def __unicode__(self):
         return self.name
