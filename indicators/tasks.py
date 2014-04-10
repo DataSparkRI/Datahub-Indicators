@@ -223,7 +223,7 @@ try:
         for i in inds:
             i.parse_tags()
 
-        f.close()
+        #f.close()
         return str(count) + "---" + file_name
 
 except ImportError:
