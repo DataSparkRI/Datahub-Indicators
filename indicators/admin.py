@@ -243,7 +243,7 @@ def save_pregen_csv_data(modeladmin, request, queryset):
 
     messages.add_message(
                             request, messages.INFO,
-                            "Updated: "+ ', '.join([str(x) for x in names]) + "  "+'. '.join([str(x) for x in mess])
+                            "Save PreGen CSV Data: "+ ', '.join([str(x) for x in names]) + "  "+'. '.join([str(x) for x in mess])
                         )
 save_pregen_csv_data.short_description = "Save PreGen CSV Data"
 
