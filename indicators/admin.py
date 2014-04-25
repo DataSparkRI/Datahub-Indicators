@@ -35,10 +35,10 @@ class upLoadType(SimpleListFilter):
                 Usr.append(i.id)
         if self.value() == 'Hub':
             return queryset.filter(id__in=Hub)
-        else:
+        elif self.value() == 'Usr':
             return queryset.filter(id__in=Usr)
-
-
+        else:
+            return AI
 
 class subAgencyDataSourcesField(SimpleListFilter):
     title = _('Sub-Agency Data Sources')
