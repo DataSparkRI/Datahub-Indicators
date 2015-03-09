@@ -1,4 +1,4 @@
-import csv
+import csv, re
 import logging
 import os
 import uuid
@@ -365,6 +365,7 @@ class IndicatorAdmin(admin.ModelAdmin):
                         return obj
                     reader = csv.reader(csv_file)
                     cols = reader.next()
+                    cols = [re.sub(r'[^\x00-\x7F]+','', y) for y in cols]
                     if pregenpart.column_name in cols \
                             and pregenpart.key_column in cols:
                         name_col = cols.index(pregenpart.column_name)
