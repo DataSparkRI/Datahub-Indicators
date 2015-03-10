@@ -366,6 +366,27 @@ class IndicatorAdmin(admin.ModelAdmin):
                     reader = csv.reader(csv_file)
                     cols = reader.next()
                     cols = [re.sub(r'[^\x00-\x7F]+','', y) for y in cols]
+                    if (pregenpart.key_column in cols) == False and (pregenpart.column_name in cols) == False:
+                       messages.add_message(
+                            request, messages.ERROR,
+                            'Unable to find column "'+pregenpart.key_column+'" and "'+ pregenpart.column_name +'" in the file "'
+                            + filename + '" for the pregen data. '
+                            'Meta-data saved.  Skip "'+pregenpart.time_value+'" Indicator Data.'
+                        )
+                    elif (pregenpart.key_column in cols) == False:
+                       messages.add_message(
+                            request, messages.ERROR,
+                            'Unable to find column "'+pregenpart.key_column+'" in the file "'
+                            + filename + '" for the pregen data. '
+                            'Meta-data saved.  Skip "'+pregenpart.time_value+'" Indicator Data.'
+                        )
+                    elif (pregenpart.column_name in cols) == False:
+                       messages.add_message(
+                            request, messages.ERROR,
+                            'Unable to find column "'+pregenpart.column_name+'" in the file "'
+                            + filename + '" for the pregen data. '
+                            'Meta-data saved.  Skip "'+pregenpart.time_value+'" Indicator Data.'
+                        )
                     if pregenpart.column_name in cols \
                             and pregenpart.key_column in cols:
                         name_col = cols.index(pregenpart.column_name)
