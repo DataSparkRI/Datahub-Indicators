@@ -370,19 +370,19 @@ class IndicatorAdmin(admin.ModelAdmin):
                        messages.add_message(
                             request, messages.ERROR,
                             "Bad column name (%s) and bad key column name (%s)."%(pregenpart.column_name, pregenpart.key_column)+
-                            ' Meta-data "'+pregenpart.time_value+'" skiped.'
+                            ' Meta-data "'+pregenpart.time_value+'" skipped.'
                         )
                     elif (pregenpart.key_column in cols) == False:
                        messages.add_message(
                             request, messages.ERROR,
                             "Good column name (%s) and bad key column name (%s)."%(pregenpart.column_name, pregenpart.key_column)+
-                            ' Meta-data "'+pregenpart.time_value+'" skiped.'
+                            ' Meta-data "'+pregenpart.time_value+'" skipped.'
                         )
                     elif (pregenpart.column_name in cols) == False:
                        messages.add_message(
                             request, messages.ERROR,
                             "Bad column name (%s) and good key column name (%s)."%(pregenpart.column_name, pregenpart.key_column)+
-                            ' Meta-data "'+pregenpart.time_value+'" skiped.'
+                            ' Meta-data "'+pregenpart.time_value+'" skipped.'
                         )
                     elif (pregenpart.key_column in cols) == True and (pregenpart.column_name in cols) == True:
                         messages.add_message(
