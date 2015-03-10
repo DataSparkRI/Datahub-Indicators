@@ -369,23 +369,26 @@ class IndicatorAdmin(admin.ModelAdmin):
                     if (pregenpart.key_column in cols) == False and (pregenpart.column_name in cols) == False:
                        messages.add_message(
                             request, messages.ERROR,
-                            'Unable to find column "'+pregenpart.key_column+'" and "'+ pregenpart.column_name +'" in the file "'
-                            + filename + '" for the pregen data. '
-                            'Meta-data saved.  Skip "'+pregenpart.time_value+'" Indicator Data.'
+                            "Bad column name (%s) and bad key column name (%s)."%(pregenpart.column_name, pregenpart.key_column)+
+                            ' Meta-data "'+pregenpart.time_value+'" skiped.'
                         )
                     elif (pregenpart.key_column in cols) == False:
                        messages.add_message(
                             request, messages.ERROR,
-                            'Unable to find column "'+pregenpart.key_column+'" in the file "'
-                            + filename + '" for the pregen data. '
-                            'Meta-data saved.  Skip "'+pregenpart.time_value+'" Indicator Data.'
+                            "Good column name (%s) and bad key column name (%s)."%(pregenpart.column_name, pregenpart.key_column)+
+                            ' Meta-data "'+pregenpart.time_value+'" skiped.'
                         )
                     elif (pregenpart.column_name in cols) == False:
                        messages.add_message(
                             request, messages.ERROR,
-                            'Unable to find column "'+pregenpart.column_name+'" in the file "'
-                            + filename + '" for the pregen data. '
-                            'Meta-data saved.  Skip "'+pregenpart.time_value+'" Indicator Data.'
+                            "Bad column name (%s) and good key column name (%s)."%(pregenpart.column_name, pregenpart.key_column)+
+                            ' Meta-data "'+pregenpart.time_value+'" skiped.'
+                        )
+                    elif (pregenpart.key_column in cols) == True and (pregenpart.column_name in cols) == True:
+                        messages.add_message(
+                             request, messages.INFO,
+                            "Good column name (%s) and good key column name (%s)."%(pregenpart.column_name, pregenpart.key_column)+
+                            ' Meta-data "'+pregenpart.time_value+'" saved.'
                         )
                     if pregenpart.column_name in cols \
                             and pregenpart.key_column in cols:
