@@ -14,7 +14,6 @@ from taggit.utils import parse_tags
 
 #from weave.models import AttributeColumn
 from indicators.conversion import school_year_to_year
-from indicators.fields import RoundingDecimalField, FileNameField
 INDICATOR_TYPES = (
     ('csv', 'csv'),
     ('generated', 'generated'),
@@ -150,7 +149,7 @@ class IndicatorManager(models.Manager):
 class Indicator(models.Model):
     #qualitative information
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
-    file_name = FileNameField(max_length=100, blank=True)
+    file_name = models.CharField(max_length=100, blank=True)
     display_name = models.CharField(max_length=100)
     short_definition = models.TextField()
     long_definition = models.TextField(help_text="This field is Markdown enabled.")
@@ -417,7 +416,7 @@ class IndicatorData(models.Model):
     key_unit_type = models.CharField(max_length=50,choices=KEY_UNIT_TYPE_CHOICES,db_index=True)
     key_value = models.CharField(max_length=100,db_index=True)
     data_type = models.CharField(max_length=7,choices=DATA_TYPE_CHOICES)
-    numeric = RoundingDecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
+    numeric = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
     string = models.CharField(max_length=100,null=True)
 
     @property

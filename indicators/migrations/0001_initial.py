@@ -1,301 +1,211 @@
-# encoding: utf-8
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-class Migration(SchemaMigration):
-
-    def forwards(self, orm):
-        
-        # Adding model 'DataSource'
-        db.create_table('indicators_datasource', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('short', self.gf('django.db.models.fields.CharField')(max_length=11)),
-            ('short_name', self.gf('django.db.models.fields.CharField')(max_length=12)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('icon_file', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-        ))
-        db.send_create_signal('indicators', ['DataSource'])
-
-        # Adding model 'IndicatorPregenPart'
-        db.create_table('indicators_indicatorpregenpart', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('indicator', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['indicators.Indicator'])),
-            ('file_name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('column_name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('key_type', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('time_type', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('time_value', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('key_column', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-        ))
-        db.send_create_signal('indicators', ['IndicatorPregenPart'])
-
-        # Adding model 'Indicator'
-        db.create_table('indicators_indicator', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
-            ('file_name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('display_name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('short_definition', self.gf('django.db.models.fields.TextField')()),
-            ('long_definition', self.gf('django.db.models.fields.TextField')()),
-            ('purpose', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('universe', self.gf('django.db.models.fields.CharField')(max_length=300, blank=True)),
-            ('limitations', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('routine_use', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('last_audited', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('min', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('max', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('unit', self.gf('django.db.models.fields.CharField')(default='other', max_length=10)),
-            ('data_type', self.gf('django.db.models.fields.CharField')(max_length=7)),
-            ('raw_tags', self.gf('django.db.models.fields.TextField')()),
-            ('raw_datasources', self.gf('django.db.models.fields.TextField')()),
-            ('notes', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('data_levels_available', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('query_level', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('suppression_numerator', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('suppression_denominator', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('years_available_display', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('years_available', self.gf('django.db.models.fields.CommaSeparatedIntegerField')(max_length=200)),
-            ('published', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('visible_in_all_lists', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('load_pending', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('last_load_completed', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-        ))
-        db.send_create_signal('indicators', ['Indicator'])
-
-        # Adding M2M table for field datasources on 'Indicator'
-        db.create_table('indicators_indicator_datasources', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('indicator', models.ForeignKey(orm['indicators.indicator'], null=False)),
-            ('datasource', models.ForeignKey(orm['indicators.datasource'], null=False))
-        ))
-        db.create_unique('indicators_indicator_datasources', ['indicator_id', 'datasource_id'])
-
-        # Adding model 'IndicatorData'
-        db.create_table('indicators_indicatordata', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('indicator', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['indicators.Indicator'])),
-            ('time_type', self.gf('django.db.models.fields.CharField')(db_index=True, max_length=50, null=True, blank=True)),
-            ('time_key', self.gf('django.db.models.fields.CharField')(db_index=True, max_length=10, null=True, blank=True)),
-            ('key_unit_type', self.gf('django.db.models.fields.CharField')(max_length=50, db_index=True)),
-            ('key_value', self.gf('django.db.models.fields.CharField')(max_length=100, db_index=True)),
-            ('data_type', self.gf('django.db.models.fields.CharField')(max_length=7)),
-            ('numeric', self.gf('indicators.fields.RoundingDecimalField')(null=True, max_digits=20, decimal_places=2, blank=True)),
-            ('string', self.gf('django.db.models.fields.CharField')(max_length=100, null=True)),
-        ))
-        db.send_create_signal('indicators', ['IndicatorData'])
-
-        # Adding model 'IndicatorList'
-        db.create_table('indicators_indicatorlist', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=200, db_index=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('visible_in_default', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('created', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('visible_in_weave', self.gf('django.db.models.fields.BooleanField')(default=True)),
-        ))
-        db.send_create_signal('indicators', ['IndicatorList'])
-
-        # Adding unique constraint on 'IndicatorList', fields ['name', 'owner']
-        db.create_unique('indicators_indicatorlist', ['name', 'owner_id'])
-
-        # Adding M2M table for field indicators on 'IndicatorList'
-        db.create_table('indicators_indicatorlist_indicators', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('indicatorlist', models.ForeignKey(orm['indicators.indicatorlist'], null=False)),
-            ('indicator', models.ForeignKey(orm['indicators.indicator'], null=False))
-        ))
-        db.create_unique('indicators_indicatorlist_indicators', ['indicatorlist_id', 'indicator_id'])
-
-        # Adding model 'AnonymizedEnrollment'
-        db.create_table('indicators_anonymizedenrollment', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('school_year', self.gf('django.db.models.fields.CharField')(max_length=9, db_index=True)),
-            ('SASID', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-            ('distCode', self.gf('django.db.models.fields.CharField')(max_length=2, db_index=True)),
-            ('grade', self.gf('django.db.models.fields.CharField')(max_length=50, db_index=True)),
-            ('enroll_date', self.gf('django.db.models.fields.DateField')(null=True)),
-            ('exit_date', self.gf('django.db.models.fields.DateField')(null=True)),
-            ('exit_type', self.gf('django.db.models.fields.CharField')(max_length=200)),
-        ))
-        db.send_create_signal('indicators', ['AnonymizedEnrollment'])
+from django.db import models, migrations
+from django.conf import settings
+import taggit_autosuggest.managers
 
 
-    def backwards(self, orm):
-        
-        # Removing unique constraint on 'IndicatorList', fields ['name', 'owner']
-        db.delete_unique('indicators_indicatorlist', ['name', 'owner_id'])
+class Migration(migrations.Migration):
 
-        # Deleting model 'DataSource'
-        db.delete_table('indicators_datasource')
+    dependencies = [
+        ('taggit', '0002_auto_20150616_2121'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
 
-        # Deleting model 'IndicatorPregenPart'
-        db.delete_table('indicators_indicatorpregenpart')
-
-        # Deleting model 'Indicator'
-        db.delete_table('indicators_indicator')
-
-        # Removing M2M table for field datasources on 'Indicator'
-        db.delete_table('indicators_indicator_datasources')
-
-        # Deleting model 'IndicatorData'
-        db.delete_table('indicators_indicatordata')
-
-        # Deleting model 'IndicatorList'
-        db.delete_table('indicators_indicatorlist')
-
-        # Removing M2M table for field indicators on 'IndicatorList'
-        db.delete_table('indicators_indicatorlist_indicators')
-
-        # Deleting model 'AnonymizedEnrollment'
-        db.delete_table('indicators_anonymizedenrollment')
-
-
-    models = {
-        'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'indicators.anonymizedenrollment': {
-            'Meta': {'object_name': 'AnonymizedEnrollment'},
-            'SASID': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'distCode': ('django.db.models.fields.CharField', [], {'max_length': '2', 'db_index': 'True'}),
-            'enroll_date': ('django.db.models.fields.DateField', [], {'null': 'True'}),
-            'exit_date': ('django.db.models.fields.DateField', [], {'null': 'True'}),
-            'exit_type': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'grade': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'school_year': ('django.db.models.fields.CharField', [], {'max_length': '9', 'db_index': 'True'})
-        },
-        'indicators.datasource': {
-            'Meta': {'object_name': 'DataSource'},
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'icon_file': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'short': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
-            'short_name': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
-        },
-        'indicators.indicator': {
-            'Meta': {'object_name': 'Indicator'},
-            'data_levels_available': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'data_type': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
-            'datasources': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['indicators.DataSource']", 'symmetrical': 'False'}),
-            'display_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'file_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_audited': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'last_load_completed': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'limitations': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'load_pending': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'long_definition': ('django.db.models.fields.TextField', [], {}),
-            'max': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'min': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'notes': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'published': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'purpose': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'query_level': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'raw_datasources': ('django.db.models.fields.TextField', [], {}),
-            'raw_tags': ('django.db.models.fields.TextField', [], {}),
-            'routine_use': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'short_definition': ('django.db.models.fields.TextField', [], {}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'suppression_denominator': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'suppression_numerator': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'unit': ('django.db.models.fields.CharField', [], {'default': "'other'", 'max_length': '10'}),
-            'universe': ('django.db.models.fields.CharField', [], {'max_length': '300', 'blank': 'True'}),
-            'visible_in_all_lists': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'years_available': ('django.db.models.fields.CommaSeparatedIntegerField', [], {'max_length': '200'}),
-            'years_available_display': ('django.db.models.fields.CharField', [], {'max_length': '200'})
-        },
-        'indicators.indicatordata': {
-            'Meta': {'object_name': 'IndicatorData'},
-            'data_type': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'indicator': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['indicators.Indicator']"}),
-            'key_unit_type': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'}),
-            'key_value': ('django.db.models.fields.CharField', [], {'max_length': '100', 'db_index': 'True'}),
-            'numeric': ('indicators.fields.RoundingDecimalField', [], {'null': 'True', 'max_digits': '20', 'decimal_places': '2', 'blank': 'True'}),
-            'string': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True'}),
-            'time_key': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '10', 'null': 'True', 'blank': 'True'}),
-            'time_type': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '50', 'null': 'True', 'blank': 'True'})
-        },
-        'indicators.indicatorlist': {
-            'Meta': {'unique_together': "(('name', 'owner'),)", 'object_name': 'IndicatorList'},
-            'created': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'indicators': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['indicators.Indicator']", 'symmetrical': 'False'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '200', 'db_index': 'True'}),
-            'visible_in_default': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'visible_in_weave': ('django.db.models.fields.BooleanField', [], {'default': 'True'})
-        },
-        'indicators.indicatorpregenpart': {
-            'Meta': {'object_name': 'IndicatorPregenPart'},
-            'column_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'file_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'indicator': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['indicators.Indicator']"}),
-            'key_column': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'key_type': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'time_type': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'time_value': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
-        },
-        'taggit.taggeditem': {
-            'Meta': {'object_name': 'TaggedItem'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_tagged_items'", 'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_items'", 'to': "orm['taggit.Tag']"})
-        }
-    }
-
-    complete_apps = ['indicators']
+    operations = [
+        migrations.CreateModel(
+            name='AnonymizedEnrollment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('school_year', models.CharField(max_length=9, db_index=True)),
+                ('SASID', models.IntegerField(db_index=True)),
+                ('distCode', models.CharField(max_length=2, db_index=True)),
+                ('grade', models.CharField(max_length=50, db_index=True)),
+                ('enroll_date', models.DateField(null=True)),
+                ('exit_date', models.DateField(null=True)),
+                ('exit_type', models.CharField(max_length=200)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='DataSource',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('short', models.CharField(max_length=11)),
+                ('short_name', models.CharField(max_length=12)),
+                ('name', models.CharField(max_length=100)),
+                ('url', models.URLField()),
+                ('icon_file', models.ImageField(null=True, upload_to=b'datasource_icons', blank=True)),
+                ('description', models.TextField(blank=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='DefaultIndicatorList',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=200)),
+                ('slug', models.SlugField(unique=True, max_length=200, blank=True)),
+                ('public', models.BooleanField(default=False)),
+                ('visible_in_default', models.BooleanField(default=False)),
+                ('created', models.DateField(auto_now_add=True)),
+                ('visible_in_weave', models.BooleanField(default=True)),
+                ('description', models.TextField(blank=True)),
+            ],
+            options={
+                'verbose_name': 'Recommended Indicator List',
+            },
+        ),
+        migrations.CreateModel(
+            name='DefaultListSubscription',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('visible_in_weave', models.BooleanField(default=True)),
+                ('ilist', models.ForeignKey(to='indicators.DefaultIndicatorList')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Indicator',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=100)),
+                ('file_name', models.CharField(max_length=100, blank=True)),
+                ('display_name', models.CharField(max_length=100)),
+                ('short_definition', models.TextField()),
+                ('long_definition', models.TextField(help_text=b'This field is Markdown enabled.')),
+                ('purpose', models.TextField(help_text=b'This field is Markdown enabled.', blank=True)),
+                ('universe', models.CharField(max_length=300, blank=True)),
+                ('limitations', models.TextField(help_text=b'This field is Markdown enabled.', blank=True)),
+                ('routine_use', models.TextField(blank=True)),
+                ('last_audited', models.DateTimeField(help_text=b'Blank or null means it has never been audited', null=True, blank=True)),
+                ('min', models.IntegerField(null=True, blank=True)),
+                ('max', models.IntegerField(null=True, blank=True)),
+                ('unit', models.CharField(default=b'other', max_length=10, choices=[(b'percent', b'percent'), (b'count', b'count'), (b'rate', b'rate'), (b'other', b'other')])),
+                ('data_type', models.CharField(max_length=7, choices=[(b'numeric', b'numeric'), (b'string', b'string')])),
+                ('raw_tags', models.TextField()),
+                ('raw_datasources', models.TextField()),
+                ('notes', models.TextField(blank=True)),
+                ('data_levels_available', models.CharField(max_length=200, blank=True)),
+                ('query_level', models.CharField(max_length=100, blank=True)),
+                ('suppression_numerator', models.IntegerField(help_text=b'Cells < value are suppressed. Cells >= value appear in output.', null=True, blank=True)),
+                ('suppression_denominator', models.IntegerField(help_text=b'Cells < value are suppressed. Cells >= value appear in output.', null=True, blank=True)),
+                ('years_available_display', models.CharField(max_length=200)),
+                ('years_available', models.CommaSeparatedIntegerField(max_length=200)),
+                ('published', models.BooleanField(default=True)),
+                ('retired', models.BooleanField(default=False)),
+                ('visible_in_all_lists', models.BooleanField(default=False)),
+                ('slug', models.SlugField(unique=True)),
+                ('load_pending', models.BooleanField(default=False, help_text=b'Weave attribute column regen pending')),
+                ('last_load_completed', models.DateTimeField(help_text=b'Date/Time data last loaded into database', null=True, blank=True)),
+                ('datasources', models.ManyToManyField(to='indicators.DataSource', verbose_name=b'Data Sources')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='IndicatorData',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('time_type', models.CharField(blank=True, max_length=50, null=True, db_index=True, choices=[(b'School Year', b'School Year')])),
+                ('time_key', models.CharField(db_index=True, max_length=10, null=True, blank=True)),
+                ('key_unit_type', models.CharField(db_index=True, max_length=50, choices=[(b'School', b'School'), (b'District', b'District')])),
+                ('key_value', models.CharField(max_length=100, db_index=True)),
+                ('data_type', models.CharField(max_length=7, choices=[(b'numeric', b'numeric'), (b'string', b'string')])),
+                ('numeric', models.DecimalField(null=True, max_digits=20, decimal_places=2, blank=True)),
+                ('string', models.CharField(max_length=100, null=True)),
+                ('indicator', models.ForeignKey(to='indicators.Indicator')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='IndicatorList',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=200)),
+                ('slug', models.SlugField(unique=True, max_length=200)),
+                ('public', models.BooleanField(default=False)),
+                ('visible_in_default', models.BooleanField(default=False)),
+                ('created', models.DateField(auto_now_add=True)),
+                ('visible_in_weave', models.BooleanField(default=True)),
+                ('indicators', models.ManyToManyField(to='indicators.Indicator')),
+                ('owner', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='IndicatorPregenPart',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('file_name', models.CharField(max_length=100)),
+                ('column_name', models.CharField(max_length=100)),
+                ('key_type', models.CharField(max_length=100)),
+                ('time_type', models.CharField(max_length=100)),
+                ('time_value', models.CharField(max_length=100)),
+                ('key_column', models.CharField(max_length=100, blank=True)),
+                ('indicator', models.ForeignKey(related_name='pregenparts', to='indicators.Indicator')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Permission',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('indicator', models.ForeignKey(to='indicators.Indicator')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='SubDataSourceDisclaimer',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=100)),
+                ('title', models.CharField(max_length=100)),
+                ('content', models.TextField(help_text=b'This field is Markdown enabled.')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='TypeIndicatorLookup',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=100)),
+                ('key_unit_type', models.CharField(max_length=100)),
+                ('indicator_id', models.CharField(max_length=10)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='SubDataSource',
+            fields=[
+                ('short', models.CharField(max_length=11)),
+                ('short_name', models.CharField(max_length=12)),
+                ('name', models.CharField(max_length=100)),
+                ('url', models.URLField(blank=True)),
+                ('icon_file', models.ImageField(null=True, upload_to=b'datasource_icons', blank=True)),
+                ('description', models.TextField(blank=True)),
+                ('disclaimer', models.OneToOneField(primary_key=True, serialize=False, to='indicators.SubDataSourceDisclaimer')),
+            ],
+        ),
+        migrations.AddField(
+            model_name='indicator',
+            name='permissions',
+            field=models.ForeignKey(related_name='indicator_permission', blank=True, to='indicators.Permission', null=True),
+        ),
+        migrations.AddField(
+            model_name='indicator',
+            name='tags',
+            field=taggit_autosuggest.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags'),
+        ),
+        migrations.AddField(
+            model_name='defaultindicatorlist',
+            name='indicators',
+            field=models.ManyToManyField(to='indicators.Indicator'),
+        ),
+        migrations.AddField(
+            model_name='defaultindicatorlist',
+            name='users',
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, through='indicators.DefaultListSubscription'),
+        ),
+        migrations.AlterUniqueTogether(
+            name='indicatorlist',
+            unique_together=set([('name', 'owner')]),
+        ),
+        migrations.AddField(
+            model_name='datasource',
+            name='sub_datasources',
+            field=models.ManyToManyField(to='indicators.SubDataSource', null=True, blank=True),
+        ),
+    ]

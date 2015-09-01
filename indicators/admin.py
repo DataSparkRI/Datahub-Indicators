@@ -8,11 +8,12 @@ from django.contrib import admin, messages
 from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, DefaultIndicatorList, DefaultListSubscription, \
         Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup, Permission,AnonymizedEnrollment
 from django.utils.translation import ugettext_lazy as _
-from indicators.fields import RoundingDecimalField, FileNameField
 
 from radmin import console
 console.register_to_all('Generate Weave','indicators.views.gen_weave', True)
 from django.contrib.admin import SimpleListFilter
+
+from django.db import models
 
 class upLoadType(SimpleListFilter):
     title = _('Data collected from')
@@ -113,7 +114,7 @@ try:
         cls.filter_specs.insert(0, (test, factory))
 
     FilterSpec.register_front = classmethod(_register_front)
-    FilterSpec.register_front(lambda f: isinstance(f, FileNameField), IndicatorSourceListFilter)
+    FilterSpec.register_front(lambda f: isinstance(f, models.CharField), IndicatorSourceListFilter)
 except ImportError:
     pass
 
