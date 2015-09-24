@@ -154,6 +154,12 @@ try:
     def import_indicator_csv_task(file_name):
         import_indicator_csv(file_name)
 
+    @task()
+    def run_indicator_api(indicators):
+        from indicators.api import save_api
+        for indicator in indicators:
+           save_api(indicator)
+
 except ImportError:
     pass
 

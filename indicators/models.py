@@ -151,6 +151,7 @@ class Indicator(models.Model):
     #qualitative information
     name = models.CharField(max_length=100,blank=False,unique=True) # unique element name, not visible
     file_name = FileNameField(max_length=100, blank=True)
+    api = models.ForeignKey("IndicatorApi", blank=True, null=True, related_name="indicator_api")
     display_name = models.CharField(max_length=100)
     short_definition = models.TextField()
     long_definition = models.TextField(help_text="This field is Markdown enabled.")
@@ -194,6 +195,20 @@ class Indicator(models.Model):
 
     class Meta:
         pass
+    
+    def get_all_data(self):
+        return IndicatorData.objects.filter(indicator_id=self.id)
+
+    def get_data(self):
+        all_data = IndicatorData.objects.filter(indicator_id=self.id)
+        result = {}
+        for data in all_data:
+            result.update({data.time_key:data})
+        
+        for key, value in result.iteritems():
+            result.update({key:IndicatorData.objects.filter(indicator_id=self.id, time_key=key)})        
+
+        return result
 
     def weave_name(self):
         return self.display_name
@@ -636,3 +651,50 @@ class AnonymizedEnrollment(models.Model):
     exit_type = models.CharField(max_length=200)
 
     objects = AnonymizedEnrollmentManager()
+
+class IndicatorApiJson(models.Model):
+     choices = (("time_type","time_type"),
+                ("time_key","time_key"),
+                ("key_unit_type","key_unit_type"),
+                ("key_value","key_value"),
+                ("data_type","data_type"),
+                ("numeric","numeric"),
+                ("string","string"))
+     api = models.ForeignKey("IndicatorApi")
+     json_key = models.CharField(max_length=255)
+     indicator_data_key = models.CharField(max_length=255, choices=choices)
+
+     def __unicode__(self):
+        return u"%s: %s"%(self.json_key, self.indicator_data_key)
+
+
+class IndicatorApiParam(models.Model):
+     key = models.CharField(max_length=255)
+     value = models.CharField(max_length=255)
+
+     def __unicode__(self):
+        return u"%s: %s"%(self.key, self.value)
+
+class IndicatorApiParamSet(models.Model):
+     api = models.ForeignKey("IndicatorApi")
+     param = models.ManyToManyField(IndicatorApiParam)
+     name = models.CharField(max_length=255)
+
+     def __unicode__(self):
+        return u"%s"%(self.name)
+
+class IndicatorApi(models.Model):
+    url = models.URLField(max_length=200)
+    json = models.CharField(max_length=255, help_text = "loop json data key.key", blank = True, null=True)
+
+    @property
+    def url_param_sets(self):
+        return IndicatorApiParamSet.objects.filter(api=self)
+
+    @property
+    def json_keys(self):
+        return IndicatorApiJson.objects.filter(api=self)
+
+    def __unicode__(self):
+        return "%s. %s [%s]"%(self.id, self.url, self.json)
+

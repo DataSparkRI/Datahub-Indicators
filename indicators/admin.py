@@ -6,7 +6,8 @@ import datetime
 from django.conf import settings
 from django.contrib import admin, messages
 from indicators.models import DataSource, SubDataSource, SubDataSourceDisclaimer, IndicatorList, DefaultIndicatorList, DefaultListSubscription, \
-        Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup, Permission,AnonymizedEnrollment
+        Indicator, IndicatorPregenPart, IndicatorData, TypeIndicatorLookup, Permission,AnonymizedEnrollment, IndicatorApiParamSet, IndicatorApiJson, \
+        IndicatorApi, IndicatorApiParam
 from django.utils.translation import ugettext_lazy as _
 from indicators.fields import RoundingDecimalField, FileNameField
 
@@ -166,6 +167,13 @@ def unpublish(modeladmin, request, queryset):
     queryset.update(published=False)
 unpublish.short_description = "Unpublish selected indicators"
 
+def get_data_from_api(modeladmin, request, queryset):
+    query_set = queryset.exclude(api__isnull=True)
+    from indicators.tasks import run_indicator_api
+    run_indicator_api(query_set) 
+
+get_data_from_api.short_description = "Save Api data for the selected Indicators"
+
 def save_pregen_csv_data(modeladmin, request, queryset):
     mess = []
     names = []
@@ -291,14 +299,15 @@ class IndicatorAdmin(admin.ModelAdmin):
 
     try:
         from indicators.load import DataImporter
-        actions = [batch_debug_indicators, load_indicators, publish, unpublish]
+        actions = [batch_debug_indicators, load_indicators, publish, unpublish, get_data_from_api]
     except ImportError:
-        actions = [publish, unpublish, switch_load_pending, save_pregen_csv_data]
+        actions = [publish, unpublish, switch_load_pending, save_pregen_csv_data, get_data_from_api]
 
     fieldsets = (
         ('Basic Information', { 'fields':(
             'name',
             'file_name',
+            'api',
             'display_name',
             'short_definition',
             'long_definition',
@@ -458,8 +467,17 @@ class AnonymizedEnrollmentAdmin(admin.ModelAdmin):
     list_display = ('school_year', 'SASID', 'distCode', 'grade','enroll_date', 'exit_date', 'exit_type')
     list_filter = ('school_year','exit_type')
    
+class IndicatorApiParamSetInline(admin.TabularInline):
+    model = IndicatorApiParamSet
 
+class IndicatorApiJsonInline(admin.TabularInline):
+    model = IndicatorApiJson
 
+class IndicatorApiAdmin(admin.ModelAdmin):
+    inlines = (IndicatorApiParamSetInline, IndicatorApiJsonInline)
+admin.site.register(IndicatorApi, IndicatorApiAdmin)
+
+admin.site.register(IndicatorApiParam)
 admin.site.register(DataSource)
 admin.site.register(SubDataSource)
 admin.site.register(SubDataSourceDisclaimer)
