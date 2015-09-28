@@ -2,7 +2,6 @@ import requests
 from indicators.models import Indicator, IndicatorData
 
 def save(indicator, save_data):
-   IndicatorData.objects.filter(indicator=indicator).delete()
    save_data.update({"indicator":indicator})
    IndicatorData(**save_data).save()
 
@@ -34,6 +33,7 @@ def save_json(indicator, json):
 
 def save_api(indicator):
    indicator_api = indicator.api
+   IndicatorData.objects.filter(indicator=indicator).delete()
    for param_set in indicator_api.url_param_sets:
        payload = {}
        for param in param_set.param.all():
