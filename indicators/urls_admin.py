@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 urlpatterns = patterns('',
     url(r'^indicator_batches/$', 'indicators.admin_views.indicator_batch_list', name="indicators_admin_batch_list"),
